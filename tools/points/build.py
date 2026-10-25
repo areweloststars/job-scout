@@ -55,7 +55,32 @@ def go(k, r, has_img):
         where = f'이 이야기는 <b>{lab}</b>에, 그림 속 장면은 <b>{il}</b>에 기록되어 있습니다.'
     elif has_img and k not in NOSCENE: where = f'이 그림과 이야기는 <b>{lab}</b>에 기록되어 있습니다.'
     else: where = f'이 이야기는 <b>{lab}</b>에 기록되어 있습니다.'
-    return {'w': where + ' 대한성서공회 성경에서 바로 읽어 보세요.', 'links': links}
+    return {'w': where + ' 아래에서 본문을 펼쳐 바로 읽어 보세요.', 'links': links}
+TX = {}
+for _m in ('tx1', 'tx2', 'tx3', 'tx4', 'tx5'): TX.update(__import__(_m).TX)
+LASTV = {}
+for _k in TX: _c, _v = map(int, _k.split(':')); LASTV[_c] = max(LASTV.get(_c, 0), _v)
+def segs(r):
+    m = re.match(r'^(\d+):(\d+)–(\d+):(\d+)$', r)
+    if m:
+        c1, v1, c2, v2 = map(int, m.groups())
+        return [(c1, list(range(v1, LASTV[c1] + 1))), (c2, list(range(1, v2 + 1)))]
+    c, rest = r.split(':', 1); out = []
+    for part in rest.split(','):
+        a, _, b = part.strip().partition('–'); out.append((int(c), list(range(int(a), int(b or a) + 1))))
+    return out
+def passage(r):
+    parts, miss, S = [], [], segs(r)
+    for i, (c, vs) in enumerate(S):
+        chunk = []
+        for v in vs:
+            t = TX.get(f'{c}:{v}')
+            if t is None: miss.append(f'{c}:{v}'); continue
+            chunk.append(f'<sup>{v}</sup>' + re.sub(r'〔(.+?)〕', r'<span class="tn">〔\1〕</span>', t))
+        lead = '' if i == 0 else (f'<span class="ch">{c}장</span>' if c != S[i - 1][0] else '<span class="ch">⋯</span>')
+        parts.append(f'<p>{lead}{" ".join(chunk)}</p>')
+    if miss: parts.append(f'<p class="tn">※ {", ".join(miss)}절은 가장 오래된 사본들에 없어서 싣지 않았습니다.</p>')
+    return ''.join(parts)
 def mark(s):
     s = re.sub(r'⟪([^⟫]+)⟫', r'<span class="gk" lang="grc">\1</span>', s)
     return re.sub(r'⟦([^|⟧]+)\|[^⟧]+⟧', r'<span class="he" lang="he" dir="rtl">\1</span>', s)
@@ -72,7 +97,7 @@ for p in PTS:
         w, h = Image.open(f'{REPO}/{img}').size
         c = cap(k, e['cap']); m = re.search(r'〈([^〉]+)〉', c)
         rec.update(img=img, iw=w, ih=h, cap=c, alt=(m[1] if m else c.split('.')[0]))
-    rec['go'] = go(k, p['r'], bool(img))
+    rec['go'] = go(k, p['r'], bool(img)); rec['bt'] = passage(p['r'])
     out.setdefault(p['c'], []).append(rec)
 cred = [f'<li>{html.escape(cap(k, CAPS.get(k, "")).split(". ")[0])} · <a href="{html.escape(v["url"])}" target="_blank" rel="noopener">출처</a> · {html.escape(v["lic"])}</li>'
         for k, v in sorted(C.items(), key=lambda kv: [int(x) for x in kv[0].split('-')]) if os.path.exists(f'raw/{k}.jpg')]
