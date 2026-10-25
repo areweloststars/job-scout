@@ -4,7 +4,8 @@
 
 ## 실행
 
-빌드 과정 없이 `index.html` 하나로 동작합니다. 브라우저로 열거나 GitHub Pages로 배포하면 됩니다.
+빌드 과정 없이 `index.html`과 `images/` 폴더만으로 동작합니다. 브라우저로 열거나 GitHub Pages로 배포하면 됩니다.
 
 - GitHub Pages: 저장소 **Settings → Pages**에서 배포할 브랜치와 `/ (root)` 폴더를 선택
 - `#ep3`처럼 주소 끝에 화 번호를 붙이면 해당 화로 바로 이동
+- `images/epNN.jpg`: 각 화의 핵심 구절에 맞춘 그림. 출처와 라이선스는 페이지 맨 아래에 있습니다.
