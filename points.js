@@ -15,7 +15,16 @@ const POINTS = {
 "iw": 628,
 "ih": 800,
 "cap": "제임스 티소, 〈성 마가〉(1886–94). 복음서를 쓰는 마가. 전승은 그를 베드로의 통역자로 봅니다.",
-"alt": "성 마가"
+"alt": "성 마가",
+"go": {
+"w": "이 이야기는 <b>마가복음 1장 1절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 1장 1절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=1&sec=1"
+}
+]
+}
 },
 {
 "r": "1:2–8",
@@ -31,7 +40,16 @@ const POINTS = {
 "iw": 474,
 "ih": 800,
 "cap": "제임스 티소, 〈광야의 소리〉(1886–94). 광야에서 외치는 세례 요한.",
-"alt": "광야의 소리"
+"alt": "광야의 소리",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 1장 2–8절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 1장 2–8절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=1&sec=2"
+}
+]
+}
 },
 {
 "r": "1:9–11",
@@ -47,7 +65,16 @@ const POINTS = {
 "iw": 549,
 "ih": 800,
 "cap": "제임스 티소, 〈예수의 세례〉(1886–94).",
-"alt": "예수의 세례"
+"alt": "예수의 세례",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 1장 9–11절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 1장 9–11절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=1&sec=9"
+}
+]
+}
 },
 {
 "r": "1:12–13",
@@ -59,7 +86,16 @@ const POINTS = {
 "iw": 800,
 "ih": 559,
 "cap": "제임스 티소, 〈천사들의 수종을 받으시는 예수〉(1886–94). “천사들이 수종들더라”(1:13).",
-"alt": "천사들의 수종을 받으시는 예수"
+"alt": "천사들의 수종을 받으시는 예수",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 1장 12–13절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 1장 12–13절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=1&sec=12"
+}
+]
+}
 },
 {
 "r": "1:14–15",
@@ -75,7 +111,16 @@ const POINTS = {
 "iw": 590,
 "ih": 800,
 "cap": "제임스 티소, 〈회당에서 가르치시는 예수〉(1886–94). 갈릴리의 여러 회당을 다니며 복음을 전하신 모습.",
-"alt": "회당에서 가르치시는 예수"
+"alt": "회당에서 가르치시는 예수",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 1장 14–15절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 1장 14–15절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=1&sec=14"
+}
+]
+}
 },
 {
 "r": "1:16–20",
@@ -91,7 +136,16 @@ const POINTS = {
 "iw": 565,
 "ih": 800,
 "cap": "제임스 티소, 〈베드로와 안드레를 부르심〉(1886–94).",
-"alt": "베드로와 안드레를 부르심"
+"alt": "베드로와 안드레를 부르심",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 1장 16–20절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 1장 16–20절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=1&sec=16"
+}
+]
+}
 },
 {
 "r": "1:21–28",
@@ -107,7 +161,16 @@ const POINTS = {
 "iw": 691,
 "ih": 900,
 "cap": "마우리치 고틀리프, 〈가버나움에서 가르치는 그리스도〉(1878–79). 회당에서 두 팔을 들고 말씀을 전하는 예수.",
-"alt": "가버나움에서 가르치는 그리스도"
+"alt": "가버나움에서 가르치는 그리스도",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 1장 21–28절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 1장 21–28절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=1&sec=21"
+}
+]
+}
 },
 {
 "r": "1:29–34",
@@ -123,7 +186,16 @@ const POINTS = {
 "iw": 800,
 "ih": 670,
 "cap": "제임스 티소, 〈베드로의 장모를 고치심〉(1886–94).",
-"alt": "베드로의 장모를 고치심"
+"alt": "베드로의 장모를 고치심",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 1장 29–34절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 1장 29–34절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=1&sec=29"
+}
+]
+}
 },
 {
 "r": "1:35–39",
@@ -139,7 +211,16 @@ const POINTS = {
 "iw": 800,
 "ih": 495,
 "cap": "제임스 티소, 〈한적한 곳으로 가시는 예수〉(1886–94).",
-"alt": "한적한 곳으로 가시는 예수"
+"alt": "한적한 곳으로 가시는 예수",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 1장 35–39절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 1장 35–39절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=1&sec=35"
+}
+]
+}
 },
 {
 "r": "1:40–45",
@@ -155,7 +236,16 @@ const POINTS = {
 "iw": 445,
 "ih": 800,
 "cap": "제임스 티소, 〈가버나움에서 나병환자들을 고치심〉(1886–94).",
-"alt": "가버나움에서 나병환자들을 고치심"
+"alt": "가버나움에서 나병환자들을 고치심",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 1장 40–45절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 1장 40–45절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=1&sec=40"
+}
+]
+}
 }
 ],
 "2": [
@@ -173,7 +263,16 @@ const POINTS = {
 "iw": 567,
 "ih": 800,
 "cap": "제임스 티소, 〈지붕을 뚫고 내려진 중풍병자〉(1886–94).",
-"alt": "지붕을 뚫고 내려진 중풍병자"
+"alt": "지붕을 뚫고 내려진 중풍병자",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 2장 1–5절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 2장 1–5절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=2&sec=1"
+}
+]
+}
 },
 {
 "r": "2:6–12",
@@ -189,7 +288,16 @@ const POINTS = {
 "iw": 800,
 "ih": 613,
 "cap": "로마 산 사바 성당의 프레스코, 〈가버나움의 중풍병자를 고치시는 그리스도〉(중세).",
-"alt": "가버나움의 중풍병자를 고치시는 그리스도"
+"alt": "가버나움의 중풍병자를 고치시는 그리스도",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 2장 6–12절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 2장 6–12절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=2&sec=6"
+}
+]
+}
 },
 {
 "r": "2:13–14",
@@ -205,7 +313,16 @@ const POINTS = {
 "iw": 800,
 "ih": 599,
 "cap": "헨드릭 테르브뤼헌, 〈마태를 부르심〉(1621). 세관 탁자의 마태(레위)가 ‘저 말입니까?’ 하듯 자기를 가리킵니다.",
-"alt": "마태를 부르심"
+"alt": "마태를 부르심",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 2장 13–14절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 2장 13–14절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=2&sec=13"
+}
+]
+}
 },
 {
 "r": "2:15–17",
@@ -221,7 +338,16 @@ const POINTS = {
 "iw": 800,
 "ih": 591,
 "cap": "제임스 티소, 〈마태의 집에서의 식사〉(1886–94).",
-"alt": "마태의 집에서의 식사"
+"alt": "마태의 집에서의 식사",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 2장 15–17절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 2장 15–17절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=2&sec=15"
+}
+]
+}
 },
 {
 "r": "2:18–22",
@@ -237,7 +363,20 @@ const POINTS = {
 "iw": 699,
 "ih": 800,
 "cap": "제임스 티소, 〈가나의 혼인 잔치〉(1886–94). 요한복음 2장의 장면이지만, 예수가 말한 ‘혼인집 손님’(2:19)의 분위기를 보여 줍니다.",
-"alt": "가나의 혼인 잔치"
+"alt": "가나의 혼인 잔치",
+"go": {
+"w": "이 이야기는 <b>마가복음 2장 18–22절</b>에, 그림 속 장면은 <b>요한복음 2장 1–11절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 2장 18–22절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=2&sec=18"
+},
+{
+"t": "요한복음 2장 1–11절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=jhn&chap=2&sec=1"
+}
+]
+}
 },
 {
 "r": "2:23–28",
@@ -253,7 +392,16 @@ const POINTS = {
 "iw": 652,
 "ih": 800,
 "cap": "제임스 티소, 〈안식일에 밀 이삭을 먹는 제자들〉(1886–94).",
-"alt": "안식일에 밀 이삭을 먹는 제자들"
+"alt": "안식일에 밀 이삭을 먹는 제자들",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 2장 23–28절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 2장 23–28절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=2&sec=23"
+}
+]
+}
 }
 ],
 "3": [
@@ -271,7 +419,16 @@ const POINTS = {
 "iw": 590,
 "ih": 800,
 "cap": "제임스 티소, 〈손 마른 사람〉(1886–94).",
-"alt": "손 마른 사람"
+"alt": "손 마른 사람",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 3장 1–6절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 3장 1–6절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=3&sec=1"
+}
+]
+}
 },
 {
 "r": "3:7–12",
@@ -283,7 +440,16 @@ const POINTS = {
 "iw": 800,
 "ih": 600,
 "cap": "제임스 티소, 〈배에서 가르치시는 예수〉(1886–94). 무리가 밀려들자 작은 배를 대기시키신 장면(3:9)과 이어집니다.",
-"alt": "배에서 가르치시는 예수"
+"alt": "배에서 가르치시는 예수",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 3장 7–12절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 3장 7–12절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=3&sec=7"
+}
+]
+}
 },
 {
 "r": "3:13–19",
@@ -299,7 +465,16 @@ const POINTS = {
 "iw": 800,
 "ih": 526,
 "cap": "제임스 티소, 〈열두 사도를 세우심〉(1886–94).",
-"alt": "열두 사도를 세우심"
+"alt": "열두 사도를 세우심",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 3장 13–19절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 3장 13–19절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=3&sec=13"
+}
+]
+}
 },
 {
 "r": "3:22–30",
@@ -315,7 +490,20 @@ const POINTS = {
 "iw": 520,
 "ih": 800,
 "cap": "제임스 티소, 〈말 못하는 귀신 들린 사람을 고치심〉(1886–94). 마태복음은 바알세불 논쟁이 이런 축귀에서 시작됐다고 전합니다(마 12:22–24).",
-"alt": "말 못하는 귀신 들린 사람을 고치심"
+"alt": "말 못하는 귀신 들린 사람을 고치심",
+"go": {
+"w": "이 이야기는 <b>마가복음 3장 22–30절</b>에, 그림 속 장면은 <b>마태복음 12장 22–24절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 3장 22–30절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=3&sec=22"
+},
+{
+"t": "마태복음 12장 22–24절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mat&chap=12&sec=22"
+}
+]
+}
 },
 {
 "r": "3:20–21, 31–35",
@@ -331,7 +519,16 @@ const POINTS = {
 "iw": 800,
 "ih": 600,
 "cap": "작자 미상, 〈어머니와 형제들이 예수를 찾다〉(1485–91년경, 채색 목판화). 안에는 둘러앉은 사람들이, 문밖에는 어머니와 형제들이 서 있습니다.",
-"alt": "어머니와 형제들이 예수를 찾다"
+"alt": "어머니와 형제들이 예수를 찾다",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 3장 20–21절, 31–35절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 3장 20–21절, 31–35절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=3&sec=20"
+}
+]
+}
 }
 ],
 "4": [
@@ -349,7 +546,16 @@ const POINTS = {
 "iw": 453,
 "ih": 800,
 "cap": "제임스 티소, 〈씨 뿌리는 사람〉(1886–94).",
-"alt": "씨 뿌리는 사람"
+"alt": "씨 뿌리는 사람",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 4장 1–9절, 13–20절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 4장 1–9절, 13–20절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=4&sec=1"
+}
+]
+}
 },
 {
 "r": "4:10–12",
@@ -365,7 +571,16 @@ const POINTS = {
 "iw": 800,
 "ih": 519,
 "cap": "제임스 티소, 〈제자들과 이야기하시는 예수〉(1886–94).",
-"alt": "제자들과 이야기하시는 예수"
+"alt": "제자들과 이야기하시는 예수",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 4장 10–12절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 4장 10–12절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=4&sec=10"
+}
+]
+}
 },
 {
 "r": "4:21–25",
@@ -381,7 +596,16 @@ const POINTS = {
 "iw": 600,
 "ih": 600,
 "cap": "로마 시대의 흙 등잔(1세기, 메트로폴리탄 미술관). 예수 시대의 ‘등불’은 이런 손바닥만 한 등잔이었습니다.",
-"alt": "로마 시대의 흙 등잔(1세기, 메트로폴리탄 미술관)"
+"alt": "로마 시대의 흙 등잔(1세기, 메트로폴리탄 미술관)",
+"go": {
+"w": "이 이야기는 <b>마가복음 4장 21–25절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 4장 21–25절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=4&sec=21"
+}
+]
+}
 },
 {
 "r": "4:26–29",
@@ -397,7 +621,16 @@ const POINTS = {
 "iw": 600,
 "ih": 442,
 "cap": "피터르 브뤼헐(아버지), 〈추수하는 사람들〉(1565). 열매가 익자 곧 낫을 대는(4:29) 들판.",
-"alt": "추수하는 사람들"
+"alt": "추수하는 사람들",
+"go": {
+"w": "이 이야기는 <b>마가복음 4장 26–29절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 4장 26–29절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=4&sec=26"
+}
+]
+}
 },
 {
 "r": "4:30–34",
@@ -413,7 +646,16 @@ const POINTS = {
 "iw": 604,
 "ih": 800,
 "cap": "헤르만 아돌프 쾰러, 〈흑겨자〉(《쾰러의 약용식물》 도판). 성경의 겨자로 흔히 보는 식물입니다.",
-"alt": "흑겨자"
+"alt": "흑겨자",
+"go": {
+"w": "이 이야기는 <b>마가복음 4장 30–34절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 4장 30–34절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=4&sec=30"
+}
+]
+}
 },
 {
 "r": "4:35–41",
@@ -429,7 +671,16 @@ const POINTS = {
 "iw": 560,
 "ih": 696,
 "cap": "렘브란트, 〈갈릴리 바다의 폭풍〉(1633). 배 한가운데서 제자들이 예수를 깨우고 있습니다.",
-"alt": "갈릴리 바다의 폭풍"
+"alt": "갈릴리 바다의 폭풍",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 4장 35–41절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 4장 35–41절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=4&sec=35"
+}
+]
+}
 }
 ],
 "5": [
@@ -447,7 +698,16 @@ const POINTS = {
 "iw": 800,
 "ih": 559,
 "cap": "제임스 티소, 〈내 이름은 군대〉(1886–94).",
-"alt": "내 이름은 군대"
+"alt": "내 이름은 군대",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 5장 1–13절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 5장 1–13절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=5&sec=1"
+}
+]
+}
 },
 {
 "r": "5:14–17",
@@ -459,7 +719,16 @@ const POINTS = {
 "iw": 531,
 "ih": 800,
 "cap": "제임스 티소, 〈바다로 몰려 들어가는 돼지 떼〉(1886–94).",
-"alt": "바다로 몰려 들어가는 돼지 떼"
+"alt": "바다로 몰려 들어가는 돼지 떼",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 5장 14–17절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 5장 14–17절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=5&sec=14"
+}
+]
+}
 },
 {
 "r": "5:18–20",
@@ -475,7 +744,20 @@ const POINTS = {
 "iw": 800,
 "ih": 545,
 "cap": "제임스 티소, 〈귀신 들린 두 사람〉(1886–94). 마태복음은 이 사건을 귀신 들린 두 사람의 이야기로 전합니다(마 8:28).",
-"alt": "귀신 들린 두 사람"
+"alt": "귀신 들린 두 사람",
+"go": {
+"w": "이 이야기는 <b>마가복음 5장 18–20절</b>에, 그림 속 장면은 <b>마태복음 8장 28–34절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 5장 18–20절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=5&sec=18"
+},
+{
+"t": "마태복음 8장 28–34절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mat&chap=8&sec=28"
+}
+]
+}
 },
 {
 "r": "5:21–34",
@@ -491,7 +773,16 @@ const POINTS = {
 "iw": 534,
 "ih": 800,
 "cap": "제임스 티소, 〈혈루증 여인〉(1886–94).",
-"alt": "혈루증 여인"
+"alt": "혈루증 여인",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 5장 21–34절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 5장 21–34절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=5&sec=21"
+}
+]
+}
 },
 {
 "r": "5:35–43",
@@ -507,7 +798,16 @@ const POINTS = {
 "iw": 800,
 "ih": 634,
 "cap": "가브리엘 폰 막스, 〈야이로의 딸을 살리심〉(1881). 예수께서 소녀의 손을 잡아 일으키십니다(5:41).",
-"alt": "야이로의 딸을 살리심"
+"alt": "야이로의 딸을 살리심",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 5장 35–43절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 5장 35–43절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=5&sec=35"
+}
+]
+}
 }
 ],
 "6": [
@@ -525,7 +825,20 @@ const POINTS = {
 "iw": 587,
 "ih": 800,
 "cap": "제임스 티소, 〈회당에서 두루마리를 펴시는 예수〉(1886–94). 누가복음 4장이 전하는 나사렛 회당 장면입니다.",
-"alt": "회당에서 두루마리를 펴시는 예수"
+"alt": "회당에서 두루마리를 펴시는 예수",
+"go": {
+"w": "이 이야기는 <b>마가복음 6장 1–6절</b>에, 그림 속 장면은 <b>누가복음 4장 16–30절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 6장 1–6절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=6&sec=1"
+},
+{
+"t": "누가복음 4장 16–30절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=luk&chap=4&sec=16"
+}
+]
+}
 },
 {
 "r": "6:7–13",
@@ -537,7 +850,16 @@ const POINTS = {
 "iw": 800,
 "ih": 490,
 "cap": "제임스 티소, 〈둘씩 보내시다〉(1886–94).",
-"alt": "둘씩 보내시다"
+"alt": "둘씩 보내시다",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 6장 7–13절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 6장 7–13절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=6&sec=7"
+}
+]
+}
 },
 {
 "r": "6:14–29",
@@ -549,7 +871,16 @@ const POINTS = {
 "iw": 628,
 "ih": 800,
 "cap": "제임스 티소, 〈춤추는 헤로디아의 딸〉(1886–94).",
-"alt": "춤추는 헤로디아의 딸"
+"alt": "춤추는 헤로디아의 딸",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 6장 14–29절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 6장 14–29절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=6&sec=14"
+}
+]
+}
 },
 {
 "r": "6:30–32",
@@ -565,7 +896,16 @@ const POINTS = {
 "iw": 800,
 "ih": 590,
 "cap": "제임스 티소, 〈사도들에게 쉬라고 하시는 예수〉(1886–94).",
-"alt": "사도들에게 쉬라고 하시는 예수"
+"alt": "사도들에게 쉬라고 하시는 예수",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 6장 30–32절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 6장 30–32절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=6&sec=30"
+}
+]
+}
 },
 {
 "r": "6:33–34",
@@ -577,7 +917,16 @@ const POINTS = {
 "iw": 614,
 "ih": 900,
 "cap": "윌리엄 홀(1846–1917), 〈무리를 보시고 불쌍히 여기시다〉. 오래된 슬라이드 사진이라 색을 보정했습니다.",
-"alt": "무리를 보시고 불쌍히 여기시다"
+"alt": "무리를 보시고 불쌍히 여기시다",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 6장 33–34절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 6장 33–34절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=6&sec=33"
+}
+]
+}
 },
 {
 "r": "6:35–44",
@@ -593,7 +942,16 @@ const POINTS = {
 "iw": 800,
 "ih": 552,
 "cap": "제임스 티소, 〈오병이어의 기적〉(1886–94).",
-"alt": "오병이어의 기적"
+"alt": "오병이어의 기적",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 6장 35–44절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 6장 35–44절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=6&sec=35"
+}
+]
+}
 },
 {
 "r": "6:45–52",
@@ -609,7 +967,16 @@ const POINTS = {
 "iw": 356,
 "ih": 800,
 "cap": "제임스 티소, 〈바다 위를 걸으시는 예수〉(1886–94).",
-"alt": "바다 위를 걸으시는 예수"
+"alt": "바다 위를 걸으시는 예수",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 6장 45–52절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 6장 45–52절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=6&sec=45"
+}
+]
+}
 },
 {
 "r": "6:53–56",
@@ -621,7 +988,16 @@ const POINTS = {
 "iw": 558,
 "ih": 800,
 "cap": "제임스 티소, 〈마을마다 병자들을 데려오다〉(1886–94).",
-"alt": "마을마다 병자들을 데려오다"
+"alt": "마을마다 병자들을 데려오다",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 6장 53–56절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 6장 53–56절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=6&sec=53"
+}
+]
+}
 }
 ],
 "7": [
@@ -639,7 +1015,16 @@ const POINTS = {
 "iw": 800,
 "ih": 558,
 "cap": "제임스 티소, 〈예수께 질문하는 바리새인들〉(1886–94).",
-"alt": "예수께 질문하는 바리새인들"
+"alt": "예수께 질문하는 바리새인들",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 7장 1–8절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 7장 1–8절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=7&sec=1"
+}
+]
+}
 },
 {
 "r": "7:9–13",
@@ -651,7 +1036,20 @@ const POINTS = {
 "iw": 800,
 "ih": 544,
 "cap": "제임스 티소, 〈화 있을진저 서기관과 바리새인들아〉(1886–94). 마태복음 23장의 장면이지만 전통을 둘러싼 같은 갈등을 보여 줍니다.",
-"alt": "화 있을진저 서기관과 바리새인들아"
+"alt": "화 있을진저 서기관과 바리새인들아",
+"go": {
+"w": "이 이야기는 <b>마가복음 7장 9–13절</b>에, 그림 속 장면은 <b>마태복음 23장 13–36절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 7장 9–13절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=7&sec=9"
+},
+{
+"t": "마태복음 23장 13–36절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mat&chap=23&sec=13"
+}
+]
+}
 },
 {
 "r": "7:14–23",
@@ -667,7 +1065,20 @@ const POINTS = {
 "iw": 800,
 "ih": 584,
 "cap": "제임스 티소, 〈바닷가에서 사람들을 가르치시는 예수〉(1886–94). 무리를 다시 불러 가르치신 장면(7:14)과 이어집니다.",
-"alt": "바닷가에서 사람들을 가르치시는 예수"
+"alt": "바닷가에서 사람들을 가르치시는 예수",
+"go": {
+"w": "이 이야기는 <b>마가복음 7장 14–23절</b>에, 그림 속 장면은 <b>마가복음 4장 1–2절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 7장 14–23절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=7&sec=14"
+},
+{
+"t": "마가복음 4장 1–2절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=4&sec=1"
+}
+]
+}
 },
 {
 "r": "7:24–30",
@@ -683,7 +1094,16 @@ const POINTS = {
 "iw": 519,
 "ih": 800,
 "cap": "제임스 티소, 〈가나안 여인의 딸〉(1886–94).",
-"alt": "가나안 여인의 딸"
+"alt": "가나안 여인의 딸",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 7장 24–30절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 7장 24–30절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=7&sec=24"
+}
+]
+}
 },
 {
 "r": "7:31–37",
@@ -699,7 +1119,16 @@ const POINTS = {
 "iw": 461,
 "ih": 624,
 "cap": "한스 쇼이펠라인, 〈귀 먹고 말 더듬는 사람을 고치시는 그리스도〉(1517, 목판화). 손가락을 귀에 넣으시는 장면입니다.",
-"alt": "귀 먹고 말 더듬는 사람을 고치시는 그리스도"
+"alt": "귀 먹고 말 더듬는 사람을 고치시는 그리스도",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 7장 31–37절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 7장 31–37절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=7&sec=31"
+}
+]
+}
 }
 ],
 "8": [
@@ -713,7 +1142,20 @@ const POINTS = {
 "iw": 800,
 "ih": 593,
 "cap": "제임스 티소, 〈산 위에서 맹인과 저는 사람을 고치시는 예수〉(1886–94). 마태복음은 사천 명을 먹이시기 직전에 이 장면을 놓습니다(마 15:29–31).",
-"alt": "산 위에서 맹인과 저는 사람을 고치시는 예수"
+"alt": "산 위에서 맹인과 저는 사람을 고치시는 예수",
+"go": {
+"w": "이 이야기는 <b>마가복음 8장 1–10절</b>에, 그림 속 장면은 <b>마태복음 15장 29–31절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 8장 1–10절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=8&sec=1"
+},
+{
+"t": "마태복음 15장 29–31절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mat&chap=15&sec=29"
+}
+]
+}
 },
 {
 "r": "8:11–13",
@@ -729,7 +1171,16 @@ const POINTS = {
 "iw": 800,
 "ih": 548,
 "cap": "제임스 티소, 〈예수를 시험하러 온 바리새인과 사두개인〉(1886–94).",
-"alt": "예수를 시험하러 온 바리새인과 사두개인"
+"alt": "예수를 시험하러 온 바리새인과 사두개인",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 8장 11–13절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 8장 11–13절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=8&sec=11"
+}
+]
+}
 },
 {
 "r": "8:14–21",
@@ -745,7 +1196,20 @@ const POINTS = {
 "iw": 800,
 "ih": 574,
 "cap": "제임스 티소, 〈폭풍 중에 주무시는 예수〉(1886–94). 4장의 장면이지만, 8장에서도 제자들은 같은 배 안에서 떡 한 개를 두고 걱정합니다.",
-"alt": "폭풍 중에 주무시는 예수"
+"alt": "폭풍 중에 주무시는 예수",
+"go": {
+"w": "이 이야기는 <b>마가복음 8장 14–21절</b>에, 그림 속 장면은 <b>마가복음 4장 35–41절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 8장 14–21절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=8&sec=14"
+},
+{
+"t": "마가복음 4장 35–41절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=4&sec=35"
+}
+]
+}
 },
 {
 "r": "8:22–26",
@@ -761,7 +1225,20 @@ const POINTS = {
 "iw": 447,
 "ih": 800,
 "cap": "제임스 티소, 〈가버나움의 맹인들〉(1886–94). 마가의 장면은 벳새다지만, 맹인의 눈에 손을 대시는 모습을 보여 줍니다.",
-"alt": "가버나움의 맹인들"
+"alt": "가버나움의 맹인들",
+"go": {
+"w": "이 이야기는 <b>마가복음 8장 22–26절</b>에, 그림 속 장면은 <b>마태복음 9장 27–31절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 8장 22–26절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=8&sec=22"
+},
+{
+"t": "마태복음 9장 27–31절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mat&chap=9&sec=27"
+}
+]
+}
 },
 {
 "r": "8:27–30",
@@ -777,7 +1254,20 @@ const POINTS = {
 "iw": 800,
 "ih": 552,
 "cap": "제임스 티소, 〈성 베드로의 수위권〉(1886–94). 마태복음(16:18)의 ‘반석’ 장면을 그린 그림입니다.",
-"alt": "성 베드로의 수위권"
+"alt": "성 베드로의 수위권",
+"go": {
+"w": "이 이야기는 <b>마가복음 8장 27–30절</b>에, 그림 속 장면은 <b>마태복음 16장 13–20절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 8장 27–30절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=8&sec=27"
+},
+{
+"t": "마태복음 16장 13–20절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mat&chap=16&sec=13"
+}
+]
+}
 },
 {
 "r": "8:31–33",
@@ -793,7 +1283,16 @@ const POINTS = {
 "iw": 800,
 "ih": 528,
 "cap": "제임스 티소, 〈사탄아 물러가라〉(1886–94).",
-"alt": "사탄아 물러가라"
+"alt": "사탄아 물러가라",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 8장 31–33절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 8장 31–33절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=8&sec=31"
+}
+]
+}
 },
 {
 "r": "8:34–9:1",
@@ -809,7 +1308,20 @@ const POINTS = {
 "iw": 800,
 "ih": 594,
 "cap": "렘브란트, 〈어리석은 부자의 비유〉(1627). 촛불 아래 금화를 살피는 부자. 온 천하를 얻고도 목숨을 잃는다는 말씀(8:36)을 이야기로 보여 줍니다.",
-"alt": "어리석은 부자의 비유"
+"alt": "어리석은 부자의 비유",
+"go": {
+"w": "이 이야기는 <b>마가복음 8장 34절–9장 1절</b>에, 그림 속 장면은 <b>누가복음 12장 16–21절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 8장 34절–9장 1절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=8&sec=34"
+},
+{
+"t": "누가복음 12장 16–21절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=luk&chap=12&sec=16"
+}
+]
+}
 }
 ],
 "9": [
@@ -827,7 +1339,16 @@ const POINTS = {
 "iw": 515,
 "ih": 800,
 "cap": "제임스 티소, 〈변화산〉(1886–94).",
-"alt": "변화산"
+"alt": "변화산",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 9장 2–8절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 9장 2–8절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=9&sec=2"
+}
+]
+}
 },
 {
 "r": "9:9–13",
@@ -839,7 +1360,20 @@ const POINTS = {
 "iw": 800,
 "ih": 570,
 "cap": "제임스 티소, 〈세례 요한과 바리새인들〉(1886–94).",
-"alt": "세례 요한과 바리새인들"
+"alt": "세례 요한과 바리새인들",
+"go": {
+"w": "이 이야기는 <b>마가복음 9장 9–13절</b>에, 그림 속 장면은 <b>마태복음 3장 7–10절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 9장 9–13절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=9&sec=9"
+},
+{
+"t": "마태복음 3장 7–10절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mat&chap=3&sec=7"
+}
+]
+}
 },
 {
 "r": "9:14–29",
@@ -855,7 +1389,16 @@ const POINTS = {
 "iw": 568,
 "ih": 800,
 "cap": "제임스 티소, 〈다볼 산 아래의 귀신 들린 아이〉(1886–94).",
-"alt": "다볼 산 아래의 귀신 들린 아이"
+"alt": "다볼 산 아래의 귀신 들린 아이",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 9장 14–29절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 9장 14–29절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=9&sec=14"
+}
+]
+}
 },
 {
 "r": "9:30–32",
@@ -867,7 +1410,16 @@ const POINTS = {
 "iw": 800,
 "ih": 484,
 "cap": "제임스 티소, 〈길을 가시는 예수〉(1886–94).",
-"alt": "길을 가시는 예수"
+"alt": "길을 가시는 예수",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 9장 30–32절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 9장 30–32절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=9&sec=30"
+}
+]
+}
 },
 {
 "r": "9:33–37",
@@ -879,7 +1431,16 @@ const POINTS = {
 "iw": 742,
 "ih": 459,
 "cap": "제임스 티소, 〈예수와 어린아이〉(1886–94). 누가 크냐 다투던 제자들 앞에서 어린아이를 안으십니다.",
-"alt": "예수와 어린아이"
+"alt": "예수와 어린아이",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 9장 33–37절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 9장 33–37절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=9&sec=33"
+}
+]
+}
 },
 {
 "r": "9:38–41",
@@ -895,7 +1456,20 @@ const POINTS = {
 "iw": 652,
 "ih": 800,
 "cap": "제임스 티소, 〈회당의 귀신 들린 사람〉(1886–94). 예수의 이름으로 귀신을 쫓는 일이 어떤 모습이었을지 보여 줍니다(1:23–26).",
-"alt": "회당의 귀신 들린 사람"
+"alt": "회당의 귀신 들린 사람",
+"go": {
+"w": "이 이야기는 <b>마가복음 9장 38–41절</b>에, 그림 속 장면은 <b>마가복음 1장 23–26절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 9장 38–41절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=9&sec=38"
+},
+{
+"t": "마가복음 1장 23–26절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=1&sec=23"
+}
+]
+}
 },
 {
 "r": "9:42–50",
@@ -911,7 +1485,16 @@ const POINTS = {
 "iw": 800,
 "ih": 590,
 "cap": "매트슨 사진 컬렉션, 〈맷돌 앞의 베두인 남자〉(1900년경). 9:42의 연자맷돌은 이보다 훨씬 커서 나귀가 돌렸습니다.",
-"alt": "맷돌 앞의 베두인 남자"
+"alt": "맷돌 앞의 베두인 남자",
+"go": {
+"w": "이 이야기는 <b>마가복음 9장 42–50절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 9장 42–50절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=9&sec=42"
+}
+]
+}
 }
 ],
 "10": [
@@ -929,7 +1512,20 @@ const POINTS = {
 "iw": 493,
 "ih": 624,
 "cap": "알브레히트 뒤러, 〈아담과 하와〉(1504, 동판화). 예수는 이혼 논쟁에 창조의 처음(10:6)으로 답하십니다.",
-"alt": "아담과 하와"
+"alt": "아담과 하와",
+"go": {
+"w": "이 이야기는 <b>마가복음 10장 1–12절</b>에, 그림 속 장면은 <b>창세기 2장 18절–3장 7절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 10장 1–12절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=10&sec=1"
+},
+{
+"t": "창세기 2장 18절–3장 7절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=gen&chap=2&sec=18"
+}
+]
+}
 },
 {
 "r": "10:13–16",
@@ -945,7 +1541,16 @@ const POINTS = {
 "iw": 800,
 "ih": 599,
 "cap": "제임스 티소, 〈어린아이들이 내게 오는 것을 용납하라〉(1886–94).",
-"alt": "어린아이들이 내게 오는 것을 용납하라"
+"alt": "어린아이들이 내게 오는 것을 용납하라",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 10장 13–16절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 10장 13–16절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=10&sec=13"
+}
+]
+}
 },
 {
 "r": "10:17–22",
@@ -961,7 +1566,16 @@ const POINTS = {
 "iw": 800,
 "ih": 585,
 "cap": "제임스 티소, 〈근심하며 떠나는 부자 청년〉(1886–94).",
-"alt": "근심하며 떠나는 부자 청년"
+"alt": "근심하며 떠나는 부자 청년",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 10장 17–22절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 10장 17–22절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=10&sec=17"
+}
+]
+}
 },
 {
 "r": "10:23–27",
@@ -977,7 +1591,16 @@ const POINTS = {
 "iw": 350,
 "ih": 623,
 "cap": "〈낙타〉(12세기 전반, 스페인 산 바우델리오 성당 벽화). 그 지역에서 가장 큰 짐승입니다.",
-"alt": "낙타"
+"alt": "낙타",
+"go": {
+"w": "이 이야기는 <b>마가복음 10장 23–27절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 10장 23–27절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=10&sec=23"
+}
+]
+}
 },
 {
 "r": "10:28–31",
@@ -993,7 +1616,16 @@ const POINTS = {
 "iw": 800,
 "ih": 586,
 "cap": "제임스 티소, 〈먼저 된 자가 나중 되고〉(1886–94).",
-"alt": "먼저 된 자가 나중 되고"
+"alt": "먼저 된 자가 나중 되고",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 10장 28–31절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 10장 28–31절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=10&sec=28"
+}
+]
+}
 },
 {
 "r": "10:32–34",
@@ -1009,7 +1641,16 @@ const POINTS = {
 "iw": 800,
 "ih": 579,
 "cap": "제임스 티소, 〈유월절이 다가오자 예루살렘으로 올라가시는 예수〉(1886–94).",
-"alt": "유월절이 다가오자 예루살렘으로 올라가시는 예수"
+"alt": "유월절이 다가오자 예루살렘으로 올라가시는 예수",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 10장 32–34절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 10장 32–34절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=10&sec=32"
+}
+]
+}
 },
 {
 "r": "10:35–45",
@@ -1021,7 +1662,20 @@ const POINTS = {
 "iw": 800,
 "ih": 706,
 "cap": "포드 매덕스 브라운, 〈베드로의 발을 씻기시는 예수〉(1852–56). 요한복음 13장의 장면이지만 섬기러 오신 인자를 잘 보여 줍니다.",
-"alt": "베드로의 발을 씻기시는 예수"
+"alt": "베드로의 발을 씻기시는 예수",
+"go": {
+"w": "이 이야기는 <b>마가복음 10장 35–45절</b>에, 그림 속 장면은 <b>요한복음 13장 1–17절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 10장 35–45절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=10&sec=35"
+},
+{
+"t": "요한복음 13장 1–17절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=jhn&chap=13&sec=1"
+}
+]
+}
 },
 {
 "r": "10:46–52",
@@ -1037,7 +1691,20 @@ const POINTS = {
 "iw": 800,
 "ih": 662,
 "cap": "제임스 티소, 〈여리고의 두 맹인〉(1886–94). 마태복음은 맹인 둘로, 마가는 이름까지 밝혀 바디매오 한 사람으로 전합니다.",
-"alt": "여리고의 두 맹인"
+"alt": "여리고의 두 맹인",
+"go": {
+"w": "이 이야기는 <b>마가복음 10장 46–52절</b>에, 그림 속 장면은 <b>마태복음 20장 29–34절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 10장 46–52절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=10&sec=46"
+},
+{
+"t": "마태복음 20장 29–34절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mat&chap=20&sec=29"
+}
+]
+}
 }
 ],
 "11": [
@@ -1051,7 +1718,16 @@ const POINTS = {
 "iw": 800,
 "ih": 576,
 "cap": "제임스 티소, 〈벳바게의 나귀 새끼〉(1886–94).",
-"alt": "벳바게의 나귀 새끼"
+"alt": "벳바게의 나귀 새끼",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 11장 1–7절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 11장 1–7절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=11&sec=1"
+}
+]
+}
 },
 {
 "r": "11:8–11",
@@ -1067,7 +1743,16 @@ const POINTS = {
 "iw": 522,
 "ih": 800,
 "cap": "제임스 티소, 〈감람산의 행렬〉(1886–94).",
-"alt": "감람산의 행렬"
+"alt": "감람산의 행렬",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 11장 8–11절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 11장 8–11절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=11&sec=8"
+}
+]
+}
 },
 {
 "r": "11:12–14",
@@ -1079,7 +1764,16 @@ const POINTS = {
 "iw": 800,
 "ih": 619,
 "cap": "제임스 티소, 〈저주받은 무화과나무〉(1886–94).",
-"alt": "저주받은 무화과나무"
+"alt": "저주받은 무화과나무",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 11장 12–14절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 11장 12–14절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=11&sec=12"
+}
+]
+}
 },
 {
 "r": "11:15–19",
@@ -1091,7 +1785,16 @@ const POINTS = {
 "iw": 800,
 "ih": 639,
 "cap": "디르크 반 바뷔렌, 〈성전에서 장사꾼들을 내쫓으심〉(17세기 초). 채찍을 든 예수 앞에서 돈 바꾸는 사람들과 상인들이 놀랍니다.",
-"alt": "성전에서 장사꾼들을 내쫓으심"
+"alt": "성전에서 장사꾼들을 내쫓으심",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 11장 15–19절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 11장 15–19절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=11&sec=15"
+}
+]
+}
 },
 {
 "r": "11:20–25",
@@ -1107,7 +1810,20 @@ const POINTS = {
 "iw": 614,
 "ih": 800,
 "cap": "제임스 티소, 〈주기도문〉(1886–94). 기도와 용서를 함께 가르치신 장면입니다(마 6:12).",
-"alt": "주기도문"
+"alt": "주기도문",
+"go": {
+"w": "이 이야기는 <b>마가복음 11장 20–25절</b>에, 그림 속 장면은 <b>마태복음 6장 9–15절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 11장 20–25절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=11&sec=20"
+},
+{
+"t": "마태복음 6장 9–15절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mat&chap=6&sec=9"
+}
+]
+}
 },
 {
 "r": "11:27–33",
@@ -1123,7 +1839,16 @@ const POINTS = {
 "iw": 800,
 "ih": 576,
 "cap": "제임스 티소, 〈무슨 권위로 이런 일을 하느냐고 묻는 대제사장들〉(1886–94).",
-"alt": "무슨 권위로 이런 일을 하느냐고 묻는 대제사장들"
+"alt": "무슨 권위로 이런 일을 하느냐고 묻는 대제사장들",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 11장 27–33절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 11장 27–33절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=11&sec=27"
+}
+]
+}
 }
 ],
 "12": [
@@ -1137,7 +1862,16 @@ const POINTS = {
 "iw": 609,
 "ih": 800,
 "cap": "제임스 티소, 〈포도원의 아들〉(1886–94).",
-"alt": "포도원의 아들"
+"alt": "포도원의 아들",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 12장 1–9절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 12장 1–9절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=12&sec=1"
+}
+]
+}
 },
 {
 "r": "12:10–12",
@@ -1153,7 +1887,16 @@ const POINTS = {
 "iw": 604,
 "ih": 800,
 "cap": "제임스 티소, 〈모퉁이의 머릿돌〉(1886–94).",
-"alt": "모퉁이의 머릿돌"
+"alt": "모퉁이의 머릿돌",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 12장 10–12절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 12장 10–12절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=12&sec=10"
+}
+]
+}
 },
 {
 "r": "12:13–17",
@@ -1165,7 +1908,16 @@ const POINTS = {
 "iw": 685,
 "ih": 900,
 "cap": "티치아노, 〈세금 바치는 돈〉(1516년경). 바리새인이 내민 데나리온 앞에서 답하시는 순간입니다.",
-"alt": "세금 바치는 돈"
+"alt": "세금 바치는 돈",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 12장 13–17절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 12장 13–17절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=12&sec=13"
+}
+]
+}
 },
 {
 "r": "12:18–27",
@@ -1181,7 +1933,20 @@ const POINTS = {
 "iw": 484,
 "ih": 625,
 "cap": "도메니키노, 〈떨기나무 앞의 모세가 있는 풍경〉(1610–16). 예수가 부활 논쟁에서 인용하신 출애굽기 3장의 장면입니다.",
-"alt": "떨기나무 앞의 모세가 있는 풍경"
+"alt": "떨기나무 앞의 모세가 있는 풍경",
+"go": {
+"w": "이 이야기는 <b>마가복음 12장 18–27절</b>에, 그림 속 장면은 <b>출애굽기 3장 1–6절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 12장 18–27절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=12&sec=18"
+},
+{
+"t": "출애굽기 3장 1–6절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=exo&chap=3&sec=1"
+}
+]
+}
 },
 {
 "r": "12:28–34",
@@ -1197,7 +1962,20 @@ const POINTS = {
 "iw": 800,
 "ih": 592,
 "cap": "제임스 티소, 〈예수를 시험하려고 일어선 서기관〉(1886–94).",
-"alt": "예수를 시험하려고 일어선 서기관"
+"alt": "예수를 시험하려고 일어선 서기관",
+"go": {
+"w": "이 이야기는 <b>마가복음 12장 28–34절</b>에, 그림 속 장면은 <b>누가복음 10장 25–37절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 12장 28–34절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=12&sec=28"
+},
+{
+"t": "누가복음 10장 25–37절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=luk&chap=10&sec=25"
+}
+]
+}
 },
 {
 "r": "12:35–37",
@@ -1209,7 +1987,20 @@ const POINTS = {
 "iw": 800,
 "ih": 587,
 "cap": "제임스 티소, 〈솔로몬 행각을 거니시는 예수〉(1886–94). 성전에서 가르치시던 곳입니다(요 10:23).",
-"alt": "솔로몬 행각을 거니시는 예수"
+"alt": "솔로몬 행각을 거니시는 예수",
+"go": {
+"w": "이 이야기는 <b>마가복음 12장 35–37절</b>에, 그림 속 장면은 <b>요한복음 10장 22–23절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 12장 35–37절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=12&sec=35"
+},
+{
+"t": "요한복음 10장 22–23절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=jhn&chap=10&sec=22"
+}
+]
+}
 },
 {
 "r": "12:38–40",
@@ -1221,7 +2012,20 @@ const POINTS = {
 "iw": 800,
 "ih": 564,
 "cap": "제임스 티소, 〈바리새인들을 향한 저주〉(1886–94).",
-"alt": "바리새인들을 향한 저주"
+"alt": "바리새인들을 향한 저주",
+"go": {
+"w": "이 이야기는 <b>마가복음 12장 38–40절</b>에, 그림 속 장면은 <b>마태복음 23장 13–36절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 12장 38–40절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=12&sec=38"
+},
+{
+"t": "마태복음 23장 13–36절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mat&chap=23&sec=13"
+}
+]
+}
 },
 {
 "r": "12:41–44",
@@ -1237,7 +2041,16 @@ const POINTS = {
 "iw": 800,
 "ih": 560,
 "cap": "제임스 티소, 〈과부의 헌금〉(1886–94).",
-"alt": "과부의 헌금"
+"alt": "과부의 헌금",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 12장 41–44절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 12장 41–44절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=12&sec=41"
+}
+]
+}
 }
 ],
 "13": [
@@ -1255,7 +2068,16 @@ const POINTS = {
 "iw": 800,
 "ih": 594,
 "cap": "제임스 티소, 〈성전 건물을 감탄하는 제자들〉(1886–94).",
-"alt": "성전 건물을 감탄하는 제자들"
+"alt": "성전 건물을 감탄하는 제자들",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 13장 1–2절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 13장 1–2절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=13&sec=1"
+}
+]
+}
 },
 {
 "r": "13:3–8",
@@ -1271,7 +2093,16 @@ const POINTS = {
 "iw": 800,
 "ih": 547,
 "cap": "제임스 티소, 〈성전 멸망의 예언〉(1886–94).",
-"alt": "성전 멸망의 예언"
+"alt": "성전 멸망의 예언",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 13장 3–8절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 13장 3–8절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=13&sec=3"
+}
+]
+}
 },
 {
 "r": "13:9–13",
@@ -1287,7 +2118,16 @@ const POINTS = {
 "iw": 800,
 "ih": 607,
 "cap": "제임스 티소, 〈사도들에게 주시는 권면〉(1886–94). 제자들에게 닥칠 일을 미리 일러 주시는 장면으로 읽을 수 있습니다.",
-"alt": "사도들에게 주시는 권면"
+"alt": "사도들에게 주시는 권면",
+"go": {
+"w": "이 이야기는 <b>마가복음 13장 9–13절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 13장 9–13절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=13&sec=9"
+}
+]
+}
 },
 {
 "r": "13:14–23",
@@ -1299,7 +2139,16 @@ const POINTS = {
 "iw": 599,
 "ih": 224,
 "cap": "웬체슬라우스 홀라르, 〈예루살렘 전경〉(1660, 동판화). 성전이 서 있던 도성의 모습입니다.",
-"alt": "예루살렘 전경"
+"alt": "예루살렘 전경",
+"go": {
+"w": "이 이야기는 <b>마가복음 13장 14–23절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 13장 14–23절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=13&sec=14"
+}
+]
+}
 },
 {
 "r": "13:24–27",
@@ -1315,7 +2164,16 @@ const POINTS = {
 "iw": 522,
 "ih": 625,
 "cap": "얀 반 에이크, 〈십자가 처형; 최후의 심판〉(1436–38년경). 오른쪽 그림 위쪽에 영광 중에 오시는 그리스도가 있습니다.",
-"alt": "십자가 처형; 최후의 심판"
+"alt": "십자가 처형; 최후의 심판",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 13장 24–27절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 13장 24–27절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=13&sec=24"
+}
+]
+}
 },
 {
 "r": "13:28–31",
@@ -1331,7 +2189,20 @@ const POINTS = {
 "iw": 800,
 "ih": 610,
 "cap": "제임스 티소, 〈포도원지기와 무화과나무〉(1886–94). 누가복음 13장의 비유를 그린 그림입니다.",
-"alt": "포도원지기와 무화과나무"
+"alt": "포도원지기와 무화과나무",
+"go": {
+"w": "이 이야기는 <b>마가복음 13장 28–31절</b>에, 그림 속 장면은 <b>누가복음 13장 6–9절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 13장 28–31절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=13&sec=28"
+},
+{
+"t": "누가복음 13장 6–9절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=luk&chap=13&sec=6"
+}
+]
+}
 },
 {
 "r": "13:32–37",
@@ -1347,7 +2218,20 @@ const POINTS = {
 "iw": 800,
 "ih": 868,
 "cap": "윌리엄 블레이크, 〈슬기로운 처녀와 어리석은 처녀의 비유〉(1799–1800년경). 마태복음 25장의 비유로 ‘깨어 있으라’를 그림으로 보여 줍니다.",
-"alt": "슬기로운 처녀와 어리석은 처녀의 비유"
+"alt": "슬기로운 처녀와 어리석은 처녀의 비유",
+"go": {
+"w": "이 이야기는 <b>마가복음 13장 32–37절</b>에, 그림 속 장면은 <b>마태복음 25장 1–13절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 13장 32–37절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=13&sec=32"
+},
+{
+"t": "마태복음 25장 1–13절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mat&chap=25&sec=1"
+}
+]
+}
 }
 ],
 "14": [
@@ -1361,7 +2245,16 @@ const POINTS = {
 "iw": 800,
 "ih": 589,
 "cap": "제임스 티소, 〈함께 모의하는 대제사장들〉(1886–94).",
-"alt": "함께 모의하는 대제사장들"
+"alt": "함께 모의하는 대제사장들",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 14장 1–2절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 14장 1–2절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=14&sec=1"
+}
+]
+}
 },
 {
 "r": "14:3–9",
@@ -1377,7 +2270,16 @@ const POINTS = {
 "iw": 800,
 "ih": 638,
 "cap": "제임스 티소, 〈막달라 여자의 향유〉(1886–94). 요한복음은 이 여인을 베다니의 마리아라고 밝힙니다(요 12:3).",
-"alt": "막달라 여자의 향유"
+"alt": "막달라 여자의 향유",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 14장 3–9절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 14장 3–9절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=14&sec=3"
+}
+]
+}
 },
 {
 "r": "14:10–11",
@@ -1389,7 +2291,16 @@ const POINTS = {
 "iw": 800,
 "ih": 584,
 "cap": "제임스 티소, 〈유대인들을 찾아가는 유다〉(1886–94).",
-"alt": "유대인들을 찾아가는 유다"
+"alt": "유대인들을 찾아가는 유다",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 14장 10–11절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 14장 10–11절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=14&sec=10"
+}
+]
+}
 },
 {
 "r": "14:12–16",
@@ -1401,7 +2312,16 @@ const POINTS = {
 "iw": 554,
 "ih": 800,
 "cap": "제임스 티소, 〈물동이를 멘 사람〉(1886–94).",
-"alt": "물동이를 멘 사람"
+"alt": "물동이를 멘 사람",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 14장 12–16절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 14장 12–16절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=14&sec=12"
+}
+]
+}
 },
 {
 "r": "14:17–21",
@@ -1417,7 +2337,16 @@ const POINTS = {
 "iw": 800,
 "ih": 441,
 "cap": "제임스 티소, 〈최후의 만찬: 그릇에 손을 넣는 유다〉(1886–94).",
-"alt": "최후의 만찬: 그릇에 손을 넣는 유다"
+"alt": "최후의 만찬: 그릇에 손을 넣는 유다",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 14장 17–21절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 14장 17–21절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=14&sec=17"
+}
+]
+}
 },
 {
 "r": "14:22–25",
@@ -1433,7 +2362,16 @@ const POINTS = {
 "iw": 800,
 "ih": 565,
 "cap": "제임스 티소, 〈사도들의 성찬〉(1886–94).",
-"alt": "사도들의 성찬"
+"alt": "사도들의 성찬",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 14장 22–25절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 14장 22–25절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=14&sec=22"
+}
+]
+}
 },
 {
 "r": "14:26–31",
@@ -1449,7 +2387,16 @@ const POINTS = {
 "iw": 800,
 "ih": 508,
 "cap": "제임스 티소, 〈베드로의 장담〉(1886–94).",
-"alt": "베드로의 장담"
+"alt": "베드로의 장담",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 14장 26–31절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 14장 26–31절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=14&sec=26"
+}
+]
+}
 },
 {
 "r": "14:32–36",
@@ -1461,7 +2408,16 @@ const POINTS = {
 "iw": 800,
 "ih": 505,
 "cap": "조반니 벨리니, 〈겟세마네의 기도〉(1458–60년경). 하늘의 천사가 든 잔이 ‘이 잔’입니다. 아래에는 세 제자가 잠들어 있습니다.",
-"alt": "겟세마네의 기도"
+"alt": "겟세마네의 기도",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 14장 32–36절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 14장 32–36절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=14&sec=32"
+}
+]
+}
 },
 {
 "r": "14:37–42",
@@ -1477,7 +2433,16 @@ const POINTS = {
 "iw": 800,
 "ih": 535,
 "cap": "제임스 티소, 〈한 시간도 깨어 있을 수 없더냐〉(1886–94).",
-"alt": "한 시간도 깨어 있을 수 없더냐"
+"alt": "한 시간도 깨어 있을 수 없더냐",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 14장 37–42절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 14장 37–42절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=14&sec=37"
+}
+]
+}
 },
 {
 "r": "14:43–50",
@@ -1493,7 +2458,16 @@ const POINTS = {
 "iw": 800,
 "ih": 605,
 "cap": "제임스 티소, 〈유다의 입맞춤〉(1886–94).",
-"alt": "유다의 입맞춤"
+"alt": "유다의 입맞춤",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 14장 43–50절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 14장 43–50절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=14&sec=43"
+}
+]
+}
 },
 {
 "r": "14:51–52",
@@ -1505,7 +2479,16 @@ const POINTS = {
 "iw": 541,
 "ih": 800,
 "cap": "제임스 티소, 〈도망하는 사도들〉(1886–94).",
-"alt": "도망하는 사도들"
+"alt": "도망하는 사도들",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 14장 51–52절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 14장 51–52절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=14&sec=51"
+}
+]
+}
 },
 {
 "r": "14:53–65",
@@ -1521,7 +2504,16 @@ const POINTS = {
 "iw": 800,
 "ih": 458,
 "cap": "제임스 티소, 〈찢어진 옷〉(1886–94). 대제사장이 자기 옷을 찢는 장면(14:63)입니다.",
-"alt": "찢어진 옷"
+"alt": "찢어진 옷",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 14장 53–65절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 14장 53–65절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=14&sec=53"
+}
+]
+}
 },
 {
 "r": "14:66–72",
@@ -1537,7 +2529,16 @@ const POINTS = {
 "iw": 501,
 "ih": 800,
 "cap": "제임스 티소, 〈닭이 울었다〉(1886–94).",
-"alt": "닭이 울었다"
+"alt": "닭이 울었다",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 14장 66–72절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 14장 66–72절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=14&sec=66"
+}
+]
+}
 }
 ],
 "15": [
@@ -1555,7 +2556,16 @@ const POINTS = {
 "iw": 800,
 "ih": 519,
 "cap": "제임스 티소, 〈빌라도 앞의 예수: 첫 심문〉(1886–94).",
-"alt": "빌라도 앞의 예수: 첫 심문"
+"alt": "빌라도 앞의 예수: 첫 심문",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 15장 1–5절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 15장 1–5절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=15&sec=1"
+}
+]
+}
 },
 {
 "r": "15:6–15",
@@ -1571,7 +2581,16 @@ const POINTS = {
 "iw": 800,
 "ih": 736,
 "cap": "제임스 티소, 〈바라바〉(1886–94).",
-"alt": "바라바"
+"alt": "바라바",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 15장 6–15절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 15장 6–15절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=15&sec=6"
+}
+]
+}
 },
 {
 "r": "15:16–20",
@@ -1583,7 +2602,16 @@ const POINTS = {
 "iw": 578,
 "ih": 800,
 "cap": "제임스 티소, 〈가시관을 씌움〉(1886–94).",
-"alt": "가시관을 씌움"
+"alt": "가시관을 씌움",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 15장 16–20절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 15장 16–20절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=15&sec=16"
+}
+]
+}
 },
 {
 "r": "15:21",
@@ -1599,7 +2627,16 @@ const POINTS = {
 "iw": 706,
 "ih": 800,
 "cap": "제임스 티소, 〈구레네 시몬과 두 아들 알렉산더와 루포〉(1886–94).",
-"alt": "구레네 시몬과 두 아들 알렉산더와 루포"
+"alt": "구레네 시몬과 두 아들 알렉산더와 루포",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 15장 21절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 15장 21절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=15&sec=21"
+}
+]
+}
 },
 {
 "r": "15:22–32",
@@ -1615,7 +2652,16 @@ const POINTS = {
 "iw": 736,
 "ih": 800,
 "cap": "제임스 티소, 〈십자가 위에서 주님이 보신 것〉(1886–94). 십자가에서 내려다본 시점으로 조롱하는 무리를 그렸습니다.",
-"alt": "십자가 위에서 주님이 보신 것"
+"alt": "십자가 위에서 주님이 보신 것",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 15장 22–32절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 15장 22–32절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=15&sec=22"
+}
+]
+}
 },
 {
 "r": "15:33–37",
@@ -1631,7 +2677,16 @@ const POINTS = {
 "iw": 615,
 "ih": 800,
 "cap": "제임스 티소, 〈나의 하나님, 나의 하나님 어찌하여 나를 버리셨나이까〉(1886–94).",
-"alt": "나의 하나님, 나의 하나님 어찌하여 나를 버리셨나이까"
+"alt": "나의 하나님, 나의 하나님 어찌하여 나를 버리셨나이까",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 15장 33–37절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 15장 33–37절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=15&sec=33"
+}
+]
+}
 },
 {
 "r": "15:38–39",
@@ -1643,7 +2698,16 @@ const POINTS = {
 "iw": 622,
 "ih": 900,
 "cap": "루카스 크라나흐(아버지), 〈회심한 백부장이 있는 십자가 처형〉(1536). 말 탄 백부장 곁에 독일어로 그의 고백이 적혀 있습니다.",
-"alt": "회심한 백부장이 있는 십자가 처형"
+"alt": "회심한 백부장이 있는 십자가 처형",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 15장 38–39절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 15장 38–39절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=15&sec=38"
+}
+]
+}
 },
 {
 "r": "15:40–41",
@@ -1655,7 +2719,16 @@ const POINTS = {
 "iw": 800,
 "ih": 594,
 "cap": "제임스 티소, 〈멀리서 바라보는 거룩한 여인들〉(1886–94).",
-"alt": "멀리서 바라보는 거룩한 여인들"
+"alt": "멀리서 바라보는 거룩한 여인들",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 15장 40–41절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 15장 40–41절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=15&sec=40"
+}
+]
+}
 },
 {
 "r": "15:42–47",
@@ -1667,7 +2740,16 @@ const POINTS = {
 "iw": 800,
 "ih": 605,
 "cap": "제임스 티소, 〈빌라도에게 시신을 청하러 가는 아리마대 요셉〉(1886–94).",
-"alt": "빌라도에게 시신을 청하러 가는 아리마대 요셉"
+"alt": "빌라도에게 시신을 청하러 가는 아리마대 요셉",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 15장 42–47절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 15장 42–47절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=15&sec=42"
+}
+]
+}
 }
 ],
 "16": [
@@ -1685,7 +2767,16 @@ const POINTS = {
 "iw": 652,
 "ih": 800,
 "cap": "제임스 티소, 〈무덤에 간 막달라 마리아와 여인들〉(1886–94).",
-"alt": "무덤에 간 막달라 마리아와 여인들"
+"alt": "무덤에 간 막달라 마리아와 여인들",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 16장 1–4절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 16장 1–4절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=16&sec=1"
+}
+]
+}
 },
 {
 "r": "16:5–7",
@@ -1701,7 +2792,16 @@ const POINTS = {
 "iw": 800,
 "ih": 666,
 "cap": "페터 폰 코르넬리우스, 〈무덤가의 세 마리아〉(1815–22). 무덤에 앉은 흰옷의 천사가 향유를 들고 온 여인들에게 말합니다.",
-"alt": "무덤가의 세 마리아"
+"alt": "무덤가의 세 마리아",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 16장 5–7절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 16장 5–7절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=16&sec=5"
+}
+]
+}
 },
 {
 "r": "16:8",
@@ -1717,7 +2817,16 @@ const POINTS = {
 "iw": 800,
 "ih": 557,
 "cap": "제임스 티소, 〈거룩한 여인들〉(1886–94). 무덤을 찾아갔던 여인들.",
-"alt": "거룩한 여인들"
+"alt": "거룩한 여인들",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 16장 8절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 16장 8절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=16&sec=8"
+}
+]
+}
 },
 {
 "r": "16:9–14",
@@ -1729,7 +2838,16 @@ const POINTS = {
 "iw": 570,
 "ih": 800,
 "cap": "제임스 티소, 〈막달라 마리아에게 나타나신 예수〉(1886–94).",
-"alt": "막달라 마리아에게 나타나신 예수"
+"alt": "막달라 마리아에게 나타나신 예수",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 16장 9–14절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 16장 9–14절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=16&sec=9"
+}
+]
+}
 },
 {
 "r": "16:15–20",
@@ -1745,7 +2863,16 @@ const POINTS = {
 "iw": 658,
 "ih": 800,
 "cap": "제임스 티소, 〈승천〉(1886–94).",
-"alt": "승천"
+"alt": "승천",
+"go": {
+"w": "이 그림과 이야기는 <b>마가복음 16장 15–20절</b>에 기록되어 있습니다. 대한성서공회 성경에서 바로 읽어 보세요.",
+"links": [
+{
+"t": "마가복음 16장 15–20절",
+"u": "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=16&sec=15"
+}
+]
+}
 }
 ]
 };

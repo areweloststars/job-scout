@@ -84,6 +84,13 @@ h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.
 .hy b{color:var(--accent)}
 .me{border-left:3px solid var(--blue);padding-left:10px}
 .me b{color:var(--blue)}
+.go{display:grid;gap:10px;margin-top:4px;padding:12px 14px;border:1px solid var(--rule);border-radius:12px;background:var(--paper)}
+.where{font-size:.9063rem;line-height:1.65}
+.where b{font-weight:700;color:var(--ink)}
+.go-links{display:flex;flex-wrap:wrap;gap:8px}
+.go-btn{display:inline-block;padding:7px 14px;border-radius:999px;border:1px solid var(--blue);background:var(--blue);color:var(--surface);font-size:.875rem;font-weight:600;line-height:1.4;text-decoration:none}
+.go-btn.alt{background:var(--surface);color:var(--blue)}
+.go-btn:hover{text-decoration:underline}
 .he{font-family:"SBL Hebrew","Ezra SIL","Noto Serif Hebrew","Times New Roman",serif;unicode-bidi:isolate}
 .credits summary{cursor:pointer}
 .credits ul{margin:6px 0 0;padding-left:18px}
@@ -368,6 +375,7 @@ function render(n){
       <p class="d">${p.d}</p>
       <p class="hy"><b>관찰 가설</b>${p.h}</p>
       <p class="me"><b>나에게</b>${p.me}</p>
+      <div class="go"><p class="where">${p.go.w}</p><div class="go-links">${p.go.links.map((l, j) => `<a class="go-btn${j ? " alt" : ""}" href="${l.u}" target="_blank" rel="noopener">${l.t} 읽기 ↗</a>`).join("")}</div></div>
     </li>`).join("")}</ol>
     <blockquote class="verse"><p>${e.verse[0]}</p><cite>${e.verse[1]} · 개역개정</cite></blockquote>
     <div class="rows">
