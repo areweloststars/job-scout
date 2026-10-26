@@ -7,7 +7,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Song+Myung&family=Gentium+Book+Plus&family=Noto+Serif+Hebrew&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Serif+KR:wght@500&family=Gowun+Dodum&family=Song+Myung&family=Gentium+Book+Plus&family=Noto+Serif+Hebrew&display=swap">
 <style>
 /* Layout: 속표지(그림 한 점, 제목) 다음에 갈릴리 석회암 바탕 위로 펼친 책장. 책장 1은 장 목차와 오늘의 화, 책장 2는 마가의 의도. 기본은 낮, 밤에 읽기는 버튼으로 고른다. */
 :root{
@@ -24,6 +24,7 @@
   --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .34  0 0 0 0 .27  0 0 0 0 .16  0 0 0 .06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   --display:"Song Myung","Gowun Batang","Noto Serif KR","AppleMyungjo",serif;
   --body:"Gowun Batang","Noto Serif KR","AppleMyungjo","Batang",serif;
+  --scripture:"Noto Serif KR","Gowun Batang","AppleMyungjo","Batang",serif;  /* 성경 본문: 설명 글보다 또렷한 획 */
   --ui:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
   --greek:"Gentium Book Plus","Times New Roman",serif;
   --hebrew:"Noto Serif Hebrew","Times New Roman",serif;
@@ -96,22 +97,20 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .vq{margin:0;padding:2px 0 2px 18px;border-left:2px solid var(--gold);display:grid;gap:4px}
 .vq p{font-weight:700;font-size:1.04em;line-height:1.75}
 .vq cite{font-family:var(--ui);font-style:normal;font-size:.8125rem;color:var(--ink-2);font-variant-numeric:tabular-nums}
-.ask{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start;font-weight:700;font-size:1.05em;line-height:1.7;color:var(--lake)}
-.ask-mark{display:grid;place-items:center;width:1.75em;height:1.75em;margin-top:.02em;border-radius:50%;background:var(--lake);color:var(--paper);font-family:var(--display);font-weight:400;line-height:1}
 .lab{font-family:var(--ui);font-size:.8125rem;letter-spacing:.08em;color:var(--lake);margin-bottom:2px}
 .me{padding:14px 16px 15px;background:var(--gold-t);border-radius:3px}
 .me .lab{color:var(--gold)}
 .bible{border:1px solid var(--rule);border-radius:3px;background:var(--paper)}
 .bible summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 14px;font-family:var(--ui);font-size:.9375rem;line-height:1.45;color:var(--lake)}
 .bible summary::-webkit-details-marker{display:none}
-.bible summary .sm{font-size:.75rem;color:var(--ink-2)}
+.bible summary .sm{font-size:.75rem;color:var(--ink-2);white-space:nowrap}
 .bible summary::after{content:"";margin-left:auto;flex:none;width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .2s ease}
 .bible[open] summary::after{transform:rotate(225deg) translateY(-2px)}
-.bt{display:grid;gap:12px;padding:16px 18px 18px;border-top:1px solid var(--rule);font-size:.98em;line-height:1.95}
-.bt sup{font-family:var(--ui);font-size:.68em;line-height:0;color:var(--gold);margin:0 .22em 0 .12em;font-variant-numeric:tabular-nums}
-.bt .ch{display:block;font-family:var(--ui);font-size:.75rem;letter-spacing:.06em;color:var(--ink-2)}
-.tn{font-family:var(--ui);font-size:.8125rem;line-height:1.6;color:var(--ink-2)}
-.bt-foot{display:grid;gap:6px;padding-top:12px;border-top:1px dashed var(--rule);font-family:var(--ui);font-size:.75rem;line-height:1.6;color:var(--ink-2)}
+.bt{display:grid;gap:12px;padding:16px 18px 18px;border-top:1px solid var(--rule);font-family:var(--scripture);font-weight:500;font-size:1.03em;line-height:1.9}
+.bt sup{font-family:var(--ui);font-weight:400;font-size:.68em;line-height:0;color:var(--gold);margin:0 .22em 0 .12em;font-variant-numeric:tabular-nums}
+.bt .ch{display:block;font-family:var(--ui);font-weight:400;font-size:.75rem;letter-spacing:.06em;color:var(--ink-2)}
+.tn{font-family:var(--ui);font-weight:400;font-size:.8125rem;line-height:1.6;color:var(--ink-2)}
+.bt-foot{display:grid;gap:6px;padding-top:12px;border-top:1px dashed var(--rule);font-family:var(--ui);font-weight:400;font-size:.75rem;line-height:1.6;color:var(--ink-2)}
 .bt-links{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.8125rem}
 
 /* 장을 마치며 */
@@ -368,7 +367,6 @@ function pointHTML(n, p, i){
     ${p.img ? `<figure class="pic"><img src="${p.img}" width="${p.iw}" height="${p.ih}" loading="lazy" style="max-width:${Math.round(440 * p.iw / p.ih)}px" alt="${p.alt}"><figcaption>${p.cap}</figcaption></figure>` : ""}
     ${p.q ? `<blockquote class="vq"><p>“${p.q[1]}”</p><cite>${p.q[0]} · 개역개정</cite></blockquote>` : ""}
     <p class="d">${p.d}</p>
-    ${p.ask ? `<p class="ask"><span class="ask-mark" aria-hidden="true">?</span><span>${p.ask}</span></p>` : ""}
     <div class="me"><p class="lab">나에게</p><p>${p.me}</p></div>
     <details class="bible"><summary>${p.links[0].t} 본문 펼치기 <span class="sm">쉬운 번역</span></summary>
       <div class="bt">${p.bt}
@@ -383,7 +381,7 @@ function render(n){
   const m = METHODS[e.m];
   const isDone = done.has(n);
   const pts = POINTS[n] || [];
-  const text = [e.verse[0], e.fun, e.intent, e.mission, ...pts.flatMap(p => [p.t, p.ask || "", p.q ? p.q[1] : "", p.d, p.me])].join("").replace(/<[^>]+>/g, "");
+  const text = [e.verse[0], e.fun, e.intent, e.mission, ...pts.flatMap(p => [p.t, p.q ? p.q[1] : "", p.d, p.me])].join("").replace(/<[^>]+>/g, "");
   const mins = Math.max(1, Math.round(text.length / 475));
   const gae = "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=" + n;
   const sae = "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=SAENEW&book=mrk&chap=" + n;
