@@ -1,6 +1,7 @@
 import sys, json, re, os, shutil, html
 from PIL import Image
 sys.path.insert(0, '.')
+from asks import ASK
 REPO = '/home/user/job-scout'
 P = {}
 for m in ('c01', 'c02', 'c03'): P.update(__import__(m).P)
@@ -91,7 +92,7 @@ for p in PTS:
     elif os.path.exists(f'raw/{k}.jpg'):
         img = f"images/p{p['c']:02d}-{p['i']:02d}.jpg"; shutil.copyfile(f'raw/{k}.jpg', f'{REPO}/{img}')
     else: img = None; missing.append(k)
-    rec = {'r': p['r'], 't': e.get('t', p['t']), 'd': mark(e['d']), 'me': e['me']}
+    rec = {'r': p['r'], 't': e.get('t', p['t']), 'd': mark(e['d']), 'me': e['me'], 'ask': ASK[k]}
     if e['q']: rec['q'] = list(e['q'])
     if img:
         w, h = Image.open(f'{REPO}/{img}').size

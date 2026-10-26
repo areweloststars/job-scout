@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Song+Myung&family=Gentium+Book+Plus&family=Noto+Serif+Hebrew&display=swap">
 <style>
-/* Layout: 속표지(그림 한 점, 제목) 다음에 갈릴리 석회암 바탕 위로 펼친 책장. 책장 1은 장 목차와 오늘의 화, 책장 2는 읽는 법과 마가의 의도. 기본은 낮, 밤에 읽기는 버튼으로 고른다. */
+/* Layout: 속표지(그림 한 점, 제목) 다음에 갈릴리 석회암 바탕 위로 펼친 책장. 책장 1은 장 목차와 오늘의 화, 책장 2는 마가의 의도. 기본은 낮, 밤에 읽기는 버튼으로 고른다. */
 :root{
   --ground:#E5E0D3;   /* 갈릴리 석회암 바탕 */
   --paper:#FBF8F1;    /* 책장 */
@@ -96,6 +96,8 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .vq{margin:0;padding:2px 0 2px 18px;border-left:2px solid var(--gold);display:grid;gap:4px}
 .vq p{font-weight:700;font-size:1.04em;line-height:1.75}
 .vq cite{font-family:var(--ui);font-style:normal;font-size:.8125rem;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.ask{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start;font-weight:700;font-size:1.05em;line-height:1.7;color:var(--lake)}
+.ask-mark{display:grid;place-items:center;width:1.75em;height:1.75em;margin-top:.02em;border-radius:50%;background:var(--lake);color:var(--paper);font-family:var(--display);font-weight:400;line-height:1}
 .lab{font-family:var(--ui);font-size:.8125rem;letter-spacing:.08em;color:var(--lake);margin-bottom:2px}
 .me{padding:14px 16px 15px;background:var(--gold-t);border-radius:3px}
 .me .lab{color:var(--gold)}
@@ -182,36 +184,6 @@ h1,h2,h3{margin:0;text-wrap:balance}
   </main>
 
   <div class="leaf">
-    <section class="sec" id="methods">
-    <h2>재미있게 읽는 방법</h2>
-    <ul class="methods">
-      <li id="m-aloud">
-        <h3>소리 내어 읽기</h3>
-        <p>마음에 드는 장면 하나를 골라 소리 내어 읽습니다. 대사는 인물처럼 실감 나게.</p>
-        <p class="why">마가복음은 원래 한자리에서 소리 내어 공연되던 이야기라, 소리 내 읽으면 속도감이 살아납니다.</p>
-      </li>
-      <li id="m-scene">
-        <h3>장면 속으로<small>이냐시오식 상상 읽기</small></h3>
-        <p>장면을 천천히 읽고, 눈을 감고 소리와 표정을 떠올린 뒤, 인물 하나가 되어 예수께 말을 걸어 봅니다.</p>
-        <p class="why">16세기 이냐시오 로욜라가 가르친 방법. 마가복음처럼 이야기가 많은 본문에 잘 맞습니다.</p>
-      </li>
-      <li id="m-soap">
-        <h3>SOAP 노트</h3>
-        <p>한 절 적기(S) → 무슨 말인지 한 줄(O) → 나에게 한 줄(A) → 기도 한 줄(P). 바쁜 날은 S와 A만.</p>
-        <p class="why">짧게 기록하는 방법이라 처음 읽는 사람에게 많이 권합니다.</p>
-      </li>
-      <li id="m-dbs">
-        <h3>질문 세 개<small>발견식 성경공부</small></h3>
-        <p>예수(하나님)에 대해 뭐라고 하나? 사람에 대해서는? 이번 주에 나는 뭘 해 볼까?</p>
-        <p class="why">가르치는 사람 없이 질문만으로 굴러가는 방식이라 친구 한 명과도 할 수 있습니다.</p>
-      </li>
-    </ul>
-    <div class="note">
-      <p><b>매일 안 읽어도 됩니다.</b> 어떤 계획을 쓰느냐보다 일주일에 며칠 읽느냐가 중요하고, 주 4일부터 차이가 크게 나타났다는 조사가 있습니다. 미국 성경참여연구센터의 자체 설문이라 학술 검증을 거친 결과는 아닙니다.</p>
-      <p><b>큰 그림이 궁금하면</b> <a href="https://bibleproject.com/ko/" target="_blank" rel="noopener">바이블프로젝트</a>의 마가복음 개요 영상(약 9분)을 한 번 보세요.</p>
-    </div>
-  
-    </section>
     <section class="sec" id="why">
       <h2>마가는 왜 썼을까</h2>
 <ul class="intent">
@@ -226,17 +198,6 @@ h1,h2,h3{margin:0;text-wrap:balance}
     <h2>출처</h2>
     <p>성경 본문: 대한성서공회 개역개정·새번역(인용은 개역개정), 헬라어 SBLGNT·NA28, 히브리어 WLC. 저자 전승: 유세비우스 『교회사』 3.39.15. 읽는 시간은 분당 약 475자로 자동 계산한 어림값입니다. 장별 논점은 개역개정 소제목을 기준으로 나눴고, 헬라어는 SBLGNT, 히브리어는 WLC와 대조했습니다.</p>
     <p>‘본문 펼치기’의 쉬운 번역은 헬라어 원문 SBL Greek New Testament(SBLGNT, Society of Biblical Literature)를 이 페이지에서 쉬운 우리말로 옮긴 것으로, 공식 번역이 아닙니다.</p>
-    <p>읽기 방법:
-      <a href="https://currentsjournal.org/index.php/currents/article/download/84/104/396" target="_blank" rel="noopener">Dewey(공연된 마가복음)</a> ·
-      <a href="https://kerrywalters.substack.com/p/dont-read-marks-gospel" target="_blank" rel="noopener">Walters</a> ·
-      <a href="https://www.ignatianspirituality.com/listening-for-god-through-our-imaginations/amp/" target="_blank" rel="noopener">Ignatian Spirituality</a> ·
-      <a href="https://focus.org/posts/how-to-pray-a-step-by-step-guide-to-ignatian-contemplation" target="_blank" rel="noopener">FOCUS</a> ·
-      <a href="https://www.biblegateway.com/blog/2023/03/6-bible-study-methods-you-need-to-know-and-try/" target="_blank" rel="noopener">BibleGateway(SOAP)</a> ·
-      <a href="https://bibleinyear.com/blog/soap-bible-study-method" target="_blank" rel="noopener">BibleInYear</a> ·
-      <a href="https://resources.fca.org/resources/discovery-bible-study-training" target="_blank" rel="noopener">FCA(발견식 성경공부)</a> ·
-      <a href="https://www.backtothebible.org/post/the-evolution-of-bible-engagement-a-research-journey-2004-2023" target="_blank" rel="noopener">Back to the Bible(주 4일)</a> ·
-      <a href="https://www.christianpost.com/news/new-year-new-hope-for-turning-the-tide-of-bible-illiteracy.html" target="_blank" rel="noopener">Christian Post</a>
-    </p>
     <p>그림: 모두 저작권이 만료된 퍼블릭 도메인(CC0 포함) 작품이며, 화면에 맞게 크기를 줄였습니다. 대부분은 제임스 티소의 〈예수의 생애〉 연작(1886–94, <a href="https://www.brooklynmuseum.org/" target="_blank" rel="noopener">브루클린 미술관</a> 소장)이고, 이름난 화가들의 작품은 <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener">위키미디어 공용</a>에서 가져왔습니다.</p>
     <details class="credits"><summary>그 밖의 그림 출처</summary><ul id="credits"></ul></details>
   
@@ -408,6 +369,7 @@ function pointHTML(n, p, i){
   return `<li class="pt" id="p${n}-${i + 1}">
     <header class="pt-head"><p class="pt-r">${p.r}</p><h3>${p.t}</h3></header>
     ${p.img ? `<figure class="pic"><img src="${p.img}" width="${p.iw}" height="${p.ih}" loading="lazy" style="max-width:${Math.round(440 * p.iw / p.ih)}px" alt="${p.alt}"><figcaption>${p.cap}</figcaption></figure>` : ""}
+    ${p.ask ? `<p class="ask"><span class="ask-mark" aria-hidden="true">?</span><span>${p.ask}</span></p>` : ""}
     ${p.q ? `<blockquote class="vq"><p>“${p.q[1]}”</p><cite>${p.q[0]} · 개역개정</cite></blockquote>` : ""}
     <p class="d">${p.d}</p>
     <div class="me"><p class="lab">나에게</p><p>${p.me}</p></div>
@@ -427,7 +389,7 @@ function render(n){
   const m = METHODS[e.m];
   const isDone = done.has(n);
   const pts = POINTS[n] || [];
-  const text = [e.verse[0], e.fun, e.intent, e.mission, ...pts.flatMap(p => [p.t, p.q ? p.q[1] : "", p.d, p.me])].join("").replace(/<[^>]+>/g, "");
+  const text = [e.verse[0], e.fun, e.intent, e.mission, ...pts.flatMap(p => [p.t, p.ask || "", p.q ? p.q[1] : "", p.d, p.me])].join("").replace(/<[^>]+>/g, "");
   const mins = Math.max(1, Math.round(text.length / 475));
   const gae = "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=" + n;
   const sae = "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=SAENEW&book=mrk&chap=" + n;
@@ -443,7 +405,7 @@ function render(n){
       <div class="rows">
         <section><p class="lab">재밌는 포인트</p><p>${e.fun}</p></section>
         <section><p class="lab">마가의 의도</p><p>${e.intent}</p></section>
-        <section class="mission"><p class="lab">오늘의 미션 <a class="chip" href="#${m.id}">${m.name}</a></p><p>${e.mission}</p></section>
+        <section class="mission"><p class="lab">오늘의 미션 <span class="chip">${m.name}</span></p><p>${e.mission}</p></section>
       </div>
     </section>
     <footer class="ep-foot">

@@ -20,7 +20,9 @@ first_p_end = src.index('</p>') + 4
 src = src[:first_p_end] + '\n    <p>‘본문 펼치기’의 쉬운 번역은 헬라어 원문 SBL Greek New Testament(SBLGNT, Society of Biblical Literature)를 이 페이지에서 쉬운 우리말로 옮긴 것으로, 공식 번역이 아닙니다.</p>' + src[first_p_end:]
 t = open('template.html', encoding='utf-8').read()
 w, h = Image.open(f'{REPO}/images/p07-03.jpg').size
+i = src.index('<p>읽기 방법:'); src = src[:i].rstrip() + src[src.index('</p>', i) + 4:]
 for k, v in {**blocks, 'SOURCES_HTML': src, 'HERO_W': str(w), 'HERO_H': str(h)}.items():
+    if k == 'METHODS_HTML': continue
     assert f'@@{k}@@' in t, k; t = t.replace(f'@@{k}@@', v)
 t = t.replace('const root = document.documentElement;\n', 'const root = document.documentElement;\nroot.lang = "ko";\n', 1)
 assert '@@' not in t

@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Song+Myung&family=Gentium+Book+Plus&family=Noto+Serif+Hebrew&display=swap">
 <style>
-/* Layout: 속표지(그림 한 점, 제목) 다음에 갈릴리 석회암 바탕 위로 펼친 책장. 책장 1은 장 목차와 오늘의 화, 책장 2는 읽는 법과 마가의 의도. 기본은 낮, 밤에 읽기는 버튼으로 고른다. */
+/* Layout: 속표지(그림 한 점, 제목) 다음에 갈릴리 석회암 바탕 위로 펼친 책장. 책장 1은 장 목차와 오늘의 화, 책장 2는 마가의 의도. 기본은 낮, 밤에 읽기는 버튼으로 고른다. */
 :root{
   --ground:#E5E0D3;   /* 갈릴리 석회암 바탕 */
   --paper:#FBF8F1;    /* 책장 */
@@ -96,6 +96,8 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .vq{margin:0;padding:2px 0 2px 18px;border-left:2px solid var(--gold);display:grid;gap:4px}
 .vq p{font-weight:700;font-size:1.04em;line-height:1.75}
 .vq cite{font-family:var(--ui);font-style:normal;font-size:.8125rem;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.ask{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start;font-weight:700;font-size:1.05em;line-height:1.7;color:var(--lake)}
+.ask-mark{display:grid;place-items:center;width:1.75em;height:1.75em;margin-top:.02em;border-radius:50%;background:var(--lake);color:var(--paper);font-family:var(--display);font-weight:400;line-height:1}
 .lab{font-family:var(--ui);font-size:.8125rem;letter-spacing:.08em;color:var(--lake);margin-bottom:2px}
 .me{padding:14px 16px 15px;background:var(--gold-t);border-radius:3px}
 .me .lab{color:var(--gold)}
@@ -182,9 +184,6 @@ h1,h2,h3{margin:0;text-wrap:balance}
   </main>
 
   <div class="leaf">
-    <section class="sec" id="methods">
-@@METHODS_HTML@@
-    </section>
     <section class="sec" id="why">
       <h2>마가는 왜 썼을까</h2>
 @@WHY_HTML@@
@@ -259,6 +258,7 @@ function pointHTML(n, p, i){
   return `<li class="pt" id="p${n}-${i + 1}">
     <header class="pt-head"><p class="pt-r">${p.r}</p><h3>${p.t}</h3></header>
     ${p.img ? `<figure class="pic"><img src="${p.img}" width="${p.iw}" height="${p.ih}" loading="lazy" style="max-width:${Math.round(440 * p.iw / p.ih)}px" alt="${p.alt}"><figcaption>${p.cap}</figcaption></figure>` : ""}
+    ${p.ask ? `<p class="ask"><span class="ask-mark" aria-hidden="true">?</span><span>${p.ask}</span></p>` : ""}
     ${p.q ? `<blockquote class="vq"><p>“${p.q[1]}”</p><cite>${p.q[0]} · 개역개정</cite></blockquote>` : ""}
     <p class="d">${p.d}</p>
     <div class="me"><p class="lab">나에게</p><p>${p.me}</p></div>
@@ -278,7 +278,7 @@ function render(n){
   const m = METHODS[e.m];
   const isDone = done.has(n);
   const pts = POINTS[n] || [];
-  const text = [e.verse[0], e.fun, e.intent, e.mission, ...pts.flatMap(p => [p.t, p.q ? p.q[1] : "", p.d, p.me])].join("").replace(/<[^>]+>/g, "");
+  const text = [e.verse[0], e.fun, e.intent, e.mission, ...pts.flatMap(p => [p.t, p.ask || "", p.q ? p.q[1] : "", p.d, p.me])].join("").replace(/<[^>]+>/g, "");
   const mins = Math.max(1, Math.round(text.length / 475));
   const gae = "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=" + n;
   const sae = "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=SAENEW&book=mrk&chap=" + n;
@@ -294,7 +294,7 @@ function render(n){
       <div class="rows">
         <section><p class="lab">재밌는 포인트</p><p>${e.fun}</p></section>
         <section><p class="lab">마가의 의도</p><p>${e.intent}</p></section>
-        <section class="mission"><p class="lab">오늘의 미션 <a class="chip" href="#${m.id}">${m.name}</a></p><p>${e.mission}</p></section>
+        <section class="mission"><p class="lab">오늘의 미션 <span class="chip">${m.name}</span></p><p>${e.mission}</p></section>
       </div>
     </section>
     <footer class="ep-foot">
