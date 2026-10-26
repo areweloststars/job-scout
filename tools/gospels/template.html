@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>마가복음 16부작</title>
+<title>사복음서 89부작</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Serif+KR:wght@500&family=Gowun+Dodum&family=Song+Myung&family=Gentium+Book+Plus&family=Noto+Serif+Hebrew&display=swap">
 <style>
-/* Layout: 속표지(그림 한 점, 제목) 다음에 갈릴리 석회암 바탕 위로 펼친 책장. 책장 1은 장 목차와 오늘의 화, 책장 2는 마가의 의도. 기본은 낮, 밤에 읽기는 버튼으로 고른다. */
+/* Layout: 속표지(복음서 고르기, 그림 한 점, 제목) 다음에 갈릴리 석회암 바탕 위로 펼친 책장. 책장 1은 장 목차와 오늘의 화, 책장 2는 저자의 의도. 기본은 낮, 밤에 읽기는 버튼으로 고른다. */
 :root{
   --ground:#E5E0D3;   /* 갈릴리 석회암 바탕 */
   --paper:#FBF8F1;    /* 책장 */
@@ -60,6 +60,13 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .front h1{font-family:var(--display);font-weight:400;font-size:clamp(2.75rem,11vw,4.25rem);line-height:1.02;letter-spacing:-.01em;padding-top:4px}
 .front h1 em{font-style:normal;color:var(--lake)}
 .lede{color:var(--ink-2);max-width:31em}
+.books{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.book{display:grid;gap:3px;justify-items:center;padding:9px 2px 8px;border:1px solid var(--rule);border-radius:3px;background:transparent;color:var(--ink-2);cursor:pointer;font-family:var(--ui);line-height:1.2;min-width:0}
+.book b{font-family:var(--display);font-weight:400;font-size:clamp(.9375rem,3.9vw,1.125rem);color:var(--ink);white-space:nowrap}
+.book small{font-size:.6875rem;letter-spacing:.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.book:hover{border-color:var(--ink-2)}
+.book[aria-pressed="true"]{border-color:var(--gold);background:var(--gold-t)}
+.book[aria-pressed="true"] small{color:var(--gold)}
 
 /* 책장 */
 .leaf{background:var(--paper) var(--grain);border:1px solid var(--rule);border-radius:3px;box-shadow:0 1px 2px var(--shadow),0 30px 60px -36px var(--shadow);padding:clamp(18px,5vw,52px);min-width:0}
@@ -74,9 +81,13 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .tab.done::after{content:"";position:absolute;top:4px;right:4px;width:5px;height:5px;border-radius:50%;background:var(--gold)}
 .tab[aria-current="true"]{background:var(--lake);border-color:var(--lake);color:var(--paper)}
 .tab[aria-current="true"].done::after{background:var(--paper)}
+.tab:disabled{border-style:dashed;opacity:.45;cursor:default}
+.tab:disabled:hover{border-color:var(--rule);color:var(--ink-2)}
 
 /* 한 화 */
 .ep{display:grid;gap:4px;margin-top:30px;scroll-margin-top:16px;min-width:0}
+.state{display:grid;gap:6px;padding:22px 0 6px;font-family:var(--ui);font-size:.9375rem;line-height:1.7;color:var(--ink-2)}
+.state b{font-weight:400;color:var(--ink)}
 .ep-head{display:grid;gap:10px;padding-bottom:22px;border-bottom:1px solid var(--rule)}
 .ep-meta{font-family:var(--ui);font-size:.8125rem;letter-spacing:.04em;color:var(--gold);font-variant-numeric:tabular-nums}
 .ep h2{font-family:var(--display);font-weight:400;font-size:clamp(1.75rem,6.6vw,2.5rem);line-height:1.28}
@@ -133,13 +144,6 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .sec{display:grid;gap:16px}
 .sec + .sec{margin-top:40px;padding-top:34px;border-top:1px solid var(--rule)}
 .sec h2{font-family:var(--display);font-weight:400;font-size:clamp(1.6rem,5.6vw,2.1rem);line-height:1.3}
-.methods{margin:0;padding:0;list-style:none;display:grid}
-.methods li{display:grid;gap:4px;padding-block:14px;border-top:1px solid var(--rule);scroll-margin-top:16px}
-.methods h3{font-family:var(--body);font-weight:700;font-size:1.0625rem;line-height:1.5}
-.methods h3 small{font-family:var(--ui);font-weight:400;font-size:.8125rem;color:var(--ink-2);margin-left:6px}
-.methods .why{font-family:var(--ui);font-size:.875rem;line-height:1.7;color:var(--ink-2)}
-.note{display:grid;gap:8px;padding-top:14px;border-top:1px solid var(--rule);font-size:.9375rem}
-.note b{font-weight:700}
 .intent{margin:0;padding:0;list-style:none;display:grid;gap:12px}
 .intent li{display:grid;grid-template-columns:60px minmax(0,1fr);gap:10px}
 .intent b{font-family:var(--ui);font-weight:400;font-size:.875rem;letter-spacing:.06em;color:var(--gold);padding-top:.25em}
@@ -157,22 +161,23 @@ h1,h2,h3{margin:0;text-wrap:balance}
 <div class="wrap">
   <header class="front">
     <div class="front-bar">
-      <p class="kicker" lang="grc">ΚΑΤΑ ΜΑΡΚΟΝ</p>
+      <p class="kicker" lang="grc" id="kicker">ΚΑΤΑ ΜΑΡΚΟΝ</p>
       <button type="button" class="mode" id="read-mode" aria-pressed="false">밤에 읽기</button>
     </div>
-    <figure class="plate">
-      <img src="images/p07-03.jpg" width="@@HERO_W@@" height="@@HERO_H@@" alt="갈릴리 호숫가 바위에 앉아 무리를 가르치시는 예수">
-      <figcaption>제임스 티소, 〈바닷가에서 사람들을 가르치시는 예수〉(1886–94). 마가복음의 많은 장면이 이 갈릴리 호숫가에서 펼쳐집니다.</figcaption>
+    <nav class="books" id="books" aria-label="복음서 고르기"></nav>
+    <figure class="plate" id="plate" hidden>
+      <img id="plate-img" src="data:," alt="">
+      <figcaption id="plate-cap"></figcaption>
     </figure>
-    <h1>마가복음 <em>16</em>부작</h1>
-    <p class="lede">하루 한 화. 장마다 마가가 전하려는 요점을 그림과 함께 따라가고, 본문을 펼쳐 직접 읽습니다. 진도는 이 기기에 저장됩니다.</p>
+    <h1 id="book-title">마가복음 <em>16</em>부작</h1>
+    <p class="lede" id="lede"></p>
   </header>
 
   <main class="leaf" id="reader">
     <div class="reader-top">
       <div class="progress">
         <div class="pbar" aria-hidden="true"><span id="pfill"></span></div>
-        <p class="ptext" id="ptext">0 / 16화 완독</p>
+        <p class="ptext" id="ptext"></p>
       </div>
       <div class="tabs" id="tabs" role="group" aria-label="화 선택"></div>
     </div>
@@ -181,44 +186,129 @@ h1,h2,h3{margin:0;text-wrap:balance}
 
   <div class="leaf">
     <section class="sec" id="why">
-      <h2>마가는 왜 썼을까</h2>
-@@WHY_HTML@@
+      <h2 id="why-h">마가는 왜 썼을까</h2>
+      <ul class="intent" id="why-list"></ul>
     </section>
   </div>
 
   <footer class="sources" id="sources">
-@@SOURCES_HTML@@
+    <h2>출처</h2>
+    <p>성경 본문: 대한성서공회 개역개정·새번역(인용은 개역개정), 헬라어 SBLGNT·NA28, 히브리어 WLC. 저자 전승: 유세비우스 『교회사』 3.39.15–16, 이레네우스 『이단 논박』 3.1.1. 읽는 시간은 분당 약 475자로 자동 계산한 어림값입니다. 장별 논점은 개역개정 소제목을 기준으로 나눴고, 헬라어는 SBLGNT, 히브리어는 WLC와 대조했습니다.</p>
+    <p>‘본문 펼치기’의 쉬운 번역은 헬라어 원문 SBL Greek New Testament(SBLGNT, Society of Biblical Literature)를 이 페이지에서 쉬운 우리말로 옮긴 것으로, 공식 번역이 아닙니다.</p>
+    <p>그림: 모두 저작권이 만료된 퍼블릭 도메인(CC0 포함) 작품이며, 화면에 맞게 크기를 줄였습니다. 대부분은 제임스 티소의 〈예수의 생애〉 연작(1886–94, <a href="https://www.brooklynmuseum.org/" target="_blank" rel="noopener">브루클린 미술관</a> 소장)이고, 이름난 화가들의 작품은 <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener">위키미디어 공용</a>에서 가져왔습니다.</p>
+    <details class="credits"><summary>그 밖의 그림 출처</summary><ul id="credits"></ul></details>
   </footer>
 </div>
 
-<script src="points.js"></script>
+<script src="data/meta.js"></script>
 <script>
 const store = {
   get(k, d){ try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch(e){ return d; } },
   set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
 };
 const root = document.documentElement;
-const modeBtn = document.getElementById("read-mode");
+const $ = id => document.getElementById(id);
+const modeBtn = $("read-mode");
 function setMode(m){
   if (m === "night") root.setAttribute("data-read", "night"); else root.removeAttribute("data-read");
   modeBtn.setAttribute("aria-pressed", String(m === "night"));
   modeBtn.textContent = m === "night" ? "낮에 읽기" : "밤에 읽기";
 }
-setMode(store.get("mark16.mode", "day"));
+setMode(store.get("gospels.mode", store.get("mark16.mode", "day")));
 modeBtn.addEventListener("click", () => {
   const m = root.getAttribute("data-read") === "night" ? "day" : "night";
-  setMode(m); store.set("mark16.mode", m);
+  setMode(m); store.set("gospels.mode", m);
 });
 
-@@METHODS_CONST@@
-
-@@EP@@
+const METHODS = {aloud: "소리 내어 읽기", scene: "장면 속으로", soap: "SOAP 노트", dbs: "질문 세 개"};
+const BOOKS = META.books;
+const byId = Object.fromEntries(BOOKS.map(b => [b.id, b]));
+// 예전 ‘마가복음 16부작’에서 읽은 기록을 옮겨 온다.
+if (store.get("gospels.done.mrk", null) == null && store.get("mark16.done", null)) store.set("gospels.done.mrk", store.get("mark16.done", []));
 
 const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const done = new Set((store.get("mark16.done", []) || []).filter(n => n >= 1 && n <= 16));
-const tabs = document.getElementById("tabs");
-const panel = document.getElementById("ep");
-document.getElementById("credits").innerHTML = EXTRA_CREDITS;
+const tabs = $("tabs"), panel = $("ep"), booksNav = $("books");
+let book = null, cur = 0, done = new Set();
+$("credits").innerHTML = META.credits;
+
+// 장별 데이터(data/책/NN.js)는 그 장을 펼칠 때 불러온다.
+const cache = {}, pending = {};
+window.gospelChapter = (b, n, d) => {
+  const key = b + n; cache[key] = d;
+  if (pending[key]) { pending[key].res(d); delete pending[key]; }
+};
+function loadChapter(b, n){
+  const key = b + n;
+  if (cache[key]) return Promise.resolve(cache[key]);
+  if (pending[key]) return pending[key].p;
+  let res, rej;
+  const p = new Promise((a, c) => { res = a; rej = c; });
+  pending[key] = {p, res};
+  const s = document.createElement("script");
+  s.src = `data/${b}/${String(n).padStart(2, "0")}.js`;
+  s.onerror = () => { delete pending[key]; s.remove(); rej(new Error("load")); };
+  document.head.appendChild(s);
+  return p;
+}
+
+const isReady = (b, n) => Object.prototype.hasOwnProperty.call(b.titles, n);
+const readyList = b => Object.keys(b.titles).map(Number).sort((x, y) => x - y);
+
+BOOKS.forEach(b => {
+  const n = readyList(b).length;
+  const btn = document.createElement("button");
+  btn.type = "button"; btn.className = "book"; btn.dataset.id = b.id;
+  btn.innerHTML = `<b>${b.name}</b><small>${n === b.chapters ? b.chapters + "장" : n ? n + " / " + b.chapters + "장" : "준비 중"}</small>`;
+  btn.addEventListener("click", () => { if (book !== b) { setBook(b.id); openFirst(false); } });
+  booksNav.appendChild(btn);
+});
+
+function setBook(id){
+  book = byId[id];
+  done = new Set((store.get("gospels.done." + book.id, []) || []).filter(n => n >= 1 && n <= book.chapters));
+  [...booksNav.children].forEach(x => x.setAttribute("aria-pressed", String(x.dataset.id === book.id)));
+  $("kicker").textContent = book.kicker;
+  const pl = book.plate;
+  $("plate").hidden = !pl;
+  if (pl) { const im = $("plate-img"); im.src = pl.img; im.width = pl.w; im.height = pl.h; im.alt = pl.alt; $("plate-cap").textContent = pl.cap; }
+  $("book-title").innerHTML = `${book.name} <em>${book.chapters}</em>부작`;
+  $("lede").textContent = `하루 한 화. 장마다 ${book.subj} 전하려는 요점을 그림과 함께 따라가고, 본문을 펼쳐 직접 읽습니다. 진도는 이 기기에 저장됩니다.`;
+  $("why-h").textContent = `${book.topic} 왜 썼을까`;
+  $("why-list").innerHTML = book.why.map(([k, v]) => `<li><b>${k}</b><span>${v}</span></li>`).join("");
+  tabs.innerHTML = "";
+  for (let n = 1; n <= book.chapters; n++) {
+    const t = document.createElement("button");
+    t.type = "button"; t.className = "tab"; t.textContent = n;
+    if (isReady(book, n)) {
+      t.setAttribute("aria-label", n + "화 " + book.titles[n]);
+      t.addEventListener("click", () => select(n, true));
+    } else {
+      t.disabled = true; t.setAttribute("aria-label", n + "화 준비 중");
+    }
+    tabs.appendChild(t);
+  }
+  cur = 0;
+  refreshProgress();
+}
+
+function nextUnread(){
+  const r = readyList(book);
+  return r.find(n => !done.has(n)) || r[0] || 0;
+}
+
+function openFirst(scroll){
+  const n = nextUnread();
+  if (n) { select(n, scroll); return; }
+  panel.innerHTML = `<div class="state"><p><b>${book.name}은 지금 만드는 중입니다.</b></p><p>장이 완성되는 대로 탭이 하나씩 열립니다. 그동안 다른 복음서를 읽어 보세요.</p></div>`;
+}
+
+function refreshProgress(){
+  const n = done.size, N = book.chapters;
+  $("pfill").style.width = (n / N * 100) + "%";
+  $("ptext").textContent = n === N ? `${N} / ${N}화 완독! 1화부터 다시 읽어 보세요.` : `${n} / ${N}화 완독`;
+  [...tabs.children].forEach((t, i) => t.classList.toggle("done", done.has(i + 1)));
+}
+
 panel.addEventListener("click", ev => {
   const a = ev.target.closest(".toc a");
   if (!a) return;
@@ -226,28 +316,6 @@ panel.addEventListener("click", ev => {
   const t = document.getElementById(a.getAttribute("href").slice(1));
   if (t) t.scrollIntoView({behavior: reduceMotion ? "auto" : "smooth", block: "start"});
 });
-
-EP.forEach(e => {
-  const t = document.createElement("button");
-  t.type = "button";
-  t.className = "tab";
-  t.textContent = e.n;
-  t.setAttribute("aria-label", e.n + "화 " + e.title);
-  t.addEventListener("click", () => select(e.n, true));
-  tabs.appendChild(t);
-});
-
-function nextUnread(){
-  for (let i = 1; i <= 16; i++) if (!done.has(i)) return i;
-  return 1;
-}
-
-function refreshProgress(){
-  const n = done.size;
-  document.getElementById("pfill").style.width = (n / 16 * 100) + "%";
-  document.getElementById("ptext").textContent = n === 16 ? "16 / 16화 완독! 1화부터 다시 읽어 보세요." : n + " / 16화 완독";
-  [...tabs.children].forEach((t, i) => t.classList.toggle("done", done.has(i + 1)));
-}
 
 function pointHTML(n, p, i){
   const links = p.links.map(l => `<a href="${l.u}" target="_blank" rel="noopener">${l.t} · 개역개정 ↗</a>`).join("");
@@ -265,18 +333,17 @@ function pointHTML(n, p, i){
   </li>`;
 }
 
-function render(n){
-  const e = EP[n - 1];
-  const m = METHODS[e.m];
+function render(n, e){
   const isDone = done.has(n);
-  const pts = POINTS[n] || [];
+  const pts = e.points;
   const text = [e.verse[0], e.fun, e.intent, e.mission, ...pts.flatMap(p => [p.t, p.q ? p.q[1] : "", p.d, p.me])].join("").replace(/<[^>]+>/g, "");
   const mins = Math.max(1, Math.round(text.length / 475));
-  const gae = "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=" + n;
-  const sae = "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=SAENEW&book=mrk&chap=" + n;
+  const gae = `https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=${book.id}&chap=${n}`;
+  const sae = `https://www.bskorea.or.kr/bible/korbibReadpage.php?version=SAENEW&book=${book.id}&chap=${n}`;
+  const r = readyList(book), prev = r.filter(x => x < n).pop(), next = r.find(x => x > n);
   panel.innerHTML = `
     <header class="ep-head">
-      <p class="ep-meta">마가복음 ${n}장 · 요점 ${pts.length}개 · 약 ${mins}분</p>
+      <p class="ep-meta">${book.name} ${n}장 · 요점 ${pts.length}개 · 약 ${mins}분</p>
       <h2><span class="epn">${n}화</span>${e.title}</h2>
       <nav class="toc" aria-label="${n}장 요점">${pts.map((p, i) => `<a href="#p${n}-${i + 1}">${p.r} ${p.t}</a>`).join("")}</nav>
     </header>
@@ -285,8 +352,8 @@ function render(n){
       <blockquote class="verse"><p>${e.verse[0]}</p><cite>${e.verse[1]} · 개역개정</cite></blockquote>
       <div class="rows">
         <section><p class="lab">재밌는 포인트</p><p>${e.fun}</p></section>
-        <section><p class="lab">마가의 의도</p><p>${e.intent}</p></section>
-        <section class="mission"><p class="lab">오늘의 미션 <span class="chip">${m.name}</span></p><p>${e.mission}</p></section>
+        <section><p class="lab">${book.author}의 의도</p><p>${e.intent}</p></section>
+        <section class="mission"><p class="lab">오늘의 미션 <span class="chip">${METHODS[e.m]}</span></p><p>${e.mission}</p></section>
       </div>
     </section>
     <footer class="ep-foot">
@@ -296,36 +363,53 @@ function render(n){
       </div>
       <div class="ep-actions">
         <button type="button" class="btn done-btn" id="done-btn" aria-pressed="${isDone}">${isDone ? "✓ 다 읽었어요" : "다 읽음으로 표시"}</button>
-        <button type="button" class="btn" id="prev-btn" ${n === 1 ? "disabled" : ""}>← 이전 화</button>
-        <button type="button" class="btn" id="next-btn" ${n === 16 ? "disabled" : ""}>다음 화 →</button>
+        <button type="button" class="btn" id="prev-btn" ${prev ? "" : "disabled"}>← 이전 화</button>
+        <button type="button" class="btn" id="next-btn" ${next ? "" : "disabled"}>다음 화 →</button>
       </div>
     </footer>`;
-  document.getElementById("done-btn").addEventListener("click", () => {
+  $("done-btn").addEventListener("click", () => {
     if (done.has(n)) done.delete(n); else done.add(n);
-    store.set("mark16.done", [...done]);
+    store.set("gospels.done." + book.id, [...done]);
     refreshProgress();
-    const b = document.getElementById("done-btn");
-    const on = done.has(n);
+    const b = $("done-btn"), on = done.has(n);
     b.setAttribute("aria-pressed", on);
     b.textContent = on ? "✓ 다 읽었어요" : "다 읽음으로 표시";
   });
-  document.getElementById("prev-btn").addEventListener("click", () => select(n - 1, true));
-  document.getElementById("next-btn").addEventListener("click", () => select(n + 1, true));
+  if (prev) $("prev-btn").addEventListener("click", () => select(prev, true));
+  if (next) $("next-btn").addEventListener("click", () => select(next, true));
 }
 
-function select(n, scroll){
-  if (n < 1 || n > 16) return;
-  render(n);
+async function select(n, scroll){
+  if (!isReady(book, n)) return;
+  const b = book; cur = n;
   [...tabs.children].forEach((t, i) => t.setAttribute("aria-current", i + 1 === n ? "true" : "false"));
-  store.set("mark16.last", n);
+  store.set("gospels.last", {b: b.id, n});
   if (scroll) panel.scrollIntoView({behavior: reduceMotion ? "auto" : "smooth", block: "start"});
+  if (!cache[b.id + n]) panel.innerHTML = `<p class="state">${b.name} ${n}장을 불러오는 중…</p>`;
+  try {
+    const e = await loadChapter(b.id, n);
+    if (book === b && cur === n) render(n, e);
+  } catch (err) {
+    if (book === b && cur === n) panel.innerHTML = `<p class="state">${b.name} ${n}장을 불러오지 못했습니다. 연결을 확인한 뒤 ${n}화 탭을 다시 눌러 보세요.</p>`;
+  }
 }
 
-const hm = /^#ep(\d{1,2})$/.exec(location.hash || "");
-const fromHash = hm ? parseInt(hm[1], 10) : 0;
-const hashOk = fromHash >= 1 && fromHash <= 16;
-select(hashOk ? fromHash : nextUnread(), hashOk);
-refreshProgress();
+// #mat5, #mrk6처럼 책과 장을 주소에 붙여 바로 열 수 있다. 예전 주소 #ep6은 마가복음 6장.
+function route(){
+  const hm = /^#(?:(mat|mrk|luk|jhn)(\d{1,2})?|ep(\d{1,2}))$/.exec(location.hash || "");
+  if (!hm) return false;
+  const id = hm[1] || "mrk";
+  if (!book || book.id !== id) setBook(id);
+  const n = parseInt(hm[2] || hm[3] || "0", 10);
+  if (isReady(book, n)) select(n, true); else openFirst(false);
+  return true;
+}
+window.addEventListener("hashchange", route);
+if (!route()) {
+  const last = store.get("gospels.last", null);
+  setBook(last && byId[last.b] ? last.b : "mrk");
+  openFirst(false);
+}
 </script>
 
 </body>

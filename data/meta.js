@@ -1,0 +1,130 @@
+// 책 목록과 장 제목, 그림 출처. tools/gospels/build.py가 만듭니다.
+const META = {
+"books": [
+{
+"id": "mat",
+"name": "마태복음",
+"author": "마태",
+"subj": "마태가",
+"topic": "마태는",
+"kicker": "ΚΑΤΑ ΜΑΘΘΑΙΟΝ",
+"chapters": 28,
+"abbr": "마",
+"why": [
+[
+"누구에게",
+"유대 전통에 익숙한 그리스도인들에게. 아브라함과 다윗에서 시작하는 족보(1:1)로 문을 열고, 구약 말씀이 “이루어졌다”는 인용을 열 번 안팎 넣었습니다."
+],
+[
+"무엇을",
+"예수가 ‘하나님이 우리와 함께 계시다’는 임마누엘(1:23)이라는 것을, 마지막 말씀 “내가 세상 끝날까지 너희와 항상 함께 있으리라”(28:20)로 다시 확인시킵니다."
+],
+[
+"왜",
+"다섯 묶음의 큰 가르침(5–7장, 10장, 13장, 18장, 24–25장)으로 제자의 길을 가르쳐, 교회가 ‘모든 민족을 제자로 삼아’(28:19) 가르치는 일을 이어 가게 하려고. 전승은 세리였던 사도 마태를 저자로 봅니다(9:9)."
+]
+],
+"titles": {}
+},
+{
+"id": "mrk",
+"name": "마가복음",
+"author": "마가",
+"subj": "마가가",
+"topic": "마가는",
+"kicker": "ΚΑΤΑ ΜΑΡΚΟΝ",
+"chapters": 16,
+"abbr": "막",
+"plate": {
+"img": "images/p07-03.jpg",
+"alt": "갈릴리 호숫가 바위에 앉아 무리를 가르치시는 예수",
+"cap": "제임스 티소, 〈바닷가에서 사람들을 가르치시는 예수〉(1886–94). 마가복음의 많은 장면이 이 갈릴리 호숫가에서 펼쳐집니다.",
+"w": 800,
+"h": 584
+},
+"why": [
+[
+"누구에게",
+"박해받던 로마의 그리스도인들에게. 아람어를 번역해 주고, 로마 동전과 군대 용어를 쓴 흔적이 책에 남아 있습니다."
+],
+[
+"무엇을",
+"첫 줄(1:1)의 “하나님의 아들”이라는 답을, 마지막에 십자가 앞 로마 군인의 입(15:39)으로 확인시킵니다."
+],
+[
+"왜",
+"실패하고 두려워하는 독자에게 “갈릴리에서 다시 만나자”(16:7)고 말하려고. 전승은 저자를 베드로의 통역자 마가로 봅니다."
+]
+],
+"titles": {
+"1": "광야에서 시작된 속도전",
+"2": "지붕을 뜯고 들어온 친구들",
+"3": "가족이 “미쳤다”며 데리러 왔다",
+"4": "이야기꾼, 그리고 배 위의 폭풍",
+"5": "무덤가의 남자, 12년의 여인, 12살 소녀",
+"6": "고향의 무시, 5천 명의 저녁, 물 위의 밤",
+"7": "진짜 더러움, 그리고 말로 이긴 여인",
+"8": "반쯤 보이는 사람들",
+"9": "산 위의 빛, 산 아래의 혼란",
+"10": "높은 자리를 원한 제자, 보기를 원한 맹인",
+"11": "나귀를 탄 왕, 뒤집힌 성전",
+"12": "함정 질문 퀴즈쇼",
+"13": "깨어 있으라",
+"14": "가장 긴 밤",
+"15": "십자가라는 대관식",
+"16": "빈 무덤, 끝나지 않은 결말"
+}
+},
+{
+"id": "luk",
+"name": "누가복음",
+"author": "누가",
+"subj": "누가가",
+"topic": "누가는",
+"kicker": "ΚΑΤΑ ΛΟΥΚΑΝ",
+"chapters": 24,
+"abbr": "눅",
+"why": [
+[
+"누구에게",
+"‘데오빌로 각하’(1:3)로 대표되는 이방인 독자에게. 같은 저자가 사도행전을 이어 썼습니다(행 1:1)."
+],
+[
+"무엇을",
+"예수가 가난한 사람, 여성, 세리와 죄인, 사마리아 사람처럼 밀려난 이들을 찾아오신 구원자라는 것. “인자가 온 것은 잃어버린 자를 찾아 구원하려 함이니라”(19:10)."
+],
+[
+"왜",
+"이미 배운 것이 확실하다는 것을 알게 하려고(1:4). 전승은 바울과 함께 다닌 의사 누가를 저자로 봅니다(골 4:14)."
+]
+],
+"titles": {}
+},
+{
+"id": "jhn",
+"name": "요한복음",
+"author": "요한",
+"subj": "요한이",
+"topic": "요한은",
+"kicker": "ΚΑΤΑ ΙΩΑΝΝΗΝ",
+"chapters": 21,
+"abbr": "요",
+"why": [
+[
+"누구에게",
+"이미 예수 이야기를 들어 아는 교회에게. 예수를 믿는다는 이유로 회당에서 쫓겨나던 형편(9:22; 16:2)이 책에 비칩니다."
+],
+[
+"무엇을",
+"일곱 표적과 “나는 …이다”라는 말씀들로 예수가 누구인지 보여 줍니다. 첫 줄 “태초에 말씀이 계시니라”(1:1)는 창세기 1:1을 떠올리게 합니다."
+],
+[
+"왜",
+"예수께서 하나님의 아들 그리스도이심을 믿고 생명을 얻게 하려고(20:31). 전승은 ‘예수께서 사랑하시는 제자’(21:20, 24)를 사도 요한으로 봅니다."
+]
+],
+"titles": {}
+}
+],
+"credits": "<li>로마 산 사바 성당의 프레스코, 〈가버나움의 중풍병자를 고치시는 그리스도〉(중세) · <a href=\"https://commons.wikimedia.org/wiki/File:Fresco_of_Christ_healing_the_paralytic_at_Capernaum_(S._Saba,_Rome).jpg\" target=\"_blank\" rel=\"noopener\">출처</a> · Public domain</li><li>피터르 브뤼헐(아버지), 〈추수하는 사람들〉(1565) · <a href=\"https://www.metmuseum.org/art/collection/search/435809\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(The Met Open Access, CC0)</li><li>헤르만 아돌프 쾰러, 〈흑겨자〉(《쾰러의 약용식물》 도판) · <a href=\"https://commons.wikimedia.org/wiki/File:Brassica_nigra_(K%C3%B6hler).jpg\" target=\"_blank\" rel=\"noopener\">출처</a> · Public domain</li><li>한스 쇼이펠라인, 〈귀 먹고 말 더듬는 사람을 고치시는 그리스도〉(1517, 목판화) · <a href=\"https://www.metmuseum.org/art/collection/search/670826\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(The Met Open Access, CC0)</li><li>매트슨 사진 컬렉션, 〈맷돌 앞의 베두인 남자〉(1900년경) · <a href=\"https://www.loc.gov/item/2019703853/\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(미국 의회도서관)</li><li>알브레히트 뒤러, 〈아담과 하와〉(1504, 동판화) · <a href=\"https://www.metmuseum.org/art/collection/search/336222\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(The Met Open Access, CC0)</li><li>〈낙타〉(12세기 전반, 스페인 산 바우델리오 성당 벽화) · <a href=\"https://www.metmuseum.org/art/collection/search/471906\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(The Met Open Access, CC0)</li><li>도메니키노, 〈떨기나무 앞의 모세가 있는 풍경〉(1610–16) · <a href=\"https://www.metmuseum.org/art/collection/search/436205\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(The Met Open Access, CC0)</li><li>웬체슬라우스 홀라르, 〈예루살렘 전경〉(1660, 동판화) · <a href=\"https://www.metmuseum.org/art/collection/search/360075\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(The Met Open Access, CC0)</li><li>얀 반 에이크, 〈십자가 처형; 최후의 심판〉(1436–38년경) · <a href=\"https://www.metmuseum.org/art/collection/search/436282\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(The Met Open Access, CC0)</li>"
+};

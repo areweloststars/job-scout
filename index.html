@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>마가복음 16부작</title>
+<title>사복음서 89부작</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Serif+KR:wght@500&family=Gowun+Dodum&family=Song+Myung&family=Gentium+Book+Plus&family=Noto+Serif+Hebrew&display=swap">
 <style>
-/* Layout: 속표지(그림 한 점, 제목) 다음에 갈릴리 석회암 바탕 위로 펼친 책장. 책장 1은 장 목차와 오늘의 화, 책장 2는 마가의 의도. 기본은 낮, 밤에 읽기는 버튼으로 고른다. */
+/* Layout: 속표지(복음서 고르기, 그림 한 점, 제목) 다음에 갈릴리 석회암 바탕 위로 펼친 책장. 책장 1은 장 목차와 오늘의 화, 책장 2는 저자의 의도. 기본은 낮, 밤에 읽기는 버튼으로 고른다. */
 :root{
   --ground:#E5E0D3;   /* 갈릴리 석회암 바탕 */
   --paper:#FBF8F1;    /* 책장 */
@@ -60,6 +60,13 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .front h1{font-family:var(--display);font-weight:400;font-size:clamp(2.75rem,11vw,4.25rem);line-height:1.02;letter-spacing:-.01em;padding-top:4px}
 .front h1 em{font-style:normal;color:var(--lake)}
 .lede{color:var(--ink-2);max-width:31em}
+.books{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.book{display:grid;gap:3px;justify-items:center;padding:9px 2px 8px;border:1px solid var(--rule);border-radius:3px;background:transparent;color:var(--ink-2);cursor:pointer;font-family:var(--ui);line-height:1.2;min-width:0}
+.book b{font-family:var(--display);font-weight:400;font-size:clamp(.9375rem,3.9vw,1.125rem);color:var(--ink);white-space:nowrap}
+.book small{font-size:.6875rem;letter-spacing:.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.book:hover{border-color:var(--ink-2)}
+.book[aria-pressed="true"]{border-color:var(--gold);background:var(--gold-t)}
+.book[aria-pressed="true"] small{color:var(--gold)}
 
 /* 책장 */
 .leaf{background:var(--paper) var(--grain);border:1px solid var(--rule);border-radius:3px;box-shadow:0 1px 2px var(--shadow),0 30px 60px -36px var(--shadow);padding:clamp(18px,5vw,52px);min-width:0}
@@ -74,9 +81,13 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .tab.done::after{content:"";position:absolute;top:4px;right:4px;width:5px;height:5px;border-radius:50%;background:var(--gold)}
 .tab[aria-current="true"]{background:var(--lake);border-color:var(--lake);color:var(--paper)}
 .tab[aria-current="true"].done::after{background:var(--paper)}
+.tab:disabled{border-style:dashed;opacity:.45;cursor:default}
+.tab:disabled:hover{border-color:var(--rule);color:var(--ink-2)}
 
 /* 한 화 */
 .ep{display:grid;gap:4px;margin-top:30px;scroll-margin-top:16px;min-width:0}
+.state{display:grid;gap:6px;padding:22px 0 6px;font-family:var(--ui);font-size:.9375rem;line-height:1.7;color:var(--ink-2)}
+.state b{font-weight:400;color:var(--ink)}
 .ep-head{display:grid;gap:10px;padding-bottom:22px;border-bottom:1px solid var(--rule)}
 .ep-meta{font-family:var(--ui);font-size:.8125rem;letter-spacing:.04em;color:var(--gold);font-variant-numeric:tabular-nums}
 .ep h2{font-family:var(--display);font-weight:400;font-size:clamp(1.75rem,6.6vw,2.5rem);line-height:1.28}
@@ -133,13 +144,6 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .sec{display:grid;gap:16px}
 .sec + .sec{margin-top:40px;padding-top:34px;border-top:1px solid var(--rule)}
 .sec h2{font-family:var(--display);font-weight:400;font-size:clamp(1.6rem,5.6vw,2.1rem);line-height:1.3}
-.methods{margin:0;padding:0;list-style:none;display:grid}
-.methods li{display:grid;gap:4px;padding-block:14px;border-top:1px solid var(--rule);scroll-margin-top:16px}
-.methods h3{font-family:var(--body);font-weight:700;font-size:1.0625rem;line-height:1.5}
-.methods h3 small{font-family:var(--ui);font-weight:400;font-size:.8125rem;color:var(--ink-2);margin-left:6px}
-.methods .why{font-family:var(--ui);font-size:.875rem;line-height:1.7;color:var(--ink-2)}
-.note{display:grid;gap:8px;padding-top:14px;border-top:1px solid var(--rule);font-size:.9375rem}
-.note b{font-weight:700}
 .intent{margin:0;padding:0;list-style:none;display:grid;gap:12px}
 .intent li{display:grid;grid-template-columns:60px minmax(0,1fr);gap:10px}
 .intent b{font-family:var(--ui);font-weight:400;font-size:.875rem;letter-spacing:.06em;color:var(--gold);padding-top:.25em}
@@ -157,22 +161,23 @@ h1,h2,h3{margin:0;text-wrap:balance}
 <div class="wrap">
   <header class="front">
     <div class="front-bar">
-      <p class="kicker" lang="grc">ΚΑΤΑ ΜΑΡΚΟΝ</p>
+      <p class="kicker" lang="grc" id="kicker">ΚΑΤΑ ΜΑΡΚΟΝ</p>
       <button type="button" class="mode" id="read-mode" aria-pressed="false">밤에 읽기</button>
     </div>
-    <figure class="plate">
-      <img src="images/p07-03.jpg" width="800" height="584" alt="갈릴리 호숫가 바위에 앉아 무리를 가르치시는 예수">
-      <figcaption>제임스 티소, 〈바닷가에서 사람들을 가르치시는 예수〉(1886–94). 마가복음의 많은 장면이 이 갈릴리 호숫가에서 펼쳐집니다.</figcaption>
+    <nav class="books" id="books" aria-label="복음서 고르기"></nav>
+    <figure class="plate" id="plate" hidden>
+      <img id="plate-img" src="data:," alt="">
+      <figcaption id="plate-cap"></figcaption>
     </figure>
-    <h1>마가복음 <em>16</em>부작</h1>
-    <p class="lede">하루 한 화. 장마다 마가가 전하려는 요점을 그림과 함께 따라가고, 본문을 펼쳐 직접 읽습니다. 진도는 이 기기에 저장됩니다.</p>
+    <h1 id="book-title">마가복음 <em>16</em>부작</h1>
+    <p class="lede" id="lede"></p>
   </header>
 
   <main class="leaf" id="reader">
     <div class="reader-top">
       <div class="progress">
         <div class="pbar" aria-hidden="true"><span id="pfill"></span></div>
-        <p class="ptext" id="ptext">0 / 16화 완독</p>
+        <p class="ptext" id="ptext"></p>
       </div>
       <div class="tabs" id="tabs" role="group" aria-label="화 선택"></div>
     </div>
@@ -181,26 +186,21 @@ h1,h2,h3{margin:0;text-wrap:balance}
 
   <div class="leaf">
     <section class="sec" id="why">
-      <h2>마가는 왜 썼을까</h2>
-<ul class="intent">
-      <li><b>누구에게</b><span>박해받던 로마의 그리스도인들에게. 아람어를 번역해 주고, 로마 동전과 군대 용어를 쓴 흔적이 책에 남아 있습니다.</span></li>
-      <li><b>무엇을</b><span>첫 줄(1:1)의 “하나님의 아들”이라는 답을, 마지막에 십자가 앞 로마 군인의 입(15:39)으로 확인시킵니다.</span></li>
-      <li><b>왜</b><span>실패하고 두려워하는 독자에게 “갈릴리에서 다시 만나자”(16:7)고 말하려고. 전승은 저자를 베드로의 통역자 마가로 봅니다.</span></li>
-    </ul>
+      <h2 id="why-h">마가는 왜 썼을까</h2>
+      <ul class="intent" id="why-list"></ul>
     </section>
   </div>
 
   <footer class="sources" id="sources">
     <h2>출처</h2>
-    <p>성경 본문: 대한성서공회 개역개정·새번역(인용은 개역개정), 헬라어 SBLGNT·NA28, 히브리어 WLC. 저자 전승: 유세비우스 『교회사』 3.39.15. 읽는 시간은 분당 약 475자로 자동 계산한 어림값입니다. 장별 논점은 개역개정 소제목을 기준으로 나눴고, 헬라어는 SBLGNT, 히브리어는 WLC와 대조했습니다.</p>
+    <p>성경 본문: 대한성서공회 개역개정·새번역(인용은 개역개정), 헬라어 SBLGNT·NA28, 히브리어 WLC. 저자 전승: 유세비우스 『교회사』 3.39.15–16, 이레네우스 『이단 논박』 3.1.1. 읽는 시간은 분당 약 475자로 자동 계산한 어림값입니다. 장별 논점은 개역개정 소제목을 기준으로 나눴고, 헬라어는 SBLGNT, 히브리어는 WLC와 대조했습니다.</p>
     <p>‘본문 펼치기’의 쉬운 번역은 헬라어 원문 SBL Greek New Testament(SBLGNT, Society of Biblical Literature)를 이 페이지에서 쉬운 우리말로 옮긴 것으로, 공식 번역이 아닙니다.</p>
     <p>그림: 모두 저작권이 만료된 퍼블릭 도메인(CC0 포함) 작품이며, 화면에 맞게 크기를 줄였습니다. 대부분은 제임스 티소의 〈예수의 생애〉 연작(1886–94, <a href="https://www.brooklynmuseum.org/" target="_blank" rel="noopener">브루클린 미술관</a> 소장)이고, 이름난 화가들의 작품은 <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener">위키미디어 공용</a>에서 가져왔습니다.</p>
     <details class="credits"><summary>그 밖의 그림 출처</summary><ul id="credits"></ul></details>
-  
   </footer>
 </div>
 
-<script src="points.js"></script>
+<script src="data/meta.js"></script>
 <script>
 const store = {
   get(k, d){ try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch(e){ return d; } },
@@ -208,128 +208,108 @@ const store = {
 };
 const root = document.documentElement;
 root.lang = "ko";
-const modeBtn = document.getElementById("read-mode");
+const $ = id => document.getElementById(id);
+const modeBtn = $("read-mode");
 function setMode(m){
   if (m === "night") root.setAttribute("data-read", "night"); else root.removeAttribute("data-read");
   modeBtn.setAttribute("aria-pressed", String(m === "night"));
   modeBtn.textContent = m === "night" ? "낮에 읽기" : "밤에 읽기";
 }
-setMode(store.get("mark16.mode", "day"));
+setMode(store.get("gospels.mode", store.get("mark16.mode", "day")));
 modeBtn.addEventListener("click", () => {
   const m = root.getAttribute("data-read") === "night" ? "day" : "night";
-  setMode(m); store.set("mark16.mode", m);
+  setMode(m); store.set("gospels.mode", m);
 });
 
-const METHODS = {
-  aloud:{name:"소리 내어 읽기", id:"m-aloud"},
-  scene:{name:"장면 속으로", id:"m-scene"},
-  soap:{name:"SOAP 노트", id:"m-soap"},
-  dbs:{name:"질문 세 개", id:"m-dbs"}
-};
-
-const EP = [
-{n:1,v:45,title:`광야에서 시작된 속도전`,
-verse:[`때가 찼고 하나님의 나라가 가까이 왔으니 회개하고 복음을 믿으라`,`막 1:15`],
-fun:`마가가 가장 좋아한 단어는 ‘곧’(<span class="gk" lang="grc">εὐθύς</span>, 유뒤스)입니다. 책 전체에 40번 넘게 나와서 장면이 숨 돌릴 틈 없이 넘어갑니다. 그리고 1:10의 하늘이 ‘찢어지다’(<span class="gk" lang="grc">σχίζω</span>)는 책 끝에 딱 한 번 더 나옵니다. 어디인지는 15화에서.`,
-intent:`첫 문장 “하나님의 아들 예수 그리스도 복음의 시작”이 책 전체의 결론입니다. 결론부터 던져 놓고, 등장인물들이 그걸 언제 깨닫는지 지켜보게 만드는 구조예요.`,
-m:"aloud",mission:`제자 부르는 장면(1:16–20)을 소리 내어 읽으며 ‘곧’이 나올 때마다 손가락을 접어 보세요. 마가의 속도가 느껴집니다.`},
-
-{n:2,v:28,title:`지붕을 뜯고 들어온 친구들`,
-verse:[`건강한 자에게는 의사가 쓸 데 없고 병든 자에게라야 쓸 데 있느니라 나는 의인을 부르러 온 것이 아니요 죄인을 부르러 왔노라`,`막 2:17`],
-fun:`2:1부터 3:6까지 다툼이 다섯 번 이어집니다. 죄 사함, 죄인과의 식사, 금식, 안식일의 밀밭, 안식일의 치유. 갈수록 세져서 결국 ‘예수를 죽일 의논’(3:6)에 이릅니다. 마가가 짜 놓은 5단 콤보예요.`,
-intent:`유대 출신과 이방 출신이 섞인 초대교회는 안식일과 음식 문제로 자주 부딪혔습니다. 마가는 예수가 규칙보다 사람을 먼저 두는 장면을 모아 그 질문에 답합니다.`,
-m:"scene",mission:`지붕 위 친구 중 한 명이 되어 보세요. 흙먼지를 뒤집어쓰고 구멍을 뚫으며 무슨 생각을 할까요? 지금 나를 위해 들것을 들어 줄 사람은 누구인가요?`},
-
-{n:3,v:35,title:`가족이 “미쳤다”며 데리러 왔다`,
-verse:[`누구든지 하나님의 뜻대로 행하는 자가 내 형제요 자매요 어머니이니라`,`막 3:35`],
-fun:`‘보아너게’라는 별명은 괜히 붙은 게 아닙니다. 요한은 다른 사람의 축귀를 막고(9:38), 두 형제는 영광의 자리를 달라고 조릅니다(10:37). 성격 급한 형제 캐릭터가 계속 이어져요.`,
-intent:`3:5에서 예수는 화내고 탄식합니다. 같은 장면에서 마태와 누가는 이 감정을 뺐지만 마가는 그대로 둡니다. 권위와 사람다운 감정을 함께 가진 예수를 보여 주려는 선택입니다.`,
-m:"soap",mission:`3:35를 적고(S), 나에게 핏줄이 아니라 같은 뜻으로 묶인 ‘가족’은 누구인지 한 줄 써 보세요(A).`},
-
-{n:4,v:41,title:`이야기꾼, 그리고 배 위의 폭풍`,
-verse:[`그가 누구이기에 바람과 바다도 순종하는가`,`막 4:41`],
-fun:`폭풍에게 한 “고요하라”는 귀신에게 “잠잠하라”(1:25)고 할 때와 같은 동사(<span class="gk" lang="grc">φιμόω</span>, 재갈 물리다)입니다. 예수는 폭풍을 귀신 다루듯 꾸짖습니다. 구약에서 바다를 잠잠하게 하는 분은 하나님입니다(시 107:29).`,
-intent:`“그가 누구이기에?”는 마가복음 전체를 끌고 가는 질문입니다. 독자는 1:1에서 답을 들었지만 제자들은 모릅니다. 답을 아는 시청자가 되어 제자들이 언제 깨달을지 지켜보게 만듭니다.`,
-m:"aloud",mission:`폭풍 장면(4:35–41)을 소리 내어 읽어 보세요. 제자들의 외침은 크게, “잠잠하라”는 낮게. 지금 내 배를 흔드는 폭풍에 이름을 붙인다면요?`},
-
-{n:5,v:43,title:`무덤가의 남자, 12년의 여인, 12살 소녀`,
-verse:[`두려워하지 말고 믿기만 하라`,`막 5:36`],
-fun:`여인이 앓은 기간은 12년, 소녀의 나이도 12살. “달리다굼”은 예수의 모국어 아람어가 소리 그대로 남은 말입니다. 헬라어 ‘구원하다’(<span class="gk" lang="grc">σῴζω</span>)는 ‘병이 낫다’와 같은 단어예요.`,
-intent:`급한 VIP인 회당장의 길을 멈추고, 이름 없는 여인을 먼저 불러 ‘딸’이라고 부릅니다. 예수 앞에서는 순서가 뒤집힌다는 것, 율법상 만지면 부정해진다는 피와 시신에 예수가 먼저 손을 댄다는 것을 보여 줍니다.`,
-m:"scene",mission:`혈루증 여인이 되어 보세요. 몰래 옷만 만지고 사라지려 했는데, 예수가 멈춰 서서 돌아봅니다. 그 순간 나는 무슨 말을 하고 싶나요?`},
-
-{n:6,v:56,title:`고향의 무시, 5천 명의 저녁, 물 위의 밤`,
-verse:[`목자 없는 양 같음으로 인하여 불쌍히 여기사 이에 여러 가지로 가르치시더라`,`막 6:34`],
-fun:`물 위를 걸어온 예수는 왜 “지나가려고”(6:48) 했을까요? 구약에서 하나님이 모세 앞을 ‘지나가실’ 때 쓰던 표현입니다(출 33:22). 이어지는 “내니”(<span class="gk" lang="grc">ἐγώ εἰμι</span>)도 “나는 스스로 있는 자”(출 3:14)를 떠올리게 합니다. 하나님의 등장을 넌지시 연출한 장면이에요.`,
-intent:`제자들을 보내는 이야기 사이에 세례 요한의 처형을 끼워 넣었습니다. 하나님 나라를 전하는 일에는 대가가 따른다는 것을 박해받던 독자에게 숨기지 않습니다.`,
-m:"soap",mission:`6:34를 한 줄 적고(S), 지쳐 있을 때 나는 사람들을 어떻게 보는지 한 줄 써 보세요(A).`},
-
-{n:7,v:37,title:`진짜 더러움, 그리고 말로 이긴 여인`,
-verse:[`무엇이든지 밖에서 사람에게로 들어가는 것은 능히 사람을 더럽게 하지 못하되 사람 안에서 나오는 것이 사람을 더럽게 하는 것이니라`,`막 7:15`],
-fun:`7:3–4에서 마가는 갑자기 유대인의 손 씻는 풍습을 설명합니다. 유대인 독자라면 필요 없는 설명이죠. 첫 독자가 이방인이었다는 단서입니다. ‘고르반’은 히브리어로 ‘바친 예물’이라는 뜻이에요.`,
-intent:`“모든 음식물을 깨끗하다 하시니라”(7:19)는 해설 바로 뒤에 이방 여인 이야기를 놓았습니다. 유대인과 이방인이 한 식탁에 앉을 수 있느냐는 초대교회의 질문에, 선이 무너지고 있다고 답하는 배치예요.`,
-m:"dbs",mission:`이방 여인 장면(7:24–30)을 읽고 물어보세요. 예수에 대해 뭐라고 하나? 이 여인에 대해서는? 이번 주에 나는 뭘 해 볼까?`},
-
-{n:8,v:38,title:`반쯤 보이는 사람들`,
-verse:[`사람이 만일 온 천하를 얻고도 자기 목숨을 잃으면 무엇이 유익하리요`,`막 8:36`],
-fun:`“내 뒤로 물러가라”(8:33)와 “나를 따라오려거든”(8:34)에는 똑같이 <span class="gk" lang="grc">ὀπίσω μου</span>(오피소 무, 내 뒤에)가 들어 있습니다. 베드로의 자리는 막아서는 앞이 아니라 따라가는 뒤라는 말장난이에요. ‘그리스도’는 히브리어 ‘메시아’, 기름 부음 받은 왕이라는 뜻입니다.`,
-intent:`두 번 만에 눈을 뜨는 맹인 바로 다음에 베드로의 고백을 놓았습니다. 베드로도 반쯤만 봅니다. ‘그리스도’는 맞혔지만 ‘고난받는 그리스도’는 못 보죠. 책 한가운데서 질문이 “그는 누구인가”에서 “따른다는 건 무엇인가”로 바뀝니다.`,
-m:"dbs",mission:`베드로의 고백과 항의 장면(8:27–33)을 읽고 물어보세요. 예수에 대해 뭐라고 하나? 베드로에 대해서는? 이번 주에 나는 어디서 ‘앞’이 아니라 ‘뒤’에 서야 할까?`},
-
-{n:9,v:50,title:`산 위의 빛, 산 아래의 혼란`,
-verse:[`누구든지 첫째가 되고자 하면 뭇 사람의 끝이 되며 뭇 사람을 섬기는 자가 되어야 하리라`,`막 9:35`],
-fun:`산 위의 음성 “이는 내 사랑하는 아들”(9:7)은 세례 때 “너는 내 사랑하는 아들”(1:11)과 짝입니다. 한 번은 예수에게, 한 번은 제자들에게. ‘모습이 변하다’(<span class="gk" lang="grc">μεταμορφόω</span>)는 영어 metamorphosis의 어원이에요.`,
-intent:`마가는 제자들의 실패를 감추지 않습니다. 훗날 교회 지도자가 될 사람들을 이렇게 둔하게 그린 건 놀라운 일이죠. 실패하는 제자도 여전히 제자라는 위로입니다.`,
-m:"soap",mission:`아버지의 외침(9:24)을 적고(S), 내 안에 같이 있는 믿음과 의심을 한 줄씩 써 보세요(A).`},
-
-{n:10,v:52,title:`높은 자리를 원한 제자, 보기를 원한 맹인`,
-verse:[`인자가 온 것은 섬김을 받으려 함이 아니라 도리어 섬기려 하고 자기 목숨을 많은 사람의 대속물로 주려 함이니라`,`막 10:45`],
-fun:`예수는 야고보·요한에게도(10:36), 바디매오에게도(10:51) “무엇을 하여 주기를 원하느냐”고 똑같이 묻습니다. 제자들은 높은 자리를, 맹인은 보는 것을 구했죠. 제자들이 원한 ‘우편과 좌편’은 15장에서 다시 나옵니다. 십자가에 달린 예수의 좌우, 두 강도의 자리로요.`,
-intent:`10:45는 마가복음의 핵심 구절입니다. ‘대속물’(<span class="gk" lang="grc">λύτρον</span>)은 노예나 포로를 풀어 주는 몸값이에요. 진짜 왕은 군림하지 않고 자기를 내준다는, 로마 독자에게는 뒤집힌 왕 이야기였습니다.`,
-m:"scene",mission:`바디매오가 되어 보세요. 예수가 “네게 무엇을 하여 주기를 원하느냐” 묻는다면 나는 뭐라고 대답할까요?`},
-
-{n:11,v:33,title:`나귀를 탄 왕, 뒤집힌 성전`,
-verse:[`내 집은 만민이 기도하는 집이라 칭함을 받으리라고 하지 아니하였느냐 너희는 강도의 소굴을 만들었도다`,`막 11:17`],
-fun:`“호산나”는 히브리어 ‘호시아 나’, 원래 “제발 구원해 주세요”라는 절박한 외침입니다(시 118:25). 군중은 환호했지만, 예수는 그 말 그대로 구원을 이루러 들어갑니다.`,
-intent:`열매 없는 무화과나무 이야기로 성전 사건을 앞뒤로 감쌌습니다. 화려하지만 기도와 정의라는 열매가 없는 성전을 보여 주려는 배치예요. 상을 엎은 곳은 이방인이 기도할 수 있는 유일한 구역이었습니다.`,
-m:"aloud",mission:`입성 장면(11:7–10)을 소리 내어 읽어 보세요. “호산나”를 ‘제발 구원해 주세요’로 바꿔 읽으면 느낌이 확 달라집니다.`},
-
-{n:12,v:44,title:`함정 질문 퀴즈쇼`,
-verse:[`가이사의 것은 가이사에게, 하나님의 것은 하나님께 바치라`,`막 12:17`],
-fun:`동전에 새겨진 황제의 얼굴, 그 ‘형상’(<span class="gk" lang="grc">εἰκών</span>)이 핵심입니다. 사람은 하나님의 형상대로 지어졌죠(창 1:27). 황제의 형상은 황제에게, 하나님의 형상이 새겨진 나는 하나님께. 마가는 “두 렙돈”을 “한 고드란트”라는 로마 동전으로 환산해 주기도 합니다(12:42). 로마 독자를 위한 친절한 환율 안내예요.`,
-intent:`과부의 가산을 삼키는 서기관들을 비판하고(12:40), 바로 이어서 전부를 드린 과부를 보여 줍니다. 남에게 보이려는 신앙과 아무도 안 보는 데서 전부를 드리는 신앙을 일부러 맞붙인 장면이에요.`,
-m:"scene",mission:`질문하는 사람들 사이에 서 보세요. 예수가 답하기 직전, 나라면 뭐라고 답했을지 먼저 생각해 보고 읽어 보세요.`},
-
-{n:13,v:37,title:`깨어 있으라`,
-verse:[`깨어 있으라 내가 너희에게 하는 이 말은 모든 사람에게 하는 말이니라`,`막 13:37`],
-fun:`13:35의 네 시간 ‘저물 때, 밤중, 닭 울 때, 새벽’은 14–15장의 만찬, 체포, 베드로의 부인, 빌라도 재판 시간과 그대로 겹칩니다. 13장의 예고가 그대로 수난의 밤 시간표가 돼요.`,
-intent:`“(읽는 자는 깨달을진저)”는 작가가 독자에게 직접 건네는 말입니다. 유대-로마 전쟁(66–70년)과 박해의 소문 속에 있던 독자에게 마가의 메시지는 분명합니다. 날짜를 계산하지 말고, 깨어서 맡은 일을 하라.`,
-m:"dbs",mission:`친구와 질문 세 개를 나눠 보세요. 세 번째 질문은 “이번 주에 나는 무엇에 깨어 있을까?”로 바꿔서.`},
-
-{n:14,v:72,title:`가장 긴 밤`,
-verse:[`아빠 아버지여 아버지께는 모든 것이 가능하오니 이 잔을 내게서 옮기시옵소서 그러나 나의 원대로 마시옵고 아버지의 원대로 하옵소서`,`막 14:36`],
-fun:`체포 현장에서 홑이불까지 버리고 벗은 몸으로 도망친 청년(14:51–52). 다른 복음서엔 없는 장면이라 작가 마가의 카메오라는 추측이 있습니다(확실한 근거는 없어요).`,
-intent:`같은 시각, 안에서는 예수가 “내가 그니라”, 마당에서는 베드로가 “알지 못한다”. 마가가 베드로의 통역자였다면, 베드로는 자기 최악의 밤을 숨기지 않고 들려준 셈입니다.`,
-m:"aloud",mission:`베드로가 부인하는 장면(14:66–72)을 소리 내어 읽어 보세요. 세 번의 ‘아니다’가 점점 커지다가 닭 울음에서 멈춥니다.`},
-
-{n:15,v:47,title:`십자가라는 대관식`,
-verse:[`예수를 향하여 섰던 백부장이 그렇게 숨지심을 보고 이르되 이 사람은 진실로 하나님의 아들이었도다 하더라`,`막 15:39`],
-fun:`1화의 답입니다. 휘장이 ‘찢어지다’(15:38)는 1:10의 하늘이 ‘갈라지다’와 같은 동사(<span class="gk" lang="grc">σχίζω</span>)예요. 처음엔 하늘이 찢어지며 “내 아들”, 끝에는 휘장이 찢어지며 “하나님의 아들”. “엘리 엘리…”는 시편 22편 첫 줄인데, 이 시는 절규로 시작해 찬양으로 끝납니다.`,
-intent:`예수를 ‘하나님의 아들’이라고 처음 고백한 사람은 제자가 아니라 로마 군인입니다. 기적이 아니라 죽음을 보고서요. 로마 독자에게 ‘당신 같은 사람이 이 고백의 주인공’이라고 말하는 장면입니다.`,
-m:"scene",mission:`십자가 맞은편의 백부장이 되어 보세요. 수많은 처형을 봐 온 그가 왜 이 말을 했을까요?`},
-
-{n:16,v:20,title:`빈 무덤, 끝나지 않은 결말`,
-verse:[`가서 그의 제자들과 베드로에게 이르기를 예수께서 너희보다 먼저 갈릴리로 가시나니 전에 너희에게 말씀하신 대로 너희가 거기서 뵈오리라 하라`,`막 16:7`],
-fun:`원문은 “무서워했기 때문이다”(<span class="gk" lang="grc">ἐφοβοῦντο γάρ</span>)로 끝납니다. 헬라어 문장을 ‘왜냐하면’으로 끝내는 건 아주 드문 일이라, 일부러 덜컥 끊은 결말처럼 읽힙니다.`,
-intent:`청년은 굳이 “제자들과 베드로에게”라고 말합니다. 세 번 부인한 그 사람을 이름으로 부르죠. 갈릴리는 이야기가 시작된 곳이라, 결말이 독자를 다시 1장으로 돌려보냅니다. 이번엔 따르는 사람으로. 여자들은 말하지 못했지만 우리가 이 이야기를 안다는 건, 누군가 결국 말했다는 뜻이기도 합니다.`,
-m:"soap",mission:`16:7을 적되 ‘베드로’ 자리에 내 이름을 넣어 보세요. “가서 그의 제자들과 ○○에게 이르기를…”`}
-];
+const METHODS = {aloud: "소리 내어 읽기", scene: "장면 속으로", soap: "SOAP 노트", dbs: "질문 세 개"};
+const BOOKS = META.books;
+const byId = Object.fromEntries(BOOKS.map(b => [b.id, b]));
+// 예전 ‘마가복음 16부작’에서 읽은 기록을 옮겨 온다.
+if (store.get("gospels.done.mrk", null) == null && store.get("mark16.done", null)) store.set("gospels.done.mrk", store.get("mark16.done", []));
 
 const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const done = new Set((store.get("mark16.done", []) || []).filter(n => n >= 1 && n <= 16));
-const tabs = document.getElementById("tabs");
-const panel = document.getElementById("ep");
-document.getElementById("credits").innerHTML = EXTRA_CREDITS;
+const tabs = $("tabs"), panel = $("ep"), booksNav = $("books");
+let book = null, cur = 0, done = new Set();
+$("credits").innerHTML = META.credits;
+
+// 장별 데이터(data/책/NN.js)는 그 장을 펼칠 때 불러온다.
+const cache = {}, pending = {};
+window.gospelChapter = (b, n, d) => {
+  const key = b + n; cache[key] = d;
+  if (pending[key]) { pending[key].res(d); delete pending[key]; }
+};
+function loadChapter(b, n){
+  const key = b + n;
+  if (cache[key]) return Promise.resolve(cache[key]);
+  if (pending[key]) return pending[key].p;
+  let res, rej;
+  const p = new Promise((a, c) => { res = a; rej = c; });
+  pending[key] = {p, res};
+  const s = document.createElement("script");
+  s.src = `data/${b}/${String(n).padStart(2, "0")}.js`;
+  s.onerror = () => { delete pending[key]; s.remove(); rej(new Error("load")); };
+  document.head.appendChild(s);
+  return p;
+}
+
+const isReady = (b, n) => Object.prototype.hasOwnProperty.call(b.titles, n);
+const readyList = b => Object.keys(b.titles).map(Number).sort((x, y) => x - y);
+
+BOOKS.forEach(b => {
+  const n = readyList(b).length;
+  const btn = document.createElement("button");
+  btn.type = "button"; btn.className = "book"; btn.dataset.id = b.id;
+  btn.innerHTML = `<b>${b.name}</b><small>${n === b.chapters ? b.chapters + "장" : n ? n + " / " + b.chapters + "장" : "준비 중"}</small>`;
+  btn.addEventListener("click", () => { if (book !== b) { setBook(b.id); openFirst(false); } });
+  booksNav.appendChild(btn);
+});
+
+function setBook(id){
+  book = byId[id];
+  done = new Set((store.get("gospels.done." + book.id, []) || []).filter(n => n >= 1 && n <= book.chapters));
+  [...booksNav.children].forEach(x => x.setAttribute("aria-pressed", String(x.dataset.id === book.id)));
+  $("kicker").textContent = book.kicker;
+  const pl = book.plate;
+  $("plate").hidden = !pl;
+  if (pl) { const im = $("plate-img"); im.src = pl.img; im.width = pl.w; im.height = pl.h; im.alt = pl.alt; $("plate-cap").textContent = pl.cap; }
+  $("book-title").innerHTML = `${book.name} <em>${book.chapters}</em>부작`;
+  $("lede").textContent = `하루 한 화. 장마다 ${book.subj} 전하려는 요점을 그림과 함께 따라가고, 본문을 펼쳐 직접 읽습니다. 진도는 이 기기에 저장됩니다.`;
+  $("why-h").textContent = `${book.topic} 왜 썼을까`;
+  $("why-list").innerHTML = book.why.map(([k, v]) => `<li><b>${k}</b><span>${v}</span></li>`).join("");
+  tabs.innerHTML = "";
+  for (let n = 1; n <= book.chapters; n++) {
+    const t = document.createElement("button");
+    t.type = "button"; t.className = "tab"; t.textContent = n;
+    if (isReady(book, n)) {
+      t.setAttribute("aria-label", n + "화 " + book.titles[n]);
+      t.addEventListener("click", () => select(n, true));
+    } else {
+      t.disabled = true; t.setAttribute("aria-label", n + "화 준비 중");
+    }
+    tabs.appendChild(t);
+  }
+  cur = 0;
+  refreshProgress();
+}
+
+function nextUnread(){
+  const r = readyList(book);
+  return r.find(n => !done.has(n)) || r[0] || 0;
+}
+
+function openFirst(scroll){
+  const n = nextUnread();
+  if (n) { select(n, scroll); return; }
+  panel.innerHTML = `<div class="state"><p><b>${book.name}은 지금 만드는 중입니다.</b></p><p>장이 완성되는 대로 탭이 하나씩 열립니다. 그동안 다른 복음서를 읽어 보세요.</p></div>`;
+}
+
+function refreshProgress(){
+  const n = done.size, N = book.chapters;
+  $("pfill").style.width = (n / N * 100) + "%";
+  $("ptext").textContent = n === N ? `${N} / ${N}화 완독! 1화부터 다시 읽어 보세요.` : `${n} / ${N}화 완독`;
+  [...tabs.children].forEach((t, i) => t.classList.toggle("done", done.has(i + 1)));
+}
+
 panel.addEventListener("click", ev => {
   const a = ev.target.closest(".toc a");
   if (!a) return;
@@ -337,28 +317,6 @@ panel.addEventListener("click", ev => {
   const t = document.getElementById(a.getAttribute("href").slice(1));
   if (t) t.scrollIntoView({behavior: reduceMotion ? "auto" : "smooth", block: "start"});
 });
-
-EP.forEach(e => {
-  const t = document.createElement("button");
-  t.type = "button";
-  t.className = "tab";
-  t.textContent = e.n;
-  t.setAttribute("aria-label", e.n + "화 " + e.title);
-  t.addEventListener("click", () => select(e.n, true));
-  tabs.appendChild(t);
-});
-
-function nextUnread(){
-  for (let i = 1; i <= 16; i++) if (!done.has(i)) return i;
-  return 1;
-}
-
-function refreshProgress(){
-  const n = done.size;
-  document.getElementById("pfill").style.width = (n / 16 * 100) + "%";
-  document.getElementById("ptext").textContent = n === 16 ? "16 / 16화 완독! 1화부터 다시 읽어 보세요." : n + " / 16화 완독";
-  [...tabs.children].forEach((t, i) => t.classList.toggle("done", done.has(i + 1)));
-}
 
 function pointHTML(n, p, i){
   const links = p.links.map(l => `<a href="${l.u}" target="_blank" rel="noopener">${l.t} · 개역개정 ↗</a>`).join("");
@@ -376,18 +334,17 @@ function pointHTML(n, p, i){
   </li>`;
 }
 
-function render(n){
-  const e = EP[n - 1];
-  const m = METHODS[e.m];
+function render(n, e){
   const isDone = done.has(n);
-  const pts = POINTS[n] || [];
+  const pts = e.points;
   const text = [e.verse[0], e.fun, e.intent, e.mission, ...pts.flatMap(p => [p.t, p.q ? p.q[1] : "", p.d, p.me])].join("").replace(/<[^>]+>/g, "");
   const mins = Math.max(1, Math.round(text.length / 475));
-  const gae = "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=" + n;
-  const sae = "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=SAENEW&book=mrk&chap=" + n;
+  const gae = `https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=${book.id}&chap=${n}`;
+  const sae = `https://www.bskorea.or.kr/bible/korbibReadpage.php?version=SAENEW&book=${book.id}&chap=${n}`;
+  const r = readyList(book), prev = r.filter(x => x < n).pop(), next = r.find(x => x > n);
   panel.innerHTML = `
     <header class="ep-head">
-      <p class="ep-meta">마가복음 ${n}장 · 요점 ${pts.length}개 · 약 ${mins}분</p>
+      <p class="ep-meta">${book.name} ${n}장 · 요점 ${pts.length}개 · 약 ${mins}분</p>
       <h2><span class="epn">${n}화</span>${e.title}</h2>
       <nav class="toc" aria-label="${n}장 요점">${pts.map((p, i) => `<a href="#p${n}-${i + 1}">${p.r} ${p.t}</a>`).join("")}</nav>
     </header>
@@ -396,8 +353,8 @@ function render(n){
       <blockquote class="verse"><p>${e.verse[0]}</p><cite>${e.verse[1]} · 개역개정</cite></blockquote>
       <div class="rows">
         <section><p class="lab">재밌는 포인트</p><p>${e.fun}</p></section>
-        <section><p class="lab">마가의 의도</p><p>${e.intent}</p></section>
-        <section class="mission"><p class="lab">오늘의 미션 <span class="chip">${m.name}</span></p><p>${e.mission}</p></section>
+        <section><p class="lab">${book.author}의 의도</p><p>${e.intent}</p></section>
+        <section class="mission"><p class="lab">오늘의 미션 <span class="chip">${METHODS[e.m]}</span></p><p>${e.mission}</p></section>
       </div>
     </section>
     <footer class="ep-foot">
@@ -407,36 +364,53 @@ function render(n){
       </div>
       <div class="ep-actions">
         <button type="button" class="btn done-btn" id="done-btn" aria-pressed="${isDone}">${isDone ? "✓ 다 읽었어요" : "다 읽음으로 표시"}</button>
-        <button type="button" class="btn" id="prev-btn" ${n === 1 ? "disabled" : ""}>← 이전 화</button>
-        <button type="button" class="btn" id="next-btn" ${n === 16 ? "disabled" : ""}>다음 화 →</button>
+        <button type="button" class="btn" id="prev-btn" ${prev ? "" : "disabled"}>← 이전 화</button>
+        <button type="button" class="btn" id="next-btn" ${next ? "" : "disabled"}>다음 화 →</button>
       </div>
     </footer>`;
-  document.getElementById("done-btn").addEventListener("click", () => {
+  $("done-btn").addEventListener("click", () => {
     if (done.has(n)) done.delete(n); else done.add(n);
-    store.set("mark16.done", [...done]);
+    store.set("gospels.done." + book.id, [...done]);
     refreshProgress();
-    const b = document.getElementById("done-btn");
-    const on = done.has(n);
+    const b = $("done-btn"), on = done.has(n);
     b.setAttribute("aria-pressed", on);
     b.textContent = on ? "✓ 다 읽었어요" : "다 읽음으로 표시";
   });
-  document.getElementById("prev-btn").addEventListener("click", () => select(n - 1, true));
-  document.getElementById("next-btn").addEventListener("click", () => select(n + 1, true));
+  if (prev) $("prev-btn").addEventListener("click", () => select(prev, true));
+  if (next) $("next-btn").addEventListener("click", () => select(next, true));
 }
 
-function select(n, scroll){
-  if (n < 1 || n > 16) return;
-  render(n);
+async function select(n, scroll){
+  if (!isReady(book, n)) return;
+  const b = book; cur = n;
   [...tabs.children].forEach((t, i) => t.setAttribute("aria-current", i + 1 === n ? "true" : "false"));
-  store.set("mark16.last", n);
+  store.set("gospels.last", {b: b.id, n});
   if (scroll) panel.scrollIntoView({behavior: reduceMotion ? "auto" : "smooth", block: "start"});
+  if (!cache[b.id + n]) panel.innerHTML = `<p class="state">${b.name} ${n}장을 불러오는 중…</p>`;
+  try {
+    const e = await loadChapter(b.id, n);
+    if (book === b && cur === n) render(n, e);
+  } catch (err) {
+    if (book === b && cur === n) panel.innerHTML = `<p class="state">${b.name} ${n}장을 불러오지 못했습니다. 연결을 확인한 뒤 ${n}화 탭을 다시 눌러 보세요.</p>`;
+  }
 }
 
-const hm = /^#ep(\d{1,2})$/.exec(location.hash || "");
-const fromHash = hm ? parseInt(hm[1], 10) : 0;
-const hashOk = fromHash >= 1 && fromHash <= 16;
-select(hashOk ? fromHash : nextUnread(), hashOk);
-refreshProgress();
+// #mat5, #mrk6처럼 책과 장을 주소에 붙여 바로 열 수 있다. 예전 주소 #ep6은 마가복음 6장.
+function route(){
+  const hm = /^#(?:(mat|mrk|luk|jhn)(\d{1,2})?|ep(\d{1,2}))$/.exec(location.hash || "");
+  if (!hm) return false;
+  const id = hm[1] || "mrk";
+  if (!book || book.id !== id) setBook(id);
+  const n = parseInt(hm[2] || hm[3] || "0", 10);
+  if (isReady(book, n)) select(n, true); else openFirst(false);
+  return true;
+}
+window.addEventListener("hashchange", route);
+if (!route()) {
+  const last = store.get("gospels.last", null);
+  setBook(last && byId[last.b] ? last.b : "mrk");
+  openFirst(false);
+}
 </script>
 
 </body>
