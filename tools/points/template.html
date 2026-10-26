@@ -167,7 +167,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
       <figcaption>제임스 티소, 〈바닷가에서 사람들을 가르치시는 예수〉(1886–94). 마가복음의 많은 장면이 이 갈릴리 호숫가에서 펼쳐집니다.</figcaption>
     </figure>
     <h1>마가복음 <em>16</em>부작</h1>
-    <p class="lede">하루 한 화. 장마다 마가가 전하려는 요점을 그림과 함께 따라가고, 구절이 왜 그렇게 쓰였는지 생각해 본 뒤 본문을 펼쳐 직접 읽습니다. 진도는 이 기기에 저장됩니다.</p>
+    <p class="lede">하루 한 화. 장마다 마가가 전하려는 요점을 그림과 함께 따라가고, 본문을 펼쳐 직접 읽습니다. 진도는 이 기기에 저장됩니다.</p>
   </header>
 
   <main class="leaf" id="reader">
@@ -261,7 +261,6 @@ function pointHTML(n, p, i){
     ${p.img ? `<figure class="pic"><img src="${p.img}" width="${p.iw}" height="${p.ih}" loading="lazy" style="max-width:${Math.round(440 * p.iw / p.ih)}px" alt="${p.alt}"><figcaption>${p.cap}</figcaption></figure>` : ""}
     ${p.q ? `<blockquote class="vq"><p>“${p.q[1]}”</p><cite>${p.q[0]} · 개역개정</cite></blockquote>` : ""}
     <p class="d">${p.d}</p>
-    <div class="hy"><p class="lab">관찰 가설</p><p>${p.h}</p></div>
     <div class="me"><p class="lab">나에게</p><p>${p.me}</p></div>
     <div class="go">
       <p class="where">${p.go.w}</p>
@@ -279,7 +278,7 @@ function render(n){
   const m = METHODS[e.m];
   const isDone = done.has(n);
   const pts = POINTS[n] || [];
-  const text = [e.verse[0], e.fun, e.intent, e.mission, ...pts.flatMap(p => [p.t, p.q ? p.q[1] : "", p.d, p.h, p.me])].join("").replace(/<[^>]+>/g, "");
+  const text = [e.verse[0], e.fun, e.intent, e.mission, ...pts.flatMap(p => [p.t, p.q ? p.q[1] : "", p.d, p.me])].join("").replace(/<[^>]+>/g, "");
   const mins = Math.max(1, Math.round(text.length / 475));
   const gae = "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mrk&chap=" + n;
   const sae = "https://www.bskorea.or.kr/bible/korbibReadpage.php?version=SAENEW&book=mrk&chap=" + n;

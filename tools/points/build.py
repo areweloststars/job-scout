@@ -91,7 +91,7 @@ for p in PTS:
     elif os.path.exists(f'raw/{k}.jpg'):
         img = f"images/p{p['c']:02d}-{p['i']:02d}.jpg"; shutil.copyfile(f'raw/{k}.jpg', f'{REPO}/{img}')
     else: img = None; missing.append(k)
-    rec = {'r': p['r'], 't': e.get('t', p['t']), 'd': mark(e['d']), 'h': mark(e['h']), 'me': e['me']}
+    rec = {'r': p['r'], 't': e.get('t', p['t']), 'd': mark(e['d']), 'me': e['me']}
     if e['q']: rec['q'] = list(e['q'])
     if img:
         w, h = Image.open(f'{REPO}/{img}').size
@@ -103,5 +103,5 @@ cred = [f'<li>{html.escape(cap(k, CAPS.get(k, "")).split(". ")[0])} · <a href="
         for k, v in sorted(C.items(), key=lambda kv: [int(x) for x in kv[0].split('-')]) if os.path.exists(f'raw/{k}.jpg')]
 js = '// 마가복음 장별 논점 데이터: docs/PLAN-points.md 기준. 빌드 스크립트가 생성합니다.\nconst POINTS = ' + json.dumps(out, ensure_ascii=False, indent=0) + ';\nconst EXTRA_CREDITS = ' + json.dumps(''.join(cred), ensure_ascii=False) + ';\n'
 open(f'{REPO}/points.js', 'w', encoding='utf-8').write(js)
-chars = {c: sum(len(re.sub(r'<[^>]+>', '', x['t'] + x.get('q', ['', ''])[1] + x['d'] + x['h'] + x['me'])) for x in v) for c, v in out.items()}
+chars = {c: sum(len(re.sub(r'<[^>]+>', '', x['t'] + x.get('q', ['', ''])[1] + x['d'] + x['me'])) for x in v) for c, v in out.items()}
 print('points.js', len(js), 'bytes; missing images:', missing); print('chars/ch:', chars)
