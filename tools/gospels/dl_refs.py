@@ -16,4 +16,8 @@ for name in ('Matt', 'Luke', 'John'):
 for b, n in (('mat', 28), ('luk', 24), ('jhn', 21)):
     for c in range(1, n + 1):
         get(f'https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book={b}&chap={c}', f'{OUT}/gae-{b}{c}.html'); time.sleep(1)
+for n, name in (('61', 'Mt'), ('63', 'Lk'), ('64', 'Jn')):  # 헬라어 낱말의 기본형(lemma) 대조용
+    get(f'https://raw.githubusercontent.com/morphgnt/sblgnt/master/{n}-{name}-morphgnt.txt', f'{OUT}/{n}-{name}-morphgnt.txt')
+for ot in ('Gen', 'Exod', 'Lev', 'Num', 'Deut', '1Sam', '2Sam', '1Kgs', 'Ps', 'Prov', 'Isa', 'Jer', 'Ezek', 'Dan', 'Hos', 'Joel', 'Jonah', 'Mic', 'Zech', 'Mal'):  # 히브리어 대조용 WLC
+    get(f'https://raw.githubusercontent.com/openscriptures/morphhb/master/wlc/{ot}.xml', f'{OUT}/{ot}.xml')
 print('DONE', flush=True)

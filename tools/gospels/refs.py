@@ -13,8 +13,10 @@ for b, name in SBL.items():
     for f in glob.glob(f'{D}/gae-{b}*.html'):
         c = re.search(rf'gae-{b}(\d+)\.html$', f)[1]
         s = open(f, encoding='utf-8', errors='replace').read(); s = s[s.index('tdBible1'):]
+        s = re.sub(r"<div id='D_[^']*' class=D2.*?</div>", '', s, flags=re.S)  # 각주 내용
+        s = re.sub(r'<a class=comment.*?</a>', '', s, flags=re.S)  # 각주 번호
         heads, verses = [], {}
-        for m in re.finditer(r'<font class="smallTitle">(.*?)</font>|<span class="number">(\d+)&nbsp;&nbsp;&nbsp;</span>(.*?)</span>\s*<br', s, re.S):
+        for m in re.finditer(r'<font class="smallTitle">(.*?)</font>|<span class="number">(\d+)&nbsp;&nbsp;&nbsp;</span>(.*?)</span>\s*(?:<br|</div>)', s, re.S):
             if m[1] is not None: heads.append([None, clean(m[1])])
             else:
                 verses[m[2]] = clean(m[3])
