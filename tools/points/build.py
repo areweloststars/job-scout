@@ -43,20 +43,16 @@ IMGREF = {  # 그림이 마가복음 밖의 본문을 그린 경우: (책, 장, 
  '12-5': ('luk', 10, 25, '10장 25–37절'), '12-6': ('jhn', 10, 22, '10장 22–23절'), '12-7': ('mat', 23, 13, '23장 13–36절'),
  '13-6': ('luk', 13, 6, '13장 6–9절'), '13-7': ('mat', 25, 1, '25장 1–13절'),
 }
-NOSCENE = {'1-1', '4-3', '4-4', '4-5', '9-7', '10-4', '13-3', '13-4'}  # 그림이 장면이 아니라 사물·풍경·인물인 경우
 def mark_ref(r):
     m = re.match(r'^(\d+):(\d+)–(\d+):(\d+)$', r)
     if m: return f'마가복음 {m[1]}장 {m[2]}절–{m[3]}장 {m[4]}절', int(m[1]), int(m[2])
     c, rest = r.split(':', 1)
     return f"마가복음 {c}장 {'절, '.join(x.strip() for x in rest.split(','))}절", int(c), int(re.match(r'\d+', rest)[0])
-def go(k, r, has_img):
-    lab, c, v = mark_ref(r); links = [{'t': lab, 'u': GAE.format('mrk', c, v)}]
+def links(k, r):
+    lab, c, v = mark_ref(r); out = [{'t': lab, 'u': GAE.format('mrk', c, v)}]
     if k in IMGREF:
-        b, ic, iv, il = IMGREF[k]; il = f'{BOOK[b]} {il}'; links.append({'t': il, 'u': GAE.format(b, ic, iv)})
-        where = f'이 이야기는 <b>{lab}</b>에, 그림 속 장면은 <b>{il}</b>에 기록되어 있습니다.'
-    elif has_img and k not in NOSCENE: where = f'이 그림과 이야기는 <b>{lab}</b>에 기록되어 있습니다.'
-    else: where = f'이 이야기는 <b>{lab}</b>에 기록되어 있습니다.'
-    return {'w': where + ' 아래에서 본문을 펼쳐 바로 읽어 보세요.', 'links': links}
+        b, ic, iv, il = IMGREF[k]; out.append({'t': f'그림 속 장면: {BOOK[b]} {il}', 'u': GAE.format(b, ic, iv)})
+    return out
 TX = {}
 for _m in ('tx1', 'tx2', 'tx3', 'tx4', 'tx5'): TX.update(__import__(_m).TX)
 LASTV = {}
@@ -98,7 +94,7 @@ for p in PTS:
         w, h = Image.open(f'{REPO}/{img}').size
         c = cap(k, e['cap']); m = re.search(r'〈([^〉]+)〉', c)
         rec.update(img=img, iw=w, ih=h, cap=c, alt=(m[1] if m else c.split('.')[0]))
-    rec['go'] = go(k, p['r'], bool(img)); rec['bt'] = passage(p['r'])
+    rec['links'] = links(k, p['r']); rec['bt'] = passage(p['r'])
     out.setdefault(p['c'], []).append(rec)
 cred = [f'<li>{html.escape(cap(k, CAPS.get(k, "")).split(". ")[0])} · <a href="{html.escape(v["url"])}" target="_blank" rel="noopener">출처</a> · {html.escape(v["lic"])}</li>'
         for k, v in sorted(C.items(), key=lambda kv: [int(x) for x in kv[0].split('-')]) if os.path.exists(f'raw/{k}.jpg')]

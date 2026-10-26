@@ -101,9 +101,6 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .lab{font-family:var(--ui);font-size:.8125rem;letter-spacing:.08em;color:var(--lake);margin-bottom:2px}
 .me{padding:14px 16px 15px;background:var(--gold-t);border-radius:3px}
 .me .lab{color:var(--gold)}
-.go{display:grid;gap:10px;padding-top:2px}
-.where{font-family:var(--ui);font-size:.9375rem;line-height:1.7;color:var(--ink-2)}
-.where b{font-weight:700;color:var(--ink)}
 .bible{border:1px solid var(--rule);border-radius:3px;background:var(--paper)}
 .bible summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 14px;font-family:var(--ui);font-size:.9375rem;line-height:1.45;color:var(--lake)}
 .bible summary::-webkit-details-marker{display:none}
@@ -254,22 +251,19 @@ function refreshProgress(){
 }
 
 function pointHTML(n, p, i){
-  const links = p.go.links.map(l => `<a href="${l.u}" target="_blank" rel="noopener">${l.t} · 개역개정 ↗</a>`).join("");
+  const links = p.links.map(l => `<a href="${l.u}" target="_blank" rel="noopener">${l.t} · 개역개정 ↗</a>`).join("");
   return `<li class="pt" id="p${n}-${i + 1}">
     <header class="pt-head"><p class="pt-r">${p.r}</p><h3>${p.t}</h3></header>
     ${p.img ? `<figure class="pic"><img src="${p.img}" width="${p.iw}" height="${p.ih}" loading="lazy" style="max-width:${Math.round(440 * p.iw / p.ih)}px" alt="${p.alt}"><figcaption>${p.cap}</figcaption></figure>` : ""}
-    ${p.ask ? `<p class="ask"><span class="ask-mark" aria-hidden="true">?</span><span>${p.ask}</span></p>` : ""}
     ${p.q ? `<blockquote class="vq"><p>“${p.q[1]}”</p><cite>${p.q[0]} · 개역개정</cite></blockquote>` : ""}
     <p class="d">${p.d}</p>
+    ${p.ask ? `<p class="ask"><span class="ask-mark" aria-hidden="true">?</span><span>${p.ask}</span></p>` : ""}
     <div class="me"><p class="lab">나에게</p><p>${p.me}</p></div>
-    <div class="go">
-      <p class="where">${p.go.w}</p>
-      <details class="bible"><summary>${p.go.links[0].t} 본문 펼치기 <span class="sm">쉬운 번역</span></summary>
-        <div class="bt">${p.bt}
-          <div class="bt-foot"><p>헬라어 원문(SBLGNT)을 이 페이지에서 쉬운 우리말로 옮긴 번역입니다. 공식 번역이 아닙니다.</p><p class="bt-links">${links}</p></div>
-        </div>
-      </details>
-    </div>
+    <details class="bible"><summary>${p.links[0].t} 본문 펼치기 <span class="sm">쉬운 번역</span></summary>
+      <div class="bt">${p.bt}
+        <div class="bt-foot"><p>헬라어 원문(SBLGNT)을 이 페이지에서 쉬운 우리말로 옮긴 번역입니다. 공식 번역이 아닙니다.</p><p class="bt-links">${links}</p></div>
+      </div>
+    </details>
   </li>`;
 }
 
