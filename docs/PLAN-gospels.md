@@ -25,20 +25,21 @@
 
 ## 도구
 - `tools/gospels/refs.py <폴더>`: 내려받은 본문을 `sbl-{책}.json`, `gae-{책}.json`(개역개정 본문과 소제목, 병행 본문 표시 포함)으로 바꾼다. 확인 결과 개역개정과 SBLGNT의 절 수 차이는 마 17:21, 18:11, 23:14 / 눅 17:36, 23:17 / 요 5:4뿐이다.
-- `tools/gospels/tissot_catalog.py <tissot.json>`: 위키미디어의 티소 파일명과 브루클린 미술관 CDN 파일명을 모은다(위키미디어 429 제한 때문에 느리다). CDN 주소는 `https://d1lfxha3ugu3d4.cloudfront.net/images/opencollection/objects/size4/<파일명>`.
+- `tools/gospels/tissot_catalog.py <tissot.json>`: 위키미디어의 티소 파일명과 브루클린 미술관 CDN 파일명을 모은다(위키미디어 429 제한 때문에 느리다). 위키미디어 원본(upload.wikimedia.org)은 자주 429로 막히므로 `thumb.wikimedia.org/.../960px-파일명` 썸네일로 받는다. CDN 주소는 `https://d1lfxha3ugu3d4.cloudfront.net/images/opencollection/objects/size4/<파일명>`.
 
 ## 진행
 - [x] 구조 개편, 마가복음 16장 이전 (요점 115개, 673절. 예전 points.js와 똑같은지 대조함)
-- [ ] 마태복음 1–28장: 1–6장 완성(점검 오류 0). 7장부터 이어서. 아티팩트에는 아직 올리지 않음(브라우저 확인 뒤 data/mat/01–06.js, data/meta.js, images/mat/*.jpg 게시)
+- [x] 마태복음 1–28장 (요점 162개, 1068절, 점검 오류 0). 아티팩트 16판에 게시
 - [ ] 누가복음 1–24장
 - [ ] 요한복음 1–21장
-- [ ] 책별 속표지 그림, `books.py`의 why 인용을 개역개정과 대조
+- [x] `books.py`의 why 인용을 개역개정과 대조 (요 21:20 고침)
+- [ ] 누가·요한 속표지 그림 (마태는 images/mat/05-1.jpg)
 - [ ] `verify.py`, 그림 내려받기 스크립트를 content/ 구조에 맞게 고치기
 
 ## 쓰는 말과 방식(마가복음과 맞춤)
 - 번역(TX): 서기관, 대제사장, 바리새인, 사두개인, 예언자, 하늘나라(마태의 ‘천국’), 하나님 나라, 인자, 공회, 지옥, ‘내가 진정으로 너희에게 말한다’, 빵, 세례자 요한. 지명은 이집트·바빌론·시리아처럼 오늘날 이름.
 - 설명(d)과 제목은 쉬운 말로 쓰고, q와 “…”(장:절) 인용은 개역개정 그대로(check.py가 대조).
-- 긴 설교(5–7, 10, 13, 18, 23–25장)는 바깥 따옴표 없이 옮기고, 요점 하나 안에서 따옴표 짝이 맞게 한다(check.py가 경고).
+- 산상 설교(5–7장)와 10장은 바깥 따옴표 없이 옮겼고, 13장부터는 요점 경계에서 따옴표를 닫고 다음 요점에서 다시 연다. 어느 쪽이든 요점 하나 안에서 따옴표 짝이 맞아야 한다(check.py가 경고).
 - 마가복음과 같은 장면은 마가복음 그림(images/pCC-II.jpg)을 다시 쓴다.
 - 도구: `show.py mat 7 8`(원문 보기), `fetch_images.py mat`, `check.py mat 1 2 …`, `build.py`. 참조 본문 경로는 GOSPEL_REF(기본값은 스크래치의 ref/dl).
 - 할 일: refs.py가 절 한가운데 있는 소제목(눅 9:43, 23:56; 요 18:38)을 본문에 섞는 문제 고치기.

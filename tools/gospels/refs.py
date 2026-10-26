@@ -18,8 +18,9 @@ for b, name in SBL.items():
         heads, verses = [], {}
         for m in re.finditer(r'<font class="smallTitle">(.*?)</font>|<span class="number">(\d+)&nbsp;&nbsp;&nbsp;</span>(.*?)</span>\s*(?:<br|</div>)', s, re.S):
             if m[1] is not None: heads.append([None, clean(m[1])])
-            else:
-                verses[m[2]] = clean(m[3])
+            else:  # 절 가운데서 시작하는 소제목(눅 9:43, 23:56; 요 18:38)은 본문에서 떼어 그 절에 단다
+                heads += [[int(m[2]), clean(t)] for t in re.findall(r'<font class="smallTitle">(.*?)</font>', m[3], re.S)]
+                verses[m[2]] = clean(re.sub(r'<font class="smallTitle">.*?</font>', ' ', m[3], flags=re.S))
                 for h in heads:
                     if h[0] is None: h[0] = int(m[2])
         gae[c] = {'verses': verses, 'heads': heads}
