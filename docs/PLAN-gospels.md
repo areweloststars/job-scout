@@ -23,6 +23,10 @@
 ## 참조 본문
 `tools/gospels/dl_refs.py <폴더>`가 SBLGNT(LogosBible) 텍스트와 대한성서공회 개역개정 장별 페이지를 내려받는다. 개역개정은 저작권이 있어 저장소에 넣지 않는다.
 
+## 도구
+- `tools/gospels/refs.py <폴더>`: 내려받은 본문을 `sbl-{책}.json`, `gae-{책}.json`(개역개정 본문과 소제목, 병행 본문 표시 포함)으로 바꾼다. 확인 결과 개역개정과 SBLGNT의 절 수 차이는 마 17:21, 18:11, 23:14 / 눅 17:36, 23:17 / 요 5:4뿐이다.
+- `tools/gospels/tissot_catalog.py <tissot.json>`: 위키미디어의 티소 파일명과 브루클린 미술관 CDN 파일명을 모은다(위키미디어 429 제한 때문에 느리다). CDN 주소는 `https://d1lfxha3ugu3d4.cloudfront.net/images/opencollection/objects/size4/<파일명>`.
+
 ## 진행
 - [x] 구조 개편, 마가복음 16장 이전 (요점 115개, 673절. 예전 points.js와 똑같은지 대조함)
 - [ ] 마태복음 1–28장
