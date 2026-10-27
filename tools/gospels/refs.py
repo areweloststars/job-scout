@@ -1,7 +1,7 @@
 # dl_refs.py로 받은 참조 본문을 장:절 JSON으로 바꾼다: sbl-{책}.json(SBLGNT), gae-{책}.json(개역개정 본문과 소제목)
 import glob, html, json, re, sys
 D = sys.argv[1]
-SBL = {'mat': 'Matt', 'luk': 'Luke', 'jhn': 'John'}
+SBL = {'mat': 'Matt', 'mrk': 'Mark', 'luk': 'Luke', 'jhn': 'John'}
 clean = lambda s: re.sub(r'\s+', ' ', html.unescape(re.sub(r'<[^>]+>', '', s))).strip()
 for b, name in SBL.items():
     sbl = {}

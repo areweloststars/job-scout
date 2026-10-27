@@ -2,7 +2,7 @@
 import glob, importlib.util, json, os, re, sys, unicodedata
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.dirname(os.path.dirname(HERE))
 REF = os.environ.get('GOSPEL_REF', '/tmp/claude-0/-home-user-job-scout/994516b7-6db5-5528-99fd-98d7f06f74c4/scratchpad/ref/dl')
-MORPH = {'mat': '61-Mt', 'luk': '63-Lk', 'jhn': '64-Jn'}
+MORPH = {'mat': '61-Mt', 'mrk': '62-Mk', 'luk': '63-Lk', 'jhn': '64-Jn'}
 book = sys.argv[1]
 G = json.load(open(f'{REF}/gae-{book}.json', encoding='utf-8')); S = json.load(open(f'{REF}/sbl-{book}.json', encoding='utf-8'))
 norm = lambda s: re.sub(r'[\W_]', '', s)
