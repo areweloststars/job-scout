@@ -7,7 +7,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Serif+KR:wght@500&family=Gowun+Dodum&family=Song+Myung&family=Gentium+Book+Plus&family=Noto+Serif+Hebrew&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Song+Myung&family=Gentium+Book+Plus&family=Noto+Serif+Hebrew&display=swap">
 <style>
 /* Layout: 속표지(복음서 고르기, 그림 한 점, 제목) 다음에 갈릴리 석회암 바탕 위로 펼친 책장. 책장 1은 장 목차와 오늘의 화, 책장 2는 저자의 의도. 기본은 낮, 밤에 읽기는 버튼으로 고른다. */
 :root{
@@ -24,7 +24,7 @@
   --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .34  0 0 0 0 .27  0 0 0 0 .16  0 0 0 .06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   --display:"Song Myung","Gowun Batang","Noto Serif KR","AppleMyungjo",serif;
   --body:"Gowun Batang","Noto Serif KR","AppleMyungjo","Batang",serif;
-  --scripture:"Noto Serif KR","Gowun Batang","AppleMyungjo","Batang",serif;  /* 성경 본문: 설명 글보다 또렷한 획 */
+  --scripture:"Gowun Batang","Noto Serif KR","AppleMyungjo","Batang",serif;  /* 성경 본문: 설명 글과 같은 글꼴(읽기에 집중이 잘된다는 사용자 요청) */
   --ui:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
   --greek:"Gentium Book Plus","Times New Roman",serif;
   --hebrew:"Noto Serif Hebrew","Times New Roman",serif;
@@ -117,7 +117,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .bible summary .sm{font-size:.75rem;color:var(--ink-2);white-space:nowrap}
 .bible summary::after{content:"";margin-left:auto;flex:none;width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .2s ease}
 .bible[open] summary::after{transform:rotate(225deg) translateY(-2px)}
-.bt{display:grid;gap:12px;padding:16px 18px 18px;border-top:1px solid var(--rule);font-family:var(--scripture);font-weight:500;font-size:1.03em;line-height:1.9}
+.bt{display:grid;gap:12px;padding:16px 18px 18px;border-top:1px solid var(--rule);font-family:var(--scripture);font-weight:400;line-height:1.85}
 .bt sup{font-family:var(--ui);font-weight:400;font-size:.68em;line-height:0;color:var(--gold);margin:0 .22em 0 .12em;font-variant-numeric:tabular-nums}
 .bt .ch{display:block;font-family:var(--ui);font-weight:400;font-size:.75rem;letter-spacing:.06em;color:var(--ink-2)}
 .tn{font-family:var(--ui);font-weight:400;font-size:.8125rem;line-height:1.6;color:var(--ink-2)}
