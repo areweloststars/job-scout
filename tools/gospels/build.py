@@ -68,7 +68,7 @@ def build_book(b, warn):
                     u, lic = p['credit']
                     credits.append(f'<li>{html.escape(p["cap"].split(". ")[0].rstrip("."))} · <a href="{html.escape(u)}" target="_blank" rel="noopener">출처</a> · {html.escape(lic)}</li>')
             rec['links'] = links; rec['bt'] = bt; pts.append(rec)
-            if not p['me'].endswith('?'): warn.append(f'{b["id"]} {p["r"]}: 나에게가 질문이 아님')
+            if not re.search(r'\?( \([^()]*절\))?$', p['me']): warn.append(f'{b["id"]} {p["r"]}: 나에게가 질문이 아님')
         ep = {'n': n, 'v': lastv.get(n, 0), 'title': e['title'], 'verse': list(e['verse']), 'fun': mark(e['fun']),
               'intent': mark(e['intent']), 'm': e['m'], 'mission': mark(e['mission']), 'points': pts}
         js = f'// {b["name"]} {n}장. tools/gospels/build.py가 content/{b["id"]}/ch{n:02d}.py에서 만듭니다.\ngospelChapter({json.dumps(b["id"])}, {n}, ' + json.dumps(ep, ensure_ascii=False, indent=0) + ');\n'
