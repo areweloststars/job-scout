@@ -70,7 +70,7 @@ def build_book(b, warn):
             rec['links'] = links; rec['bt'] = bt; pts.append(rec)
             if not re.search(r'\?( \([^()]*절\))?$', p['me']): warn.append(f'{b["id"]} {p["r"]}: 나에게가 질문이 아님')
         ep = {'n': n, 'v': lastv.get(n, 0), 'title': e['title'], 'verse': list(e['verse']), 'fun': mark(e['fun'])}
-        ep.update({'plot': mark(e['plot'])} if 'plot' in e else {'intent': mark(e['intent'])})  # plot: 줄거리(10/28부터), intent: 예전 ‘저자의 의도’
+        ep['plot'] = mark(e['plot'])  # 줄거리: 10/28부터 모든 장이 예전 ‘저자의 의도’ 칸 대신 쓴다
         ep.update(m=e['m'], mission=mark(e['mission']), points=pts)
         js = f'// {b["name"]} {n}장. tools/gospels/build.py가 content/{b["id"]}/ch{n:02d}.py에서 만듭니다.\ngospelChapter({json.dumps(b["id"])}, {n}, ' + json.dumps(ep, ensure_ascii=False, indent=0) + ');\n'
         open(f'{REPO}/data/{b["id"]}/{n:02d}.js', 'w', encoding='utf-8').write(js); titles[n] = e['title']

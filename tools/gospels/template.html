@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Song+Myung&family=Gentium+Book+Plus&family=Noto+Serif+Hebrew&display=swap">
 <style>
-/* Layout: 속표지(복음서 고르기, 그림 한 점, 제목) 다음에 갈릴리 석회암 바탕 위로 펼친 책장. 책장 1은 장 목차와 오늘의 화, 책장 2는 저자의 의도. 기본은 낮, 밤에 읽기는 버튼으로 고른다. */
+/* Layout: 속표지(복음서 고르기, 그림 한 점, 제목) 다음에 갈릴리 석회암 바탕 위로 펼친 책장. 책장 1은 장 목차와 오늘의 화, 책장 2는 책 한눈에(첫 줄·줄거리·마지막). 기본은 낮, 밤에 읽기는 버튼으로 고른다. */
 :root{
   --ground:#E5E0D3;   /* 갈릴리 석회암 바탕 */
   --paper:#FBF8F1;    /* 책장 */
@@ -353,7 +353,7 @@ function pointHTML(n, p, i){
 function render(n, e){
   const isDone = done.has(n);
   const pts = e.points;
-  const text = [e.verse[0], e.fun, e.plot || e.intent, e.mission, ...pts.flatMap(p => [p.t, p.q ? p.q[1] : "", p.d, p.me])].join("").replace(/<[^>]+>/g, "");
+  const text = [e.verse[0], e.fun, e.plot, e.mission, ...pts.flatMap(p => [p.t, p.q ? p.q[1] : "", p.d, p.me])].join("").replace(/<[^>]+>/g, "");
   const mins = Math.max(1, Math.round(text.length / 475));
   const gae = `https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=${book.id}&chap=${n}`;
   const sae = `https://www.bskorea.or.kr/bible/korbibReadpage.php?version=SAENEW&book=${book.id}&chap=${n}`;
@@ -369,7 +369,7 @@ function render(n, e){
       <blockquote class="verse"><p>${e.verse[0]}</p><cite>${e.verse[1]} · 개역개정</cite></blockquote>
       <div class="rows">
         <section><p class="lab">재밌는 포인트</p><p>${e.fun}</p></section>
-        ${e.plot ? `<section><p class="lab">줄거리</p><p>${e.plot}</p></section>` : `<section><p class="lab">${book.author}의 의도</p><p>${e.intent}</p></section>`}
+        <section><p class="lab">줄거리</p><p>${e.plot}</p></section>
         <section class="mission"><p class="lab">오늘의 미션 <span class="chip">${METHODS[e.m]}</span></p><p>${e.mission}</p></section>
       </div>
     </section>
