@@ -390,7 +390,7 @@ function render(n, e){
     b.textContent = on ? "✓ 다 읽었어요" : "다 읽음으로 표시";
   });
   if (prev) $("prev-btn").addEventListener("click", () => select(prev, true));
-  if (next) $("next-btn").addEventListener("click", () => select(next, true));
+  if (next) $("next-btn").addEventListener("click", () => select(next, "first"));  // 다음 화는 첫 요점의 제목과 그림부터 보이게(사용자 요청)
 }
 
 async function select(n, scroll){
@@ -398,11 +398,19 @@ async function select(n, scroll){
   const b = book; cur = n;
   [...tabs.children].forEach((t, i) => t.setAttribute("aria-current", i + 1 === n ? "true" : "false"));
   store.set("gospels.last", {b: b.id, n});
-  if (scroll) panel.scrollIntoView({behavior: reduceMotion ? "auto" : "smooth", block: "start"});
+  if (scroll === true) panel.scrollIntoView({behavior: reduceMotion ? "auto" : "smooth", block: "start"});
   if (!cache[b.id + n]) panel.innerHTML = `<p class="state">${b.name} ${n}장을 불러오는 중…</p>`;
   try {
     const e = await loadChapter(b.id, n);
-    if (book === b && cur === n) render(n, e);
+    if (book === b && cur === n) {
+      render(n, e);
+      const first = scroll === "first" && panel.querySelector(".pt");
+      if (first) {
+        const go = () => { try { first.scrollIntoView({behavior: "instant", block: "start"}); } catch (_) { first.scrollIntoView(true); } };  // 긴 페이지를 훑어 내려가지 않고 바로 첫 요점으로
+        go();
+        if (document.fonts) document.fonts.ready.then(go);  // 새 글꼴 조각이 늦게 와서 줄이 밀려도 첫 요점에 맞춘다
+      }
+    }
   } catch (err) {
     if (book === b && cur === n) panel.innerHTML = `<p class="state">${b.name} ${n}장을 불러오지 못했습니다. 연결을 확인한 뒤 ${n}화 탭을 다시 눌러 보세요.</p>`;
   }
