@@ -335,7 +335,7 @@ function pointHTML(n, p, i){
 function render(n, e){
   const isDone = done.has(n);
   const pts = e.points;
-  const text = [e.verse[0], e.fun, e.intent, e.mission, ...pts.flatMap(p => [p.t, p.q ? p.q[1] : "", p.d, p.me])].join("").replace(/<[^>]+>/g, "");
+  const text = [e.verse[0], e.fun, e.plot || e.intent, e.mission, ...pts.flatMap(p => [p.t, p.q ? p.q[1] : "", p.d, p.me])].join("").replace(/<[^>]+>/g, "");
   const mins = Math.max(1, Math.round(text.length / 475));
   const gae = `https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=${book.id}&chap=${n}`;
   const sae = `https://www.bskorea.or.kr/bible/korbibReadpage.php?version=SAENEW&book=${book.id}&chap=${n}`;
@@ -351,7 +351,7 @@ function render(n, e){
       <blockquote class="verse"><p>${e.verse[0]}</p><cite>${e.verse[1]} · 개역개정</cite></blockquote>
       <div class="rows">
         <section><p class="lab">재밌는 포인트</p><p>${e.fun}</p></section>
-        <section><p class="lab">${book.author}의 의도</p><p>${e.intent}</p></section>
+        ${e.plot ? `<section><p class="lab">줄거리</p><p>${e.plot}</p></section>` : `<section><p class="lab">${book.author}의 의도</p><p>${e.intent}</p></section>`}
         <section class="mission"><p class="lab">오늘의 미션 <span class="chip">${METHODS[e.m]}</span></p><p>${e.mission}</p></section>
       </div>
     </section>

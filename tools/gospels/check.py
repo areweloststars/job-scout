@@ -41,7 +41,7 @@ for c in sorted(chs):
     if have - want: errs.append(f'{tag} SBLGNT에 없는 절 {sorted(have - want)}')
     ok, src = gae_has(m.EP['verse'][1], m.EP['verse'][0])
     if not ok: errs.append(f'{tag} 핵심 구절 ≠ 개역개정: {src}')
-    texts = [('EP', m.EP[k]) for k in ('fun', 'intent', 'mission')] + [(p['r'], p[k]) for p in m.PTS for k in ('d', 'me') if p.get(k)]
+    texts = [('EP', m.EP[k]) for k in ('fun', 'plot', 'intent', 'mission') if k in m.EP] + [(p['r'], p[k]) for p in m.PTS for k in ('d', 'me') if p.get(k)]
     for p in m.PTS:
         if p.get('q'):
             ok, src = gae_has(p['q'][0], p['q'][1])
