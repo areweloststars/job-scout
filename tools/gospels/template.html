@@ -111,13 +111,19 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .lab{font-family:var(--ui);font-size:.8125rem;letter-spacing:.08em;color:var(--lake);margin-bottom:2px}
 .me{padding:14px 16px 15px;background:var(--gold-t);border-radius:3px}
 .me .lab{color:var(--gold)}
-.bible summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 0;font-family:var(--ui);font-size:.9375rem;line-height:1.45;color:var(--lake)}
+.bible summary{list-style:none;cursor:pointer;display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;padding:12px 0;font-family:var(--ui);line-height:1.45}
+.bt-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;background:var(--lake);color:var(--paper);font-size:1rem;box-shadow:0 8px 18px -12px var(--shadow)}
+.bt-btn svg{width:18px;height:18px;flex:none}
+.bt-btn::after{content:"";flex:none;width:7px;height:7px;margin-left:2px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .2s ease}
+.bible[open] .bt-btn::after{transform:rotate(225deg) translateY(-1px)}
+.bible[open] .lb-o,.bible:not([open]) .lb-c{display:none}
+.bible summary:focus-visible{outline:none}
+.bible summary:focus-visible .bt-btn{outline:2px solid var(--gold);outline-offset:2px}
 .bible summary::-webkit-details-marker{display:none}
-.bible summary .sm{font-size:.75rem;color:var(--ink-2);white-space:nowrap}
-.bible summary::after{content:"";margin-left:auto;flex:none;width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .2s ease}
-.bible[open] summary::after{transform:rotate(225deg) translateY(-2px)}
+.bible summary .sm{font-size:.8125rem;color:var(--ink-2)}
 .bt{display:grid;gap:12px;margin-top:2px;padding:2px 0;font-family:var(--scripture);font-weight:400;line-height:1.85}
-.bt sup{font-family:var(--ui);font-weight:400;font-size:.68em;line-height:0;color:var(--gold);margin:0 .22em 0 .12em;font-variant-numeric:tabular-nums}
+.bt sup{font-family:var(--ui);font-weight:400;font-size:.56em;line-height:0;color:var(--ink-2);opacity:.6;margin:0 .2em 0 .1em;font-variant-numeric:tabular-nums}
+.bt .qm{font-size:.78em;color:var(--ink-2)}  /* 본문의 따옴표를 작고 연하게(사용자 요청) */
 .bt .ch{display:block;font-family:var(--ui);font-weight:400;font-size:.75rem;letter-spacing:.06em;color:var(--ink-2)}
 .tn{font-family:var(--ui);font-weight:400;font-size:.8125rem;line-height:1.6;color:var(--ink-2)}
 .bt-foot{display:grid;gap:6px;padding-top:4px;font-family:var(--ui);font-weight:400;font-size:.75rem;line-height:1.6;color:var(--ink-2)}
@@ -133,7 +139,12 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .chip{display:inline-block;margin-left:6px;padding:1px 10px;border-radius:999px;background:var(--paper);color:var(--lake);font-size:.75rem;text-decoration:none;letter-spacing:0}
 .ep-foot{display:grid;gap:14px;margin-top:30px;padding-top:20px;border-top:1px solid var(--rule)}
 .read-links{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--ui);font-size:.875rem}
-.ep-actions{display:flex;flex-wrap:wrap;gap:8px}
+.ep-actions{display:grid;gap:10px}
+.ep-sub{display:flex;flex-wrap:wrap;gap:8px}
+.btn.next-btn{display:flex;align-items:center;gap:10px;width:100%;padding:16px 20px;border:0;border-radius:14px;background:var(--lake);color:var(--paper);text-align:left;font-size:1.0625rem;box-shadow:0 10px 22px -14px var(--shadow)}
+.next-btn .nb-t{flex:1;min-width:0;font-size:.8125rem;opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.next-btn .nb-a{flex:none;font-size:1.25rem;line-height:1}
+.btn.next-btn:hover{filter:brightness(1.1)}
 .btn{font-family:var(--ui);font-size:.875rem;line-height:1.2;padding:10px 16px;border-radius:999px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);cursor:pointer}
 .btn:not(:disabled):hover{border-color:var(--ink-2)}
 .btn:disabled{opacity:.4;cursor:default}
@@ -316,6 +327,7 @@ panel.addEventListener("click", ev => {
   if (t) t.scrollIntoView({behavior: reduceMotion ? "auto" : "smooth", block: "start"});
 });
 
+const qm = s => s.replace(/[“”‘’]/g, '<span class="qm">$&</span>');  // 따옴표를 작게 표시하려고 감싼다
 function pointHTML(n, p, i){
   const links = p.links.map(l => `<a href="${l.u}" target="_blank" rel="noopener">${l.t} · 개역개정 ↗</a>`).join("");
   return `<li class="pt" id="p${n}-${i + 1}">
@@ -324,8 +336,8 @@ function pointHTML(n, p, i){
     ${p.q ? `<blockquote class="vq"><p>“${p.q[1]}”</p><cite>${p.q[0]} · 개역개정</cite></blockquote>` : ""}
     <p class="d">${p.d}</p>
     <div class="me"><p class="lab">나에게</p><p>${p.me}</p></div>
-    <details class="bible"><summary>${p.links[0].t} 본문 펼치기 <span class="sm">쉬운 번역</span></summary>
-      <div class="bt">${p.bt}
+    <details class="bible"><summary><span class="bt-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5.5c3-1 6.5-1 10 1.5v13c-3.5-2.5-7-2.5-10-1.5z"/><path d="M22 5.5c-3-1-6.5-1-10 1.5v13c3.5-2.5 7-2.5 10-1.5z"/></svg><span class="lb-o">본문 펼치기</span><span class="lb-c">본문 접기</span></span><span class="sm">${p.links[0].t} · 쉬운 번역</span></summary>
+      <div class="bt">${qm(p.bt)}
         <div class="bt-foot"><p>헬라어 원문(SBLGNT)을 이 페이지에서 쉬운 우리말로 옮긴 번역입니다. 공식 번역이 아닙니다.</p><p class="bt-links">${links}</p></div>
       </div>
     </details>
@@ -361,9 +373,11 @@ function render(n, e){
         <a href="${sae}" target="_blank" rel="noopener">새번역 ↗</a>
       </div>
       <div class="ep-actions">
-        <button type="button" class="btn done-btn" id="done-btn" aria-pressed="${isDone}">${isDone ? "✓ 다 읽었어요" : "다 읽음으로 표시"}</button>
-        <button type="button" class="btn" id="prev-btn" ${prev ? "" : "disabled"}>← 이전 화</button>
-        <button type="button" class="btn" id="next-btn" ${next ? "" : "disabled"}>다음 화 →</button>
+        ${next ? `<button type="button" class="btn next-btn" id="next-btn"><span>다음 화</span><span class="nb-t">${next}화 · ${book.titles[next]}</span><span class="nb-a" aria-hidden="true">→</span></button>` : ""}
+        <div class="ep-sub">
+          <button type="button" class="btn done-btn" id="done-btn" aria-pressed="${isDone}">${isDone ? "✓ 다 읽었어요" : "다 읽음으로 표시"}</button>
+          <button type="button" class="btn" id="prev-btn" ${prev ? "" : "disabled"}>← 이전 화</button>
+        </div>
       </div>
     </footer>`;
   $("done-btn").addEventListener("click", () => {
