@@ -4,7 +4,9 @@ from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE)
 from books import BOOKS, NAMES
-GAE = 'https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book={}&chap={}&sec={}'
+from urllib.parse import quote
+# 본문 링크는 인용과 같은 개역한글판(저작권 만료)으로, 한국어 위키문헌의 장 제목으로 바로 간다
+def han_url(bid, c, v=None): return f'https://ko.wikisource.org/wiki/{quote("개역한글판")}/{quote(NAMES[bid])}#{quote(f"{c}장")}'
 
 def load(path):
     spec = importlib.util.spec_from_file_location(os.path.basename(path)[:-3], path)
@@ -54,9 +56,9 @@ def build_book(b, warn):
         e = m.EP; pts = []
         for p in m.PTS:
             lab, c, v = ref_label(b['name'], p['r'])
-            links = [{'t': lab, 'u': GAE.format(b['id'], c, v)}]
+            links = [{'t': lab, 'u': han_url(b['id'], c, v)}]
             if p.get('also'):
-                ob, oc, ov, ol = p['also']; links.append({'t': f'그림 속 장면: {NAMES[ob]} {ol}', 'u': GAE.format(ob, oc, ov)})
+                ob, oc, ov, ol = p['also']; links.append({'t': f'그림 속 장면: {NAMES[ob]} {ol}', 'u': han_url(ob, oc, ov)})
             bt, miss = passage(p['r'], tx, lastv)
             for sc, vs in segs(p['r'], lastv): covered.update(f'{sc}:{x}' for x in vs)
             rec = {'r': p['r'], 't': p['t'], 'd': mark(p['d']), 'me': p['me']}

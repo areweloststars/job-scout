@@ -1,10 +1,11 @@
-# 장 원본 점검: 번역한 절이 SBLGNT와 같은지, 인용이 개역개정과 같은지, 헬라어·히브리어 표기가 원문에 있는지, 그림 파일이 있는지
+# 장 원본 점검: 번역한 절이 SBLGNT와 같은지, 인용이 개역한글판과 같은지, 헬라어·히브리어 표기가 원문에 있는지, 그림 파일이 있는지
 import glob, importlib.util, json, os, re, sys, unicodedata
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.dirname(os.path.dirname(HERE))
 REF = os.environ.get('GOSPEL_REF', '/tmp/claude-0/-home-user-job-scout/994516b7-6db5-5528-99fd-98d7f06f74c4/scratchpad/ref/dl')
 MORPH = {'mat': '61-Mt', 'mrk': '62-Mk', 'luk': '63-Lk', 'jhn': '64-Jn'}
 book = sys.argv[1]
-G = json.load(open(f'{REF}/gae-{book}.json', encoding='utf-8')); S = json.load(open(f'{REF}/sbl-{book}.json', encoding='utf-8'))
+# 인용 대조는 개역한글판(dl_han.py로 받음)
+G = json.load(open(f'{REF}/han-{book}.json', encoding='utf-8')); S = json.load(open(f'{REF}/sbl-{book}.json', encoding='utf-8'))
 norm = lambda s: re.sub(r'[\W_]', '', s)
 def gnorm(w):
     w = unicodedata.normalize('NFD', w.lower()); w = ''.join(ch for ch in w if unicodedata.category(ch) != 'Mn')
@@ -40,12 +41,12 @@ for c in sorted(chs):
     if want - have: errs.append(f'{tag} 번역 빠짐 {sorted(want - have, key=lambda k: int(k.split(":")[1]))}')
     if have - want: errs.append(f'{tag} SBLGNT에 없는 절 {sorted(have - want)}')
     ok, src = gae_has(m.EP['verse'][1], m.EP['verse'][0])
-    if not ok: errs.append(f'{tag} 핵심 구절 ≠ 개역개정: {src}')
+    if not ok: errs.append(f'{tag} 핵심 구절 ≠ 개역한글: {src}')
     texts = [('EP', m.EP[k]) for k in ('fun', 'plot', 'mission') if k in m.EP] + [(p['r'], p[k]) for p in m.PTS for k in ('d', 'me') if p.get(k)]
     for p in m.PTS:
         if p.get('q'):
             ok, src = gae_has(p['q'][0], p['q'][1])
-            if not ok: errs.append(f'{tag} {p["r"]} q {p["q"][0]} ≠ 개역개정: {src}')
+            if not ok: errs.append(f'{tag} {p["r"]} q {p["q"][0]} ≠ 개역한글: {src}')
         if p.get('img') and not p.get('src') and not os.path.exists(f'{REPO}/{p["img"]}'): errs.append(f'{tag} {p["r"]} 그림 없음 {p["img"]}')
     for p in m.PTS:  # 요점마다 펼치는 본문 안에서 따옴표가 짝을 이루는지
         vs = [k for k in m.TX if p['r'].split(':')[0] == k.split(':')[0]]
