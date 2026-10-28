@@ -146,6 +146,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .next-btn .nb-t{flex:1;min-width:0;font-size:.8125rem;opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .next-btn .nb-a{flex:none;font-size:1.25rem;line-height:1}
 .btn.next-btn:hover{filter:brightness(1.1)}
+#reader{scroll-margin-top:16px}
 .btn{font-family:var(--ui);font-size:.875rem;line-height:1.2;padding:10px 16px;border-radius:999px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);cursor:pointer}
 .btn:not(:disabled):hover{border-color:var(--ink-2)}
 .btn:disabled{opacity:.4;cursor:default}
@@ -390,7 +391,7 @@ function render(n, e){
     b.textContent = on ? "✓ 다 읽었어요" : "다 읽음으로 표시";
   });
   if (prev) $("prev-btn").addEventListener("click", () => select(prev, true));
-  if (next) $("next-btn").addEventListener("click", () => select(next, "first"));  // 다음 화는 첫 요점의 제목과 그림부터 보이게(사용자 요청)
+  if (next) $("next-btn").addEventListener("click", () => select(next, "first"));
 }
 
 async function select(n, scroll){
@@ -404,7 +405,7 @@ async function select(n, scroll){
     const e = await loadChapter(b.id, n);
     if (book === b && cur === n) {
       render(n, e);
-      const first = scroll === "first" && panel.querySelector(".pt");
+      const first = scroll === "first" && $("reader");  // 다음 화는 진행 막대와 화 선택이 있는 카드 맨 위부터 보이게(사용자 요청)
       if (first) {
         const go = () => { try { first.scrollIntoView({behavior: "instant", block: "start"}); } catch (_) { first.scrollIntoView(true); } };  // 긴 페이지를 훑어 내려가지 않고 바로 첫 요점으로
         go();
