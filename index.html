@@ -112,7 +112,8 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .me{padding:14px 16px 15px;background:var(--gold-t);border-radius:3px}
 .me .lab{color:var(--gold)}
 .bible summary{list-style:none;cursor:pointer;display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;padding:12px 0;font-family:var(--ui);line-height:1.45}
-.bt-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;background:var(--lake);color:var(--paper);font-size:1rem;box-shadow:0 8px 18px -12px var(--shadow)}
+.bt-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;background:var(--gold-t);color:var(--gold);border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 35%,transparent);font-size:1rem;transition:border-color .15s ease}  /* 책장과 어울리는 금박 빛(짙은 초록이 눈에 거슬린다는 사용자 요청) */
+.bible summary:hover .bt-btn{border-color:var(--gold)}
 .bt-btn svg{width:18px;height:18px;flex:none}
 .bt-btn::after{content:"";flex:none;width:7px;height:7px;margin-left:2px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .2s ease}
 .bible[open] .bt-btn::after{transform:rotate(225deg) translateY(-1px)}
