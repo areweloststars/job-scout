@@ -147,6 +147,9 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .next-btn .nb-a{flex:none;font-size:1.25rem;line-height:1}
 .btn.next-btn:hover{filter:brightness(1.1)}
 #reader{scroll-margin-top:16px}
+.to-top{display:flex;justify-content:center;margin:4px 0 36px}  /* 페이지 맨 아래의 맨 위로 버튼(사용자 요청) */
+.top-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:999px;background:var(--gold-t);color:var(--gold);border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 35%,transparent);font-family:var(--ui);font-size:1rem;cursor:pointer}
+.top-btn:hover{border-color:var(--gold)}
 .btn{font-family:var(--ui);font-size:.875rem;line-height:1.2;padding:10px 16px;border-radius:999px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);cursor:pointer}
 .btn:not(:disabled):hover{border-color:var(--ink-2)}
 .btn:disabled{opacity:.4;cursor:default}
@@ -210,6 +213,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
     <p>그림: 모두 저작권이 만료된 퍼블릭 도메인(CC0 포함) 작품이며, 화면에 맞게 크기를 줄였습니다. 대부분은 제임스 티소의 〈예수의 생애〉 연작(1886–94, <a href="https://www.brooklynmuseum.org/" target="_blank" rel="noopener">브루클린 미술관</a> 소장)이고, 이름난 화가들의 작품은 <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener">위키미디어 공용</a>에서 가져왔습니다.</p>
     <details class="credits"><summary>그 밖의 그림 출처</summary><ul id="credits"></ul></details>
   </footer>
+  <p class="to-top"><button type="button" class="top-btn" id="top-btn"><span aria-hidden="true">↑</span> 맨 위로</button></p>
 </div>
 
 <script src="data/meta.js"></script>
@@ -428,6 +432,7 @@ function route(){
   return true;
 }
 window.addEventListener("hashchange", route);
+$("top-btn").addEventListener("click", () => scrollTo({top: 0}));
 if (!route()) {
   const last = store.get("gospels.last", null);
   setBook(last && byId[last.b] ? last.b : "mrk");
