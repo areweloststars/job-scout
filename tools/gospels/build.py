@@ -81,7 +81,7 @@ def build_book(b, warn):
 warn, books, credits, total = [], [], [], {}
 for b in BOOKS:
     titles, cr, nv = build_book(b, warn); credits += cr; total[b['id']] = (len(titles), nv)
-    meta = {k: b[k] for k in ('id', 'name', 'author', 'subj', 'topic', 'kicker', 'chapters', 'abbr')}
+    meta = {k: b[k] for k in ('id', 'name', 'author', 'kicker', 'chapters', 'abbr')}
     if b['plate']:
         w, h = Image.open(f'{REPO}/{b["plate"]["img"]}').size; meta['plate'] = {**b['plate'], 'w': w, 'h': h}
     meta['why'] = [list(x) for x in b['why']]; meta['titles'] = titles; books.append(meta)

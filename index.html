@@ -185,14 +185,14 @@ h1,h2,h3{margin:0;text-wrap:balance}
 
   <div class="leaf">
     <section class="sec" id="why">
-      <h2 id="why-h">마가는 왜 썼을까</h2>
+      <h2 id="why-h">마가복음 한눈에</h2>
       <ul class="intent" id="why-list"></ul>
     </section>
   </div>
 
   <footer class="sources" id="sources">
     <h2>출처</h2>
-    <p>성경 본문: 대한성서공회 개역개정·새번역(인용은 개역개정), 헬라어 SBLGNT·NA28, 히브리어 WLC. 저자 전승: 유세비우스 『교회사』 3.39.15–16, 이레네우스 『이단 논박』 3.1.1. 읽는 시간은 분당 약 475자로 자동 계산한 어림값입니다. 장별 논점은 개역개정 소제목을 기준으로 나눴고, 헬라어는 SBLGNT, 히브리어는 WLC와 대조했습니다.</p>
+    <p>성경 본문: 대한성서공회 개역개정·새번역(인용은 개역개정), 헬라어 SBLGNT·NA28, 히브리어 WLC. 읽는 시간은 분당 약 475자로 자동 계산한 어림값입니다. 장별 논점은 개역개정 소제목을 기준으로 나눴고, 헬라어는 SBLGNT, 히브리어는 WLC와 대조했습니다.</p>
     <p>‘본문 펼치기’의 쉬운 번역은 헬라어 원문 SBL Greek New Testament(SBLGNT, Society of Biblical Literature)를 이 페이지에서 쉬운 우리말로 옮긴 것으로, 공식 번역이 아닙니다.</p>
     <p>그림: 모두 저작권이 만료된 퍼블릭 도메인(CC0 포함) 작품이며, 화면에 맞게 크기를 줄였습니다. 대부분은 제임스 티소의 〈예수의 생애〉 연작(1886–94, <a href="https://www.brooklynmuseum.org/" target="_blank" rel="noopener">브루클린 미술관</a> 소장)이고, 이름난 화가들의 작품은 <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener">위키미디어 공용</a>에서 가져왔습니다.</p>
     <details class="credits"><summary>그 밖의 그림 출처</summary><ul id="credits"></ul></details>
@@ -272,8 +272,8 @@ function setBook(id){
   $("plate").hidden = !pl;
   if (pl) { const im = $("plate-img"); im.src = pl.img; im.width = pl.w; im.height = pl.h; im.alt = pl.alt; $("plate-cap").textContent = pl.cap; }
   $("book-title").innerHTML = `${book.name} <em>${book.chapters}</em>부작`;
-  $("lede").textContent = `하루 한 화. 장마다 ${book.subj} 전하려는 요점을 그림과 함께 따라가고, 본문을 펼쳐 직접 읽습니다. 진도는 이 기기에 저장됩니다.`;
-  $("why-h").textContent = `${book.topic} 왜 썼을까`;
+  $("lede").textContent = `하루 한 화. 장마다 본문의 요점을 그림과 함께 따라가고, 본문을 펼쳐 직접 읽습니다. 진도는 이 기기에 저장됩니다.`;
+  $("why-h").textContent = `${book.name} 한눈에`;
   $("why-list").innerHTML = book.why.map(([k, v]) => `<li><b>${k}</b><span>${v}</span></li>`).join("");
   tabs.innerHTML = "";
   for (let n = 1; n <= book.chapters; n++) {
@@ -336,7 +336,7 @@ function pointHTML(n, p, i){
 function render(n, e){
   const isDone = done.has(n);
   const pts = e.points;
-  const text = [e.verse[0], e.fun, e.intent, e.mission, ...pts.flatMap(p => [p.t, p.q ? p.q[1] : "", p.d, p.me])].join("").replace(/<[^>]+>/g, "");
+  const text = [e.verse[0], e.fun, e.plot || e.intent, e.mission, ...pts.flatMap(p => [p.t, p.q ? p.q[1] : "", p.d, p.me])].join("").replace(/<[^>]+>/g, "");
   const mins = Math.max(1, Math.round(text.length / 475));
   const gae = `https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=${book.id}&chap=${n}`;
   const sae = `https://www.bskorea.or.kr/bible/korbibReadpage.php?version=SAENEW&book=${book.id}&chap=${n}`;
@@ -352,7 +352,7 @@ function render(n, e){
       <blockquote class="verse"><p>${e.verse[0]}</p><cite>${e.verse[1]} · 개역개정</cite></blockquote>
       <div class="rows">
         <section><p class="lab">재밌는 포인트</p><p>${e.fun}</p></section>
-        <section><p class="lab">${book.author}의 의도</p><p>${e.intent}</p></section>
+        ${e.plot ? `<section><p class="lab">줄거리</p><p>${e.plot}</p></section>` : `<section><p class="lab">${book.author}의 의도</p><p>${e.intent}</p></section>`}
         <section class="mission"><p class="lab">오늘의 미션 <span class="chip">${METHODS[e.m]}</span></p><p>${e.mission}</p></section>
       </div>
     </section>
