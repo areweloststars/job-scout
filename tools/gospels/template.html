@@ -761,7 +761,8 @@ if (!route()) {
     timer = setTimeout(() => {
       const info = readSel(); if (!info){ fab.hidden = true; return; }
       picked = info; const ref = refOf(info), x = span(info);
-      fabRef.textContent = ref ? ref + " ↗" : ""; fabRef.hidden = !ref; if (x) fabRef.href = gaeUrl(x.c1, x.v1); fabCopy.hidden = !(ref && coarse());  // 휴대폰에는 오른쪽 클릭이 없어 복사 단추를 함께
+      fabRef.textContent = ref;  // ↗ 표시 없이(사용자 요청)
+      fabRef.hidden = !ref; if (x) fabRef.href = gaeUrl(x.c1, x.v1); fabCopy.hidden = !(ref && coarse());  // 휴대폰에는 오른쪽 클릭이 없어 복사 단추를 함께
       place(fab, info);
     }, 220);
   });
