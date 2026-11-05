@@ -50,7 +50,9 @@ h1,h2,h3{margin:0;text-wrap:balance}
 
 /* 속표지 */
 .front{display:grid;gap:16px}
-.front-bar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.front-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 12px}
+.front-acts{display:flex;gap:8px;margin-left:auto}  /* AI에게 물어보기 + 밤에 읽기(사용자 요청) */
+@media (max-width:380px){.front-bar{column-gap:8px}.front-bar .kicker{letter-spacing:.18em}.front-bar .mode{padding:8px 11px}}  /* 좁은 휴대폰에서도 한 줄로 */
 .kicker{font-family:var(--greek);font-size:.8125rem;letter-spacing:.26em;color:var(--gold)}
 .mode{font-family:var(--ui);font-size:.8125rem;line-height:1;padding:8px 14px;border-radius:999px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);cursor:pointer}
 .mode:hover{border-color:var(--ink-2)}
@@ -206,7 +208,10 @@ h1,h2,h3{margin:0;text-wrap:balance}
   <header class="front">
     <div class="front-bar">
       <p class="kicker" lang="grc" id="kicker">ΚΑΤΑ ΜΑΡΚΟΝ</p>
-      <button type="button" class="mode" id="read-mode" aria-pressed="false">밤에 읽기</button>
+      <div class="front-acts">
+        <button type="button" class="mode" id="ask-top">AI에게 물어보기</button>
+        <button type="button" class="mode" id="read-mode" aria-pressed="false">밤에 읽기</button>
+      </div>
     </div>
     <nav class="books" id="books" aria-label="복음서 고르기"></nav>
     <figure class="plate" id="plate" hidden>
@@ -484,7 +489,7 @@ if (!route()) {
 }
 </script>
 <script>
-/* Claude에게 묻기(사용자 요청). 글을 고르거나(휴대폰은 길게 눌러, 컴퓨터는 드래그나 오른쪽 클릭) 화 맨 아래 ‘AI에게 물어보기’ 단추로 묻는다.
+/* Claude에게 묻기(사용자 요청). 글을 고르거나(휴대폰은 길게 눌러, 컴퓨터는 드래그나 오른쪽 클릭) 맨 위와 화 맨 아래의 ‘AI에게 물어보기’ 단추로 묻는다.
    Claude 앱(아티팩트)에서는 이 자리에서 Claude Opus 5.5가 답하고(sample 기능, 묻는 사람의 Claude 사용량),
    그 밖의 곳(GitHub Pages 등)에서는 질문을 복사해 Claude 앱으로 넘긴다. */
 (() => {
@@ -672,8 +677,8 @@ if (!route()) {
   });
   input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing){ e.preventDefault(); form.requestSubmit(); } });
   $("ask-x").addEventListener("click", closeAsk);
-  // 화 맨 아래 ‘AI에게 물어보기’: 글을 고르지 않고, 이 화의 줄거리를 함께 보낸다
-  document.addEventListener("click", e => { if (e.target instanceof Element && e.target.closest("#ask-ch")) openAsk(null); });
+  // 맨 위와 화 맨 아래 ‘AI에게 물어보기’: 글을 고르지 않고, 지금 읽는 화의 줄거리를 함께 보낸다
+  document.addEventListener("click", e => { if (e.target instanceof Element && e.target.closest("#ask-top, #ask-ch")) openAsk(null); });
 
   document.addEventListener("selectionchange", () => {
     clearTimeout(timer);
