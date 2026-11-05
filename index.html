@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Song+Myung&family=Gentium+Book+Plus&family=Noto+Serif+Hebrew&display=swap">
 <style>
-/* Layout: 속표지(복음서 고르기, 그림 한 점, 제목) 다음에 갈릴리 석회암 바탕 위로 펼친 책장. 책장 1은 장 목차와 오늘의 화, 책장 2는 책 한눈에(첫 줄·줄거리·마지막). 기본은 낮, 밤에 읽기는 버튼으로 고른다. */
+/* Layout: 속표지(복음서 고르기, 그림 한 점, 제목) 다음에 갈릴리 석회암 바탕 위로 펼친 책장. 책장 1은 장 목차와 오늘의 화, 책장 아래는 출처. 기본은 낮, 밤에 읽기는 버튼으로 고른다. */
 :root{
   --ground:#E5E0D3;   /* 갈릴리 석회암 바탕 */
   --paper:#FBF8F1;    /* 책장 */
@@ -136,16 +136,16 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .verse p{font-family:var(--display);font-size:clamp(1.3rem,4.8vw,1.6rem);line-height:1.6}
 .verse cite{font-family:var(--ui);font-style:normal;font-size:.8125rem;color:var(--ink-2)}
 .rows{display:grid;gap:18px}
-.mission{background:var(--lake-t);border-radius:3px;padding:16px}
-.chip{display:inline-block;margin-left:6px;padding:1px 10px;border-radius:999px;background:var(--paper);color:var(--lake);font-size:.75rem;text-decoration:none;letter-spacing:0}
 .ep-foot{display:grid;gap:14px;margin-top:30px;padding-top:20px;border-top:1px solid var(--rule)}
 .read-links{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--ui);font-size:.875rem}
 .ep-actions{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
 .ep-sub{display:flex;flex-wrap:wrap;gap:8px}
-.btn.next-btn{display:flex;align-items:center;gap:10px;width:100%;padding:16px 20px;border:0;border-radius:14px;background:var(--lake);color:var(--paper);text-align:left;font-size:1.0625rem;box-shadow:0 10px 22px -14px var(--shadow)}
-.next-btn .nb-t{flex:1;min-width:0;font-size:.8125rem;opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.next-btn .nb-a{flex:none;font-size:1.25rem;line-height:1}
-.btn.next-btn:hover{filter:brightness(1.1)}
+.btn.next-btn{display:flex;align-items:center;gap:12px;width:100%;padding:13px 18px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 35%,transparent);border-radius:14px;background:var(--gold-t);color:var(--ink);text-align:left}  /* 다음 화: 짙은 초록 막대 대신 책장 색 카드로(사용자 요청) */
+.next-btn .nb-txt{flex:1;min-width:0;display:grid;gap:3px}
+.next-btn .nb-k{font-size:.8125rem;color:var(--gold)}
+.next-btn .nb-t{font-size:1rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.next-btn .nb-a{flex:none;font-size:1.25rem;line-height:1;color:var(--gold)}
+.btn.next-btn:hover{border-color:var(--gold)}
 #reader{scroll-margin-top:16px}
 .to-top{display:flex;justify-content:center;margin:4px 0 36px}  /* 페이지 맨 아래의 맨 위로 버튼(사용자 요청) */
 .top-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:999px;background:var(--gold-t);color:var(--gold);border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 35%,transparent);font-family:var(--ui);font-size:1rem;cursor:pointer}
@@ -156,12 +156,6 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .btn.done-btn[aria-pressed="true"]{background:var(--lake);border-color:var(--lake);color:var(--paper)}
 
 /* 책장 2 */
-.sec{display:grid;gap:16px}
-.sec + .sec{margin-top:40px;padding-top:34px;border-top:1px solid var(--rule)}
-.sec h2{font-family:var(--display);font-weight:400;font-size:clamp(1.6rem,5.6vw,2.1rem);line-height:1.3}
-.intent{margin:0;padding:0;list-style:none;display:grid;gap:12px}
-.intent li{display:grid;grid-template-columns:60px minmax(0,1fr);gap:10px}
-.intent b{font-family:var(--ui);font-weight:400;font-size:.875rem;letter-spacing:.06em;color:var(--gold);padding-top:.25em}
 
 /* 출처 */
 .sources{display:grid;gap:10px;font-family:var(--ui);font-size:.8125rem;line-height:1.8;color:var(--ink-2);padding-inline:4px}
@@ -170,15 +164,16 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .credits ul{margin:6px 0 0;padding-left:18px}
 /* 본문을 골라 Claude에게 묻기(사용자 요청). 고르면 떠오르는 버튼, 컴퓨터의 오른쪽 클릭 메뉴, 묻고 답하는 창 */
 .ask-fab{position:absolute;z-index:40;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--gold);font-family:var(--ui);font-size:.9375rem;line-height:1.2;box-shadow:0 10px 24px -12px var(--shadow);cursor:pointer}
-.ask-fab svg{width:16px;height:16px;flex:none}
-.ask-fab:focus-visible,.ask-menu button:focus-visible,.ask-x:focus-visible,.ask-chips button:focus-visible,.ask-send:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.ask-fab svg,.ask-open svg{width:16px;height:16px;flex:none}
+.ask-open{position:fixed;z-index:39;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--gold);font-family:var(--ui);font-size:.9375rem;line-height:1.2;box-shadow:0 10px 24px -12px var(--shadow);cursor:pointer}
+.ask-fab:focus-visible,.ask-menu button:focus-visible,.ask-x:focus-visible,.ask-open:focus-visible,.ask-send:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .ask-menu{position:absolute;z-index:41;min-width:180px;padding:6px;border-radius:12px;border:1px solid var(--rule);background:var(--paper);box-shadow:0 16px 32px -16px var(--shadow);display:grid}
 .ask-menu button{all:unset;padding:9px 12px;border-radius:8px;font-family:var(--ui);font-size:.9375rem;color:var(--ink);cursor:pointer}
 .ask-menu button:hover{background:var(--gold-t)}
 .ask{position:fixed;z-index:50;right:0;bottom:0;display:flex;flex-direction:column;background:var(--paper);color:var(--ink);box-shadow:0 -12px 40px -16px var(--shadow);font-family:var(--ui)}
 @media (max-width:899px){.ask{left:0;max-height:78vh;border-radius:18px 18px 0 0;border-top:1px solid var(--rule)}}
 @media (min-width:900px){.ask{top:0;width:400px;border-left:1px solid var(--rule)}}
-.ask[hidden],.ask-fab[hidden],.ask-menu[hidden]{display:none}
+.ask[hidden],.ask-fab[hidden],.ask-menu[hidden],.ask-open[hidden]{display:none}
 .ask-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 12px 10px 16px;border-bottom:1px solid var(--rule)}
 .ask-head h2{margin:0;font-family:var(--ui);font-size:1rem;font-weight:400;color:var(--gold)}
 .ask-x{all:unset;width:36px;height:36px;display:grid;place-items:center;border-radius:999px;font-size:1.375rem;line-height:1;color:var(--ink-2);cursor:pointer}
@@ -189,14 +184,15 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .ask-log{display:grid;gap:10px}
 .ask-msg{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.75;font-size:.96875rem}
 .ask-msg.me{justify-self:end;max-width:85%;padding:8px 12px;border-radius:14px 14px 4px 14px;background:var(--lake-t)}
-.ask-msg.ai{font-family:var(--body)}
+.ask-msg.ai{white-space:normal;font-family:system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif}  /* 답은 평소 Claude 앱처럼 보통 글씨체로(사용자 요청) */
+.ask-msg.ai p,.ask-msg.ai ul,.ask-msg.ai ol{margin:0 0 .6em}.ask-msg.ai>:last-child{margin-bottom:0}.ask-msg.ai ul,.ask-msg.ai ol{padding-left:1.3em}.ask-msg.ai .h{font-weight:600}
+.ask-msg.ai code{font-size:.9em;padding:0 .25em;border-radius:4px;background:var(--gold-t)}
+.ask-msg.model{font-size:.75rem;color:var(--ink-2)}
 .ask-msg.wait{color:var(--ink-2)}
 .ask-msg.note{font-size:.8125rem;line-height:1.6;color:var(--ink-2)}
 .ask-msg.note a{color:var(--lake)}
 .ask-copy{box-sizing:border-box;width:100%;min-height:8em;padding:8px 10px;border-radius:10px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);font:inherit;font-size:.8125rem}
 .ask-form{margin:0;padding:10px 16px 14px;border-top:1px solid var(--rule);display:grid;gap:8px}
-.ask-chips{display:flex;flex-wrap:wrap;gap:6px}
-.ask-chips button{all:unset;padding:5px 11px;border-radius:999px;background:var(--lake-t);color:var(--lake);font-size:.8125rem;cursor:pointer}
 .ask-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:end}
 .ask-row textarea{box-sizing:border-box;width:100%;resize:none;padding:9px 11px;border-radius:12px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);font:inherit;font-size:1rem;line-height:1.5}
 .ask-row textarea:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
@@ -233,12 +229,6 @@ h1,h2,h3{margin:0;text-wrap:balance}
     <article class="ep" id="ep" aria-live="polite"></article>
   </main>
 
-  <div class="leaf">
-    <section class="sec" id="why">
-      <h2 id="why-h">마가복음 한눈에</h2>
-      <ul class="intent" id="why-list"></ul>
-    </section>
-  </div>
 
   <footer class="sources" id="sources">
     <h2>출처</h2>
@@ -250,6 +240,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
   <p class="to-top"><button type="button" class="top-btn" id="top-btn"><span aria-hidden="true">↑</span> 맨 위로</button></p>
 </div>
 
+<button type="button" class="ask-open" id="ask-open"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.1 6.4 6.4 2.1-6.4 2.1L12 19.5l-2.1-6.4L3.5 11l6.4-2.1z"/></svg>Claude에게 묻기</button>
 <button type="button" class="ask-fab" id="ask-fab" hidden><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.1 6.4 6.4 2.1-6.4 2.1L12 19.5l-2.1-6.4L3.5 11l6.4-2.1z"/></svg>Claude에게 묻기</button>
 <div class="ask-menu" id="ask-menu" role="menu" hidden>
   <button type="button" role="menuitem" data-act="ask">Claude에게 묻기</button>
@@ -262,13 +253,8 @@ h1,h2,h3{margin:0;text-wrap:balance}
     <div class="ask-log" id="ask-log" aria-live="polite"></div>
   </div>
   <form class="ask-form" id="ask-form">
-    <div class="ask-chips" id="ask-chips">
-      <button type="button" data-q="이 부분은 무슨 뜻인가요?">무슨 뜻인가요?</button>
-      <button type="button" data-q="여기 나오는 낱말의 뜻을 알려 주세요.">낱말 뜻</button>
-      <button type="button" data-q="이 장면의 앞뒤 상황을 성경 본문에서 알려 주세요.">앞뒤 상황</button>
-    </div>
     <div class="ask-row"><textarea id="ask-in" rows="2" placeholder="궁금한 것을 적어 보세요" aria-label="질문"></textarea><button type="submit" class="ask-send" id="ask-send">묻기</button></div>
-    <p class="ask-note">답은 Claude가 쓴 것이라 틀릴 수 있어요. 물을 때마다 내 Claude 사용량이 조금씩 쓰입니다.</p>
+    <p class="ask-note">본문이 아닌 것도 물어볼 수 있어요. 답은 Claude가 쓴 것이라 틀릴 수 있고, 물을 때마다 내 Claude 사용량이 쓰입니다.</p>
   </form>
 </aside>
 
@@ -293,7 +279,6 @@ modeBtn.addEventListener("click", () => {
   setMode(m); store.set("gospels.mode", m);
 });
 
-const METHODS = {aloud: "소리 내어 읽기", scene: "장면 속으로", soap: "SOAP 노트", dbs: "질문 세 개"};
 const BOOKS = META.books;
 const byId = Object.fromEntries(BOOKS.map(b => [b.id, b]));
 // 예전 ‘마가복음 16부작’에서 읽은 기록을 옮겨 온다.
@@ -346,8 +331,6 @@ function setBook(id){
   if (pl) { const im = $("plate-img"); im.src = pl.img; im.width = pl.w; im.height = pl.h; im.alt = pl.alt; $("plate-cap").textContent = pl.cap; }
   $("book-title").innerHTML = `${book.name} <em>${book.chapters}</em>부작`;
   $("lede").textContent = `하루 한 화. 장마다 본문의 요점을 그림과 함께 따라가고, 본문을 펼쳐 직접 읽습니다. 진도는 이 기기에 저장됩니다.`;
-  $("why-h").textContent = `${book.name} 한눈에`;
-  $("why-list").innerHTML = book.why.map(([k, v]) => `<li><b>${k}</b><span>${v}</span></li>`).join("");
   tabs.innerHTML = "";
   for (let n = 1; n <= book.chapters; n++) {
     const t = document.createElement("button");
@@ -401,7 +384,7 @@ function pointHTML(n, p, i){
     <div class="me"><p class="lab">나에게</p><p>${p.me}</p></div>
     <details class="bible"><summary><span class="bt-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5.5c3-1 6.5-1 10 1.5v13c-3.5-2.5-7-2.5-10-1.5z"/><path d="M22 5.5c-3-1-6.5-1-10 1.5v13c3.5-2.5 7-2.5 10-1.5z"/></svg><span class="lb-o">본문 펼치기</span><span class="lb-c">본문 접기</span></span><span class="sm">${p.links[0].t} · 쉬운 번역</span></summary>
       <div class="bt">${qm(p.bt)}
-        <div class="bt-foot"><p>헬라어 원문(SBLGNT)을 이 페이지에서 쉬운 우리말로 옮긴 번역입니다. 공식 번역이 아닙니다.</p><p>본문을 길게 누르거나(휴대폰) 드래그해서(컴퓨터) 고르면 ‘Claude에게 묻기’ 버튼이 나옵니다. 컴퓨터에서는 절 위에서 오른쪽 클릭해도 됩니다.</p><p class="bt-links">${links}</p></div>
+        <div class="bt-foot"><p>헬라어 원문(SBLGNT)을 이 페이지에서 쉬운 우리말로 옮긴 번역입니다. 공식 번역이 아닙니다.</p><p>본문을 길게 누르거나(휴대폰) 드래그해서(컴퓨터) 고르면 ‘Claude에게 묻기’ 버튼이 나옵니다. 컴퓨터에서는 절 위에서 오른쪽 클릭해도 됩니다. 아무것도 고르지 않고 물을 때는 화면 오른쪽 아래 ‘Claude에게 묻기’를 누르세요.</p><p class="bt-links">${links}</p></div>
       </div>
     </details>
   </li>`;
@@ -410,7 +393,7 @@ function pointHTML(n, p, i){
 function render(n, e){
   const isDone = done.has(n);
   const pts = e.points;
-  const text = [e.verse[0], e.fun, e.plot, e.mission, ...pts.flatMap(p => [p.t, p.q ? p.q[1] : "", p.d, p.me])].join("").replace(/<[^>]+>/g, "");
+  const text = [e.verse[0], e.fun, e.plot, ...pts.flatMap(p => [p.t, p.q ? p.q[1] : "", p.d, p.me])].join("").replace(/<[^>]+>/g, "");
   const mins = Math.max(1, Math.round(text.length / 475));
   const han = `https://ko.wikisource.org/wiki/${encodeURIComponent("개역한글판")}/${encodeURIComponent(book.name)}#${encodeURIComponent(n + "장")}`;  // 인용과 같은 개역한글판
   const sae = `https://www.bskorea.or.kr/bible/korbibReadpage.php?version=SAENEW&book=${book.id}&chap=${n}`;
@@ -427,7 +410,6 @@ function render(n, e){
       <div class="rows">
         <section><p class="lab">재밌는 포인트</p><p>${e.fun}</p></section>
         <section><p class="lab">줄거리</p><p>${e.plot}</p></section>
-        <section class="mission"><p class="lab">오늘의 미션 <span class="chip">${METHODS[e.m]}</span></p><p>${e.mission}</p></section>
       </div>
     </section>
     <footer class="ep-foot">
@@ -436,7 +418,7 @@ function render(n, e){
         <a href="${sae}" target="_blank" rel="noopener">새번역 ↗</a>
       </div>
       <div class="ep-actions">
-        ${next ? `<button type="button" class="btn next-btn" id="next-btn"><span>다음 화</span><span class="nb-t">${next}화 · ${book.titles[next]}</span><span class="nb-a" aria-hidden="true">→</span></button>` : ""}
+        ${next ? `<button type="button" class="btn next-btn" id="next-btn"><span class="nb-txt"><span class="nb-k">다음 화</span><span class="nb-t">${next}화 · ${book.titles[next]}</span></span><span class="nb-a" aria-hidden="true">→</span></button>` : ""}
         <div class="ep-sub">
           <button type="button" class="btn done-btn" id="done-btn" aria-pressed="${isDone}">${isDone ? "✓ 다 읽었어요" : "다 읽음으로 표시"}</button>
           <button type="button" class="btn" id="prev-btn" ${prev ? "" : "disabled"}>← 이전 화</button>
@@ -497,11 +479,13 @@ if (!route()) {
 }
 </script>
 <script>
-/* 본문을 골라 Claude에게 묻기(사용자 요청). Claude 앱에서 이 페이지를 열면 이 자리에서 답을 받고(sample 기능, 묻는 사람의 Claude 사용량),
+/* Claude에게 묻기(사용자 요청). 글을 고르거나(휴대폰은 길게 눌러, 컴퓨터는 드래그나 오른쪽 클릭) 오른쪽 아래 단추로 언제든 묻는다.
+   Claude 앱(아티팩트)에서는 이 자리에서 Claude Opus 5.5가 답하고(sample 기능, 묻는 사람의 Claude 사용량),
    그 밖의 곳(GitHub Pages 등)에서는 질문을 복사해 Claude 앱으로 넘긴다. */
 (() => {
-  const fab = $("ask-fab"), menu = $("ask-menu"), sheet = $("ask"), body = $("ask-body"), log = $("ask-log"),
-        quote = $("ask-quote"), refEl = $("ask-ref"), form = $("ask-form"), input = $("ask-in"), send = $("ask-send");
+  const opener = $("ask-open"), fab = $("ask-fab"), menu = $("ask-menu"), sheet = $("ask"), body = $("ask-body"), log = $("ask-log"),
+        selBox = sheet.querySelector(".ask-sel"), quote = $("ask-quote"), refEl = $("ask-ref"), form = $("ask-form"), input = $("ask-in"), send = $("ask-send");
+  const MODEL = "claude-opus-5-5";  // 사용자가 고른 모델. 못 쓰면 가장 뛰어난 등급(complex)이 대신 답한다
   const HIDE = ["not_granted", "sampling_disabled", "not_declared", "capability_disabled", "capability_removed"];
   const SAY = {
     rate_limited: "지금은 Claude 사용량이 많아요. 잠시 뒤에 다시 물어보세요.",
@@ -510,6 +494,7 @@ if (!route()) {
     empty_completion: "답이 비어 있어요. 질문을 조금 바꿔 보세요.",
     prompt_too_large: "고른 부분이 너무 길어요. 조금 줄여서 다시 물어보세요."
   };
+  const TIER = { complex: "가장 뛰어난 등급", default: "기본 등급", quick: "빠른 등급" };
   let sample = null, mode = "pending", ctx = null, turns = [], ctl = null, busy = false, picked = null, timer = 0;
   const coarse = () => matchMedia("(pointer: coarse)").matches;
   const label = () => { send.textContent = busy ? "멈추기" : mode === "copy" ? "복사해서 묻기" : "묻기"; };
@@ -519,14 +504,14 @@ if (!route()) {
     label();
   })();
 
-  // 고른 글이 이 화의 본문이나 설명 안에 있을 때만
+  // 고른 글: 묻는 창과 단추 말고는 페이지 어디서든
   function readSel(){
     const s = getSelection();
     if (!s || s.isCollapsed || !s.rangeCount) return null;
     const text = s.toString().replace(/\s+/g, " ").trim();
     if (text.length < 2) return null;
     const r = s.getRangeAt(0), n = r.commonAncestorContainer, el = n.nodeType === 1 ? n : n.parentElement;
-    if (!el || !el.closest("#ep") || el.closest("#ask, summary, button, a")) return null;
+    if (!el || !document.body.contains(el) || el.closest("#ask, #ask-open, #ask-fab, #ask-menu, summary, button, a, input, textarea")) return null;
     return { text, range: r.cloneRange(), el };
   }
   const cut = (t, n) => t.length > n ? t.slice(0, n) + "…" : t;
@@ -548,32 +533,59 @@ if (!route()) {
     const v1 = a ? parseInt(a.textContent, 10) : 0, v2 = b ? parseInt(b.textContent, 10) : 0;
     return v1 ? (v2 > v1 ? `${v1}–${v2}` : `${v1}`) : "";
   }
+  function chapter(){  // 지금 읽는 화
+    const name = book ? book.name : "";
+    const title = (panel.querySelector("h2")?.textContent || "").replace(/\s+/g, " ").replace(/^\d+화\s*/, "").trim();
+    let plot = "";
+    for (const lab of panel.querySelectorAll(".lab")) if (lab.textContent.trim() === "줄거리"){ plot = (lab.nextElementSibling?.textContent || "").trim(); break; }
+    return { name, where: cur ? `${name} ${cur}장` : name, title, plot };
+  }
   function context(info){
-    const pt = info.el.closest(".pt"), name = book ? book.name : "";
+    const ch = chapter();
+    if (!info) return { key: `ch|${ch.where}`, where: ch.where, title: ch.title, passage: ch.plot ? `이 장의 줄거리: ${cut(ch.plot, 800)}` : "", selected: "" };
+    const pt = info.el.closest(".pt");
     const r = pt ? (pt.querySelector(".pt-r")?.textContent || "").trim() : "";
-    const title = pt ? (pt.querySelector("h3")?.textContent || "").trim() : (panel.querySelector("h2")?.textContent || "").trim();
     const bt = info.el.closest(".bt");
-    let where = r ? `${name} ${r}` : `${name} ${cur}장`;
-    if (bt && r){ const vs = verses(bt, info.range); if (vs) where = `${name} ${r.split(":")[0]}:${vs}`; }
+    let where = r ? `${ch.name} ${r}` : ch.where;
+    if (bt && r){ const vs = verses(bt, info.range); if (vs) where = `${ch.name} ${r.split(":")[0]}:${vs}`; }
     const parts = [];
     if (pt){
       const key = (pt.querySelector(".vq p")?.textContent || "").trim();
       if (key) parts.push(`핵심 구절(개역한글): ${key}`);
       const text = plain(pt.querySelector(".bt"));
-      if (text) parts.push(`쉬운 번역(헬라어 원문에서 옮김), ${name} ${r}: ${cut(text, 3500)}`);
+      if (text) parts.push(`쉬운 번역(헬라어 원문에서 옮김), ${ch.name} ${r}: ${cut(text, 3500)}`);
       if (!bt){ const d = (pt.querySelector(".d")?.textContent || "").trim(); if (d) parts.push(`이 페이지의 설명: ${cut(d, 1200)}`); }
-    } else parts.push(cut(plain(info.el.closest("section") || info.el), 1500));
-    return { key: (pt ? pt.id : "ep") + "|" + info.text, where, title, passage: parts.join("\n\n"), selected: cut(info.text, 1500) };
+    } else parts.push(cut(plain(info.el.closest("section, li, p") || info.el), 1500));
+    return { key: (pt ? pt.id : "page") + "|" + info.text, where, title: pt ? (pt.querySelector("h3")?.textContent || "").trim() : ch.title, passage: parts.join("\n\n"), selected: cut(info.text, 1500) };
   }
   const rules = c => [
-    "당신은 성경을 읽는 사람을 돕는 안내자입니다. 읽는 사람이 아래 [본문]에서 [고른 부분]을 두고 묻습니다.",
+    "당신은 성경 읽기를 돕는 안내자입니다. 읽는 사람이 이 페이지를 읽다가 묻습니다. [본문]이나 [고른 부분]이 있으면 그것을 바탕으로 답하고, 성경 본문과 상관없는 질문이면 그 질문에 맞게 답합니다.",
     "지켜 주세요:",
-    "- 한국어로, 쉬운 말로, 짧게(대개 3–8문장) 답합니다. 목록이 필요하면 줄마다 '- '로 시작합니다. 마크다운 제목, 표, 굵은 글씨는 쓰지 않습니다.",
+    "- 한국어로, 쉬운 말로, 필요한 만큼만 간결하게 답합니다.",
     "- 성경 본문에 직접 적힌 내용과 본문 밖의 설명(역사 배경, 학자나 교파의 해석)을 분명히 나누고, 본문 밖의 내용은 그렇다고 밝힙니다.",
-    "- 다른 성경 구절을 들 때는 책 이름과 장:절을 적습니다.",
+    "- 성경 구절을 들 때는 책 이름과 장:절을 적습니다.",
     "- 확실하지 않은 것은 모른다고 말합니다. 사도신경으로 고백하는 정통 기독교 신앙에서 벗어나는 주장을 사실처럼 말하지 않습니다.",
-    "", `[본문] ${c.where}${c.title ? " · " + c.title : ""}`, c.passage, "", "[고른 부분]", c.selected
+    "", `[읽고 있는 곳] ${c.where}${c.title ? " · " + c.title : ""}`,
+    ...(c.passage ? ["", "[본문]", c.passage] : []),
+    ...(c.selected ? ["", "[고른 부분]", c.selected] : [])
   ].join("\n");
+
+  // Claude가 쓴 마크다운을 보통 글로(제목, 목록, 굵은 글씨만). 글은 먼저 이스케이프한다
+  const esc = t => t.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const inline = t => esc(t).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/`([^`]+)`/g, "<code>$1</code>");
+  function md(text){
+    const out = []; let list = "";
+    const close = () => { if (list){ out.push(`</${list}>`); list = ""; } };
+    for (const raw of text.split("\n")){
+      const line = raw.trimEnd(); let m;
+      if (!line.trim()){ close(); continue; }
+      if ((m = line.match(/^#{1,6}\s+(.*)/))){ close(); out.push(`<p class="h">${inline(m[1])}</p>`); continue; }
+      if ((m = line.match(/^\s*[-*•]\s+(.*)/))){ if (list !== "ul"){ close(); out.push("<ul>"); list = "ul"; } out.push(`<li>${inline(m[1])}</li>`); continue; }
+      if ((m = line.match(/^\s*\d+[.)]\s+(.*)/))){ if (list !== "ol"){ close(); out.push("<ol>"); list = "ol"; } out.push(`<li>${inline(m[1])}</li>`); continue; }
+      close(); out.push(`<p>${inline(line)}</p>`);
+    }
+    close(); return out.join("");
+  }
 
   function place(el, info){
     const rs = info.range.getClientRects(), first = rs[0] || info.range.getBoundingClientRect(), last = rs[rs.length - 1] || first;
@@ -584,7 +596,7 @@ if (!route()) {
     x = Math.max(12, Math.min(x, innerWidth - w - 12));
     el.style.left = (x + scrollX) + "px"; el.style.top = (y + scrollY) + "px";
   }
-  function pickVerse(bt, e){  // 고른 글 없이 오른쪽 클릭하면 그 절을 고른다
+  function pickVerse(bt, e){  // 고른 글 없이 본문 위에서 오른쪽 클릭하면 그 절을 고른다
     let at = null;
     if (document.caretRangeFromPoint) at = document.caretRangeFromPoint(e.clientX, e.clientY);
     else if (document.caretPositionFromPoint){ const p = document.caretPositionFromPoint(e.clientX, e.clientY); if (p){ at = document.createRange(); at.setStart(p.offsetNode, p.offset); } }
@@ -600,31 +612,34 @@ if (!route()) {
   }
 
   const toEnd = () => { body.scrollTop = body.scrollHeight; };
-  function say(kind, text){ const p = document.createElement("p"); p.className = "ask-msg " + kind; p.textContent = text; log.append(p); toEnd(); return p; }
+  function say(kind, text){ const p = document.createElement(kind.startsWith("ai") ? "div" : "p"); p.className = "ask-msg " + kind; p.textContent = text; log.append(p); toEnd(); return p; }
   function openAsk(info){
-    if (!info) return;
     const c = context(info);
     if (!ctx || ctx.key !== c.key){ if (busy && ctl) ctl.abort(); ctx = c; turns = []; log.textContent = ""; }
-    quote.textContent = c.selected; refEl.textContent = c.where + (c.title ? ` · ${c.title}` : "");
-    sheet.hidden = false; fab.hidden = true; menu.hidden = true;
+    selBox.hidden = !c.selected; quote.textContent = c.selected;
+    refEl.textContent = c.where + (c.title ? ` · ${c.title}` : "");
+    if (!c.selected){ selBox.hidden = false; quote.textContent = ""; quote.hidden = true; } else quote.hidden = false;
+    sheet.hidden = false; opener.hidden = true; fab.hidden = true; menu.hidden = true;
     try { getSelection().removeAllRanges(); } catch (_) {}
     if (!coarse()) input.focus({ preventScroll: true });
   }
-  function closeAsk(){ if (busy && ctl) ctl.abort(); sheet.hidden = true; }
+  function closeAsk(){ if (busy && ctl) ctl.abort(); sheet.hidden = true; opener.hidden = false; }
 
   async function askClaude(q){
     turns.push({ role: "user", content: turns.length ? q : rules(ctx) + "\n\n[질문]\n" + q });
     say("me", q);
-    const out = say("ai wait", "생각하는 중…");
+    const out = say("ai wait", "생각하는 중… 깊이 생각하는 모델이라 조금 걸릴 수 있어요.");
     ctl = new AbortController(); busy = true; label();
     try {
-      const { text, truncated } = await sample(turns, { cache: false, signal: ctl.signal,
-        onText: ({ text }) => { out.textContent = text; out.classList.remove("wait"); toEnd(); } });
-      out.textContent = text; out.classList.remove("wait"); turns.push({ role: "assistant", content: text });
-      if (truncated) say("note", "답이 길어 중간에 끊겼어요. 조금 좁혀서 물어보세요.");
+      const res = await sample(turns, { model: MODEL, modelTier: "complex", cache: false, signal: ctl.signal,
+        onText: ({ text }) => { out.innerHTML = md(text); out.classList.remove("wait"); toEnd(); } });
+      out.innerHTML = md(res.text); out.classList.remove("wait"); turns.push({ role: "assistant", content: res.text });
+      const who = res.modelApplied === MODEL ? "Claude Opus 5.5" : TIER[res.modelTierApplied];
+      if (who) say("model", `답한 모델: ${who}`);
+      if (res.truncated) say("note", "답이 길어 중간에 끊겼어요. 조금 좁혀서 물어보세요.");
     } catch (e) {
       const code = e && e.code;
-      if (e && e.text && code !== "refused"){ out.textContent = e.text; out.classList.remove("wait"); turns.push({ role: "assistant", content: e.text }); }
+      if (e && e.text && code !== "refused"){ out.innerHTML = md(e.text); out.classList.remove("wait"); turns.push({ role: "assistant", content: e.text }); }
       else { out.remove(); turns.pop(); }
       if (HIDE.includes(code)){ mode = "copy"; say("note", "이 화면에서는 Claude가 바로 답할 수 없어요. ‘복사해서 묻기’를 누르면 질문이 복사되고, Claude 앱에 붙여 넣어 물어볼 수 있어요."); }
       else if (code !== "cancelled") say("note", SAY[code] || "연결이 끊겼어요. 다시 물어보세요.");
@@ -651,8 +666,9 @@ if (!route()) {
     if (mode === "claude") askClaude(q); else copyAsk(q);
   });
   input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing){ e.preventDefault(); form.requestSubmit(); } });
-  $("ask-chips").addEventListener("click", e => { const b = e.target.closest("button[data-q]"); if (!b || busy) return; input.value = b.dataset.q; form.requestSubmit(); });
   $("ask-x").addEventListener("click", closeAsk);
+  opener.addEventListener("pointerdown", e => e.preventDefault());
+  opener.addEventListener("click", () => openAsk(readSel()));
 
   document.addEventListener("selectionchange", () => {
     clearTimeout(timer);
@@ -661,7 +677,7 @@ if (!route()) {
   fab.addEventListener("pointerdown", e => e.preventDefault());  // 누르는 동안 고른 글이 풀리지 않게
   fab.addEventListener("click", () => openAsk(picked || readSel()));
   document.addEventListener("contextmenu", e => {
-    if (!matchMedia("(pointer: fine)").matches || !(e.target instanceof Element) || !e.target.closest("#ep")) return;
+    if (!matchMedia("(pointer: fine)").matches || !(e.target instanceof Element) || e.target.closest("#ask, #ask-menu")) return;
     let info = readSel();
     if (!info){ const bt = e.target.closest(".bt"); if (bt) info = pickVerse(bt, e); }
     if (!info) return;
