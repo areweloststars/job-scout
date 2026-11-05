@@ -164,8 +164,8 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .credits ul{margin:6px 0 0;padding-left:18px}
 /* 본문을 골라 Claude에게 묻기(사용자 요청). 고르면 떠오르는 버튼, 컴퓨터의 오른쪽 클릭 메뉴, 묻고 답하는 창 */
 .ask-fab{position:absolute;z-index:40;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--gold);font-family:var(--ui);font-size:.9375rem;line-height:1.2;box-shadow:0 10px 24px -12px var(--shadow);cursor:pointer}
-.ask-fab svg,.ask-open svg{width:16px;height:16px;flex:none}
-.ask-open{position:fixed;z-index:39;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));display:grid;place-items:center;width:40px;height:40px;padding:0;border-radius:999px;border:1px solid var(--rule);background:var(--paper);color:var(--gold);opacity:.4;cursor:pointer;transition:opacity .15s ease}  /* 눈에 띄지 않게 작고 흐린 물음표(사용자 요청) */
+.ai-t{font:700 .8125rem/1 system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;letter-spacing:.03em}  /* 물음표 대신 ‘AI’(사용자 요청) */
+.ask-open{position:fixed;z-index:39;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));display:grid;place-items:center;width:40px;height:40px;padding:0;border-radius:999px;border:1px solid var(--rule);background:var(--paper);color:var(--gold);opacity:.4;cursor:pointer;transition:opacity .15s ease}  /* 눈에 띄지 않게 작고 흐린 ‘AI’ 단추(사용자 요청) */
 @media (hover:hover){.ask-open:hover{opacity:1}}  /* 휴대폰에서 누른 뒤 진하게 남지 않게 */
 .ask-open:focus-visible{opacity:1}
 .ask-fab:focus-visible,.ask-menu button:focus-visible,.ask-x:focus-visible,.ask-open:focus-visible,.ask-send:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
@@ -242,8 +242,8 @@ h1,h2,h3{margin:0;text-wrap:balance}
   <p class="to-top"><button type="button" class="top-btn" id="top-btn"><span aria-hidden="true">↑</span> 맨 위로</button></p>
 </div>
 
-<button type="button" class="ask-open" id="ask-open" aria-label="Claude에게 묻기" title="Claude에게 묻기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 9a3 3 0 1 1 4.2 2.75c-.75.33-1.2 1.07-1.2 1.9V14.5"/><path d="M12 18.2v.01"/></svg></button>
-<button type="button" class="ask-fab" id="ask-fab" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 9a3 3 0 1 1 4.2 2.75c-.75.33-1.2 1.07-1.2 1.9V14.5"/><path d="M12 18.2v.01"/></svg>Claude에게 묻기</button>
+<button type="button" class="ask-open" id="ask-open" aria-label="Claude에게 묻기" title="Claude에게 묻기"><span class="ai-t" aria-hidden="true">AI</span></button>
+<button type="button" class="ask-fab" id="ask-fab" hidden><span class="ai-t" aria-hidden="true">AI</span>Claude에게 묻기</button>
 <div class="ask-menu" id="ask-menu" role="menu" hidden>
   <button type="button" role="menuitem" data-act="ask">Claude에게 묻기</button>
   <button type="button" role="menuitem" data-act="copy">복사</button>
