@@ -166,8 +166,9 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .ask-fab{position:absolute;z-index:40;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--gold);font-family:var(--ui);font-size:.9375rem;line-height:1.2;box-shadow:0 10px 24px -12px var(--shadow);cursor:pointer}
 .ai-t{font:700 .8125rem/1 system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;letter-spacing:.03em}  /* 물음표 대신 ‘AI’(사용자 요청) */
 .ask-open{position:fixed;z-index:39;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));display:grid;place-items:center;width:40px;height:40px;padding:0;border-radius:999px;border:1px solid var(--rule);background:var(--paper);color:var(--gold);opacity:.4;cursor:pointer;transition:opacity .15s ease}  /* 눈에 띄지 않게 작고 흐린 ‘AI’ 단추(사용자 요청) */
-@media (hover:hover){.ask-open:hover{opacity:1}}  /* 휴대폰에서 누른 뒤 진하게 남지 않게 */
-.ask-open:focus-visible{opacity:1}
+.ask-open .ai-t{opacity:.35}  /* 글자는 거의 안 보이게(사용자 요청) */
+@media (hover:hover){.ask-open:hover,.ask-open:hover .ai-t{opacity:1}}  /* 휴대폰에서 누른 뒤 진하게 남지 않게 */
+.ask-open:focus-visible,.ask-open:focus-visible .ai-t{opacity:1}
 .ask-fab:focus-visible,.ask-menu button:focus-visible,.ask-x:focus-visible,.ask-open:focus-visible,.ask-send:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .ask-menu{position:absolute;z-index:41;min-width:180px;padding:6px;border-radius:12px;border:1px solid var(--rule);background:var(--paper);box-shadow:0 16px 32px -16px var(--shadow);display:grid}
 .ask-menu button{all:unset;padding:9px 12px;border-radius:8px;font-family:var(--ui);font-size:.9375rem;color:var(--ink);cursor:pointer}
