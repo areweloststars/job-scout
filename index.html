@@ -136,6 +136,8 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .bt sup{font-family:var(--ui);font-weight:400;font-size:.56em;line-height:0;color:var(--ink-2);opacity:.6;margin:0 .2em 0 .1em;font-variant-numeric:tabular-nums}
 .bt .qm{font-size:.78em;color:var(--ink-2)}  /* 본문의 따옴표를 작고 연하게(사용자 요청) */
 .bt .ch{display:block;font-family:var(--ui);font-weight:400;font-size:.75rem;letter-spacing:.06em;color:var(--ink-2)}
+.pt-mk .bt sup{display:none}  /* 마가복음: 절 번호는 숨기고, 본문을 누르면 그 절을 골라 장·절을 보여 준다(사용자 요청) */
+.pt-mk .bt .qm{font-size:inherit;color:inherit}  /* 마가복음: 따옴표도 설명 글과 같은 모양으로(사용자 요청) */
 .tn{font-family:var(--ui);font-weight:400;font-size:.8125rem;line-height:1.6;color:var(--ink-2)}
 .bt-foot{display:grid;gap:6px;padding-top:4px;font-family:var(--ui);font-weight:400;font-size:.75rem;line-height:1.6;color:var(--ink-2)}
 .bt-links{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.8125rem}
@@ -173,15 +175,20 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .credits summary{cursor:pointer}
 .credits ul{margin:6px 0 0;padding-left:18px}
 /* 본문을 골라 Claude에게 묻기(사용자 요청). 고르면 떠오르는 버튼, 컴퓨터의 오른쪽 클릭 메뉴, 묻고 답하는 창 */
-.ask-fab{position:absolute;z-index:40;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--gold);font-family:var(--ui);font-size:.9375rem;line-height:1.2;box-shadow:0 10px 24px -12px var(--shadow);cursor:pointer}
-.ask-fab:focus-visible,.ask-menu button:focus-visible,.ask-x:focus-visible,.ask-send:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.ask-fab{position:absolute;z-index:40;display:inline-flex;align-items:center;gap:0;padding:3px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--gold);font-family:var(--ui);font-size:.9375rem;line-height:1.2;box-shadow:0 10px 24px -12px var(--shadow);cursor:default}
+.fab-b{all:unset;cursor:pointer;color:var(--gold);font:inherit}
+.ask-fab > *{padding:5px 11px;white-space:nowrap}
+.ask-fab > * + *{border-left:1px solid var(--rule)}
+.fab-ref{font-size:.875rem;color:var(--ink-2);font-variant-numeric:tabular-nums}  /* 고른 절의 장·절 */
+.fab-b:focus-visible,.ask-menu button:focus-visible,.ask-x:focus-visible,.ask-send:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .ask-menu{position:absolute;z-index:41;min-width:180px;padding:6px;border-radius:12px;border:1px solid var(--rule);background:var(--paper);box-shadow:0 16px 32px -16px var(--shadow);display:grid}
 .ask-menu button{all:unset;padding:9px 12px;border-radius:8px;font-family:var(--ui);font-size:.9375rem;color:var(--ink);cursor:pointer}
 .ask-menu button:hover{background:var(--gold-t)}
 .ask{position:fixed;z-index:50;right:0;bottom:0;display:flex;flex-direction:column;background:var(--paper);color:var(--ink);box-shadow:0 -12px 40px -16px var(--shadow);font-family:var(--ui)}
 @media (max-width:899px){.ask{left:0;max-height:78vh;border-radius:18px 18px 0 0;border-top:1px solid var(--rule)}}
 @media (min-width:900px){.ask{top:0;width:400px;border-left:1px solid var(--rule)}}
-.ask[hidden],.ask-fab[hidden],.ask-menu[hidden]{display:none}
+.ask[hidden],.ask-fab[hidden],.ask-fab [hidden],.ask-menu[hidden],.toast[hidden]{display:none}
+.toast{position:fixed;z-index:60;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);max-width:calc(100vw - 32px);padding:9px 16px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--ink);font-family:var(--ui);font-size:.875rem;line-height:1.3;box-shadow:0 10px 24px -12px var(--shadow);pointer-events:none}  /* 복사했다는 알림 */
 .ask-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 12px 10px 16px;border-bottom:1px solid var(--rule)}
 .ask-head h2{margin:0;font-family:var(--ui);font-size:1rem;font-weight:400;color:var(--gold)}
 .ask-x{all:unset;width:36px;height:36px;display:grid;place-items:center;border-radius:999px;font-size:1.375rem;line-height:1;color:var(--ink-2);cursor:pointer}
@@ -251,11 +258,12 @@ h1,h2,h3{margin:0;text-wrap:balance}
   <p class="to-top"><button type="button" class="top-btn" id="top-btn"><span aria-hidden="true">↑</span> 맨 위로</button></p>
 </div>
 
-<button type="button" class="ask-fab" id="ask-fab" hidden>AI에게 묻기</button>
+<div class="ask-fab" id="ask-fab" hidden><span class="fab-ref" id="fab-ref" hidden></span><button type="button" class="fab-b" id="fab-copy" hidden>복사</button><button type="button" class="fab-b" id="fab-ask">AI에게 묻기</button></div>
 <div class="ask-menu" id="ask-menu" role="menu" hidden>
+  <button type="button" role="menuitem" data-act="copy">절 복사하기</button>
   <button type="button" role="menuitem" data-act="ask">AI에게 묻기</button>
-  <button type="button" role="menuitem" data-act="copy">복사</button>
 </div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 <aside class="ask" id="ask" role="dialog" aria-labelledby="ask-h" hidden>
   <header class="ask-head"><h2 id="ask-h">AI Claude에게 묻기</h2><button type="button" class="ask-x" id="ask-x" aria-label="닫기">×</button></header>
   <div class="ask-body" id="ask-body">
@@ -515,7 +523,7 @@ if (!route()) {
    Claude 앱(아티팩트)에서는 이 자리에서 Claude Opus 5.5가 답하고(sample 기능, 묻는 사람의 Claude 사용량),
    그 밖의 곳(GitHub Pages 등)에서는 질문을 복사해 Claude 앱으로 넘긴다. */
 (() => {
-  const fab = $("ask-fab"), menu = $("ask-menu"), sheet = $("ask"), body = $("ask-body"), log = $("ask-log"),
+  const fab = $("ask-fab"), fabRef = $("fab-ref"), fabCopy = $("fab-copy"), fabAsk = $("fab-ask"), toastEl = $("toast"), menu = $("ask-menu"), sheet = $("ask"), body = $("ask-body"), log = $("ask-log"),
         selBox = sheet.querySelector(".ask-sel"), quote = $("ask-quote"), refEl = $("ask-ref"), form = $("ask-form"), input = $("ask-in"), send = $("ask-send");
   const MODEL = "claude-opus-5-5";  // 사용자가 고른 모델. 못 쓰면 가장 뛰어난 등급(complex)이 대신 답한다
   const HIDE = ["not_granted", "sampling_disabled", "not_declared", "capability_disabled", "capability_removed"];
@@ -555,16 +563,20 @@ if (!route()) {
     c.querySelectorAll("sup").forEach(x => { x.textContent = ` ${x.textContent} `; });
     return c.textContent.replace(/\s+/g, " ").trim();
   }
-  function verses(bt, range){  // 고른 글이 걸친 절 번호
-    let a = null, b = null;
-    for (const sup of bt.querySelectorAll("sup")){
-      const c = range.comparePoint(sup, 0);
-      if (c < 0) a = sup;
-      if (c <= 0) b = sup; else break;
-    }
-    if (!a) a = [...bt.querySelectorAll("sup")].find(sup => range.comparePoint(sup, 0) === 0) || null;
-    const v1 = a ? parseInt(a.textContent, 10) : 0, v2 = b ? parseInt(b.textContent, 10) : 0;
-    return v1 ? (v2 > v1 ? `${v1}–${v2}` : `${v1}`) : "";
+  function chOf(bt, sup){  // 그 절의 장: 요점 범위의 첫 장에서 시작해 ‘N장’ 표시를 지날 때마다 바꾼다
+    let ch = parseInt(bt.closest(".pt")?.querySelector(".pt-r")?.dataset.r || "", 10) || cur;
+    for (const el of bt.querySelectorAll(".ch, sup")){ if (el === sup) break; if (el.classList.contains("ch")) ch = parseInt(el.textContent, 10) || ch; }
+    return ch;
+  }
+  function refOf(info){  // 고른 글이 걸친 장·절(예: 마가복음 15장 2절)
+    const bt = info && info.el.closest(".bt"); if (!bt) return "";
+    const sups = [...bt.querySelectorAll("sup")]; let a = null, b = null;
+    for (const sup of sups){ const c = info.range.comparePoint(sup, 0); if (c < 0) a = sup; if (c <= 0) b = sup; else break; }
+    if (!a) a = sups.find(sup => info.range.comparePoint(sup, 0) === 0) || null;
+    if (!a) return "";
+    if (!b || sups.indexOf(b) < sups.indexOf(a)) b = a;
+    const c1 = chOf(bt, a), v1 = parseInt(a.textContent, 10), c2 = chOf(bt, b), v2 = parseInt(b.textContent, 10);
+    return rangeLabel(c1 === c2 ? (v1 === v2 ? `${c1}:${v1}` : `${c1}:${v1}–${v2}`) : `${c1}:${v1}–${c2}:${v2}`);
   }
   function chapter(){  // 지금 읽는 화
     const name = book ? book.name : "";
@@ -579,8 +591,8 @@ if (!route()) {
     const pt = info.el.closest(".pt");
     const r = pt ? (pt.querySelector(".pt-r")?.dataset.r || "").trim() : "";
     const bt = info.el.closest(".bt");
-    let where = r ? `${ch.name} ${r}` : ch.where;
-    if (bt && r){ const vs = verses(bt, info.range); if (vs) where = `${ch.name} ${r.split(":")[0]}:${vs}`; }
+    let where = r ? rangeLabel(r) : ch.where;
+    if (bt){ const ref = refOf(info); if (ref) where = ref; }
     const parts = [];
     if (pt){
       const key = (pt.querySelector(".vq p")?.textContent || "").trim();
@@ -629,20 +641,36 @@ if (!route()) {
     x = Math.max(12, Math.min(x, innerWidth - w - 12));
     el.style.left = (x + scrollX) + "px"; el.style.top = (y + scrollY) + "px";
   }
-  function pickVerse(bt, e){  // 고른 글 없이 본문 위에서 오른쪽 클릭하면 그 절을 고른다
-    let at = null;
-    if (document.caretRangeFromPoint) at = document.caretRangeFromPoint(e.clientX, e.clientY);
-    else if (document.caretPositionFromPoint){ const p = document.caretPositionFromPoint(e.clientX, e.clientY); if (p){ at = document.createRange(); at.setStart(p.offsetNode, p.offset); } }
+  function caretAt(e){
+    if (document.caretRangeFromPoint) return document.caretRangeFromPoint(e.clientX, e.clientY);
+    if (document.caretPositionFromPoint){ const p = document.caretPositionFromPoint(e.clientX, e.clientY); if (p){ const r = document.createRange(); r.setStart(p.offsetNode, p.offset); return r; } }
+    return null;
+  }
+  function supAt(bt, at){  // 누른 자리가 속한 절의 번호 요소
     if (!at || !bt.contains(at.startContainer)) return null;
-    let prev = null, next = null;
-    for (const sup of bt.querySelectorAll("sup")){ if (at.comparePoint(sup, 0) < 0) prev = sup; else { next = sup; break; } }
-    if (!prev) return null;
-    const r = document.createRange(); r.setStartAfter(prev);
-    const foot = bt.querySelector(".bt-foot");
-    if (next) r.setEndBefore(next); else if (foot) r.setEndBefore(foot); else r.setEnd(bt, bt.childNodes.length);
-    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    const n = at.startContainer;
+    if (n.nodeType === 3 && at.startOffset >= n.length && n.nextSibling && n.nextSibling.nodeName === "SUP") return n.nextSibling;  // 절 첫 글자 바로 앞을 누른 경우
+    let prev = null;
+    for (const sup of bt.querySelectorAll("sup")){ if (at.comparePoint(sup, 0) < 0) prev = sup; else break; }
+    return prev;
+  }
+  function verseRange(bt, sup){  // 그 절 하나를 덮는 범위: 다음 절 번호나 ‘N장’ 표시 앞까지
+    const all = [...bt.querySelectorAll("sup")], next = all[all.indexOf(sup) + 1] || null, r = document.createRange();
+    r.setStartAfter(sup);
+    if (!next){ const foot = bt.querySelector(".bt-foot"); if (foot) r.setEndBefore(foot); else r.setEnd(bt, bt.childNodes.length); return r; }
+    let end = next; const pv = next.previousElementSibling; if (pv && pv.classList.contains("ch")) end = pv;
+    const p = end.parentElement, lead = document.createRange(); lead.setStart(p, 0); lead.setEndBefore(end);
+    const prevP = p.previousElementSibling;
+    if (p !== sup.parentElement && !lead.toString().trim() && prevP) r.setEnd(prevP, prevP.childNodes.length); else r.setEndBefore(end);
+    return r;
+  }
+  let ours = null, wasSup = null;  // 눌러서 고른 절
+  function selectVerse(bt, sup){
+    const s = getSelection(); s.removeAllRanges(); s.addRange(verseRange(bt, sup));
+    ours = { sup, text: s.toString() };
     return readSel();
   }
+  function pickVerse(bt, e){ const sup = supAt(bt, caretAt(e)); return sup ? selectVerse(bt, sup) : null; }  // 누르거나 오른쪽 클릭한 자리의 절을 고른다
 
   const toEnd = () => { body.scrollTop = body.scrollHeight; };
   function say(kind, text){ const p = document.createElement(kind.startsWith("ai") ? "div" : "p"); p.className = "ask-msg " + kind; p.textContent = text; log.append(p); toEnd(); return p; }
@@ -704,18 +732,58 @@ if (!route()) {
   document.addEventListener("click", e => { if (isMrk() && e.target instanceof Element && e.target.closest("#ask-top, #ask-ch")) openAsk(null); });
   document.addEventListener("gospels:book", () => { if (isMrk()) return; if (!sheet.hidden) closeAsk(); fab.hidden = true; menu.hidden = true; });  // 다른 책으로 가면 닫는다
 
+  async function copyText(t){
+    try { await navigator.clipboard.writeText(t); return true; } catch (_) {}
+    const s = getSelection(), keep = s.rangeCount ? s.getRangeAt(0).cloneRange() : null, ta = document.createElement("textarea");
+    ta.value = t; ta.readOnly = true; ta.style.cssText = "position:fixed;top:0;left:0;width:1px;height:1px;opacity:0"; document.body.append(ta);
+    let ok = false; try { ta.select(); ok = document.execCommand("copy"); } catch (_) {}
+    ta.remove(); if (keep){ s.removeAllRanges(); s.addRange(keep); }
+    return ok;
+  }
+  let toastT = 0;
+  function toast(msg){ toastEl.textContent = msg; toastEl.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { toastEl.hidden = true; }, 1800); }
+  async function copySel(info){  // ‘본문 (마가복음 15장 2절)’ 꼴로 복사해 구글이나 Claude에 바로 붙여 넣게(사용자 요청)
+    if (!info) return;
+    const ref = refOf(info), ok = await copyText(ref ? `${info.text} (${ref})` : info.text);
+    toast(ok ? (ref ? `${ref}을 복사했어요` : "복사했어요") : "복사하지 못했어요. 길게 눌러 직접 복사해 주세요.");
+  }
+
   document.addEventListener("selectionchange", () => {
+    const sel = getSelection();
+    if (ours && (!sel || sel.isCollapsed || sel.toString() !== ours.text)) ours = null;
     clearTimeout(timer);
-    timer = setTimeout(() => { const info = readSel(); if (!info){ fab.hidden = true; return; } picked = info; place(fab, info); }, 220);
+    timer = setTimeout(() => {
+      const info = readSel(); if (!info){ fab.hidden = true; return; }
+      picked = info; const ref = refOf(info);
+      fabRef.textContent = ref; fabRef.hidden = !ref; fabCopy.hidden = !(ref && coarse());  // 휴대폰에는 오른쪽 클릭이 없어 복사 단추를 함께
+      place(fab, info);
+    }, 220);
   });
   fab.addEventListener("pointerdown", e => e.preventDefault());  // 누르는 동안 고른 글이 풀리지 않게
-  fab.addEventListener("click", () => openAsk(picked || readSel()));
+  fabAsk.addEventListener("click", () => openAsk(picked || readSel()));
+  fabCopy.addEventListener("click", () => copySel(picked || readSel()));
+  // 마가복음 본문: 한 번 누르면 그 절 전체를 고르고 장·절을 보여 준다. 같은 절을 다시 누르면 푼다(사용자 요청)
+  document.addEventListener("pointerdown", () => { wasSup = ours ? ours.sup : null; }, true);
+  document.addEventListener("click", e => {
+    if (!isMrk() || e.button !== 0 || !(e.target instanceof Element)) return;
+    const bt = e.target.closest(".pt .bt"); if (!bt || e.target.closest(".bt-foot, .ch, a, button")) return;
+    const sel = getSelection(); if (sel && !sel.isCollapsed && !(ours && sel.toString() === ours.text)) return;  // 끌어서 고른 글은 그대로 둔다
+    const sup = supAt(bt, caretAt(e)); if (!sup) return;
+    if (sup === wasSup){ sel.removeAllRanges(); ours = null; fab.hidden = true; return; }
+    selectVerse(bt, sup);
+  });
   document.addEventListener("contextmenu", e => {
-    if (!matchMedia("(pointer: fine)").matches || !(e.target instanceof Element) || e.target.closest("#ask, #ask-menu")) return;
+    if (!isMrk() || !matchMedia("(pointer: fine)").matches || !(e.target instanceof Element) || e.target.closest("#ask, #ask-menu")) return;
     let info = readSel();
-    if (!info){ const bt = e.target.closest(".bt"); if (bt) info = pickVerse(bt, e); }
+    const bt = e.target.closest(".bt");
+    if (bt && !e.target.closest(".bt-foot")){  // 고른 글 밖의 절 위에서 누르면 그 절을 새로 고른다
+      const at = caretAt(e);
+      if (!info || !(at && info.range.isPointInRange(at.startContainer, at.startOffset))) info = pickVerse(bt, e) || info;
+    }
     if (!info) return;
-    e.preventDefault(); picked = info; fab.hidden = true; menu.hidden = false;
+    e.preventDefault(); picked = info; fab.hidden = true;
+    menu.querySelector('[data-act="copy"]').textContent = refOf(info) ? "절 복사하기" : "복사하기";
+    menu.hidden = false;
     menu.style.left = Math.min(e.pageX, scrollX + innerWidth - menu.offsetWidth - 8) + "px";
     menu.style.top = Math.min(e.pageY, scrollY + innerHeight - menu.offsetHeight - 8) + "px";
     menu.querySelector("button").focus({ preventScroll: true });
@@ -724,7 +792,7 @@ if (!route()) {
     const b = e.target.closest("button"); if (!b) return;
     menu.hidden = true;
     if (b.dataset.act === "ask") openAsk(picked);
-    else if (picked && navigator.clipboard) navigator.clipboard.writeText(picked.text).catch(() => {});
+    else copySel(picked);
   });
   document.addEventListener("pointerdown", e => { if (!menu.hidden && !menu.contains(e.target)) menu.hidden = true; }, true);
   document.addEventListener("keydown", e => { if (e.key !== "Escape") return; if (!menu.hidden) menu.hidden = true; else if (!sheet.hidden) closeAsk(); });
