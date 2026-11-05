@@ -179,7 +179,8 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .fab-b{all:unset;cursor:pointer;color:var(--gold);font:inherit}
 .ask-fab > *{padding:3px 9px;white-space:nowrap}  /* 떠오르는 단추를 조금 더 작게(사용자 요청) */
 .ask-fab > * + *{border-left:1px solid var(--rule)}
-.fab-ref{font-size:.75rem;color:var(--ink-2);font-variant-numeric:tabular-nums}  /* 고른 절의 장·절 */
+.fab-ref{font-size:.75rem;color:var(--gold);text-decoration:none;font-variant-numeric:tabular-nums}  /* 고른 절의 장·절: 누르면 개역개정의 그 절로(사용자 요청) */
+.fab-ref:hover{text-decoration:underline}
 .fab-b:focus-visible,.ask-menu button:focus-visible,.ask-x:focus-visible,.ask-send:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .ask-menu{position:absolute;z-index:41;min-width:180px;padding:6px;border-radius:12px;border:1px solid var(--rule);background:var(--paper);box-shadow:0 16px 32px -16px var(--shadow);display:grid}
 .ask-menu button{all:unset;padding:9px 12px;border-radius:8px;font-family:var(--ui);font-size:.9375rem;color:var(--ink);cursor:pointer}
@@ -258,7 +259,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
   <p class="to-top"><button type="button" class="top-btn" id="top-btn"><span aria-hidden="true">↑</span> 맨 위로</button></p>
 </div>
 
-<div class="ask-fab" id="ask-fab" hidden><span class="fab-ref" id="fab-ref" hidden></span><button type="button" class="fab-b" id="fab-copy" hidden>복사</button><button type="button" class="fab-b" id="fab-ask">AI 질문</button></div>
+<div class="ask-fab" id="ask-fab" hidden><a class="fab-ref" id="fab-ref" target="_blank" rel="noopener" title="개역개정으로 보기(대한성서공회)" hidden></a><button type="button" class="fab-b" id="fab-copy" hidden>복사</button><button type="button" class="fab-b" id="fab-ask">AI 질문</button></div>
 <div class="ask-menu" id="ask-menu" role="menu" hidden>
   <button type="button" role="menuitem" data-act="copy">절 복사하기</button>
   <button type="button" role="menuitem" data-act="ask">AI 질문</button>
@@ -568,17 +569,22 @@ if (!route()) {
     for (const el of bt.querySelectorAll(".ch, sup")){ if (el === sup) break; if (el.classList.contains("ch")) ch = parseInt(el.textContent, 10) || ch; }
     return ch;
   }
-  function refOf(info){  // 고른 글이 걸친 장·절을 ‘막15:2’처럼 짧게(사용자 요청)
-    const bt = info && info.el.closest(".bt"); if (!bt) return "";
+  function span(info){  // 고른 글이 걸친 첫 절과 끝 절 {c1, v1, c2, v2}
+    const bt = info && info.el.closest(".bt"); if (!bt) return null;
     const sups = [...bt.querySelectorAll("sup")]; let a = null, b = null;
     for (const sup of sups){ const c = info.range.comparePoint(sup, 0); if (c < 0) a = sup; if (c <= 0) b = sup; else break; }
     if (!a) a = sups.find(sup => info.range.comparePoint(sup, 0) === 0) || null;
-    if (!a) return "";
+    if (!a) return null;
     if (!b || sups.indexOf(b) < sups.indexOf(a)) b = a;
     const c1 = chOf(bt, a), v1 = parseInt(a.textContent, 10), c2 = chOf(bt, b), v2 = parseInt(b.textContent, 10);
-    const ab = book.abbr || book.name;
-    return c1 === c2 ? (v1 === v2 ? `${ab}${c1}:${v1}` : `${ab}${c1}:${v1}–${v2}`) : `${ab}${c1}:${v1}–${c2}:${v2}`;
+    return { c1, v1, c2, v2 };
   }
+  function refOf(info){  // ‘마가복음 15:2’처럼(사용자 요청)
+    const x = span(info); if (!x) return "";
+    const { c1, v1, c2, v2 } = x, nm = book.name;
+    return c1 === c2 ? (v1 === v2 ? `${nm} ${c1}:${v1}` : `${nm} ${c1}:${v1}–${v2}`) : `${nm} ${c1}:${v1}–${c2}:${v2}`;
+  }
+  const gaeUrl = (c, v) => `https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=${book.id}&chap=${c}&sec=${v}#focus`;  // 대한성서공회 개역개정, 그 절로 바로
   function chapter(){  // 지금 읽는 화
     const name = book ? book.name : "";
     const title = (panel.querySelector("h2")?.textContent || "").replace(/\s+/g, " ").replace(/^\d+화\s*/, "").trim();
@@ -743,7 +749,7 @@ if (!route()) {
   }
   let toastT = 0;
   function toast(msg){ toastEl.textContent = msg; toastEl.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { toastEl.hidden = true; }, 1800); }
-  async function copySel(info){  // ‘본문 (막15:2)’ 꼴로 복사해 구글이나 Claude에 바로 붙여 넣게(사용자 요청)
+  async function copySel(info){  // ‘본문 (마가복음 15:2)’ 꼴로 복사해 구글이나 Claude에 바로 붙여 넣게(사용자 요청)
     if (!info) return;
     const ref = refOf(info), ok = await copyText(ref ? `${info.text} (${ref})` : info.text);
     toast(ok ? (ref ? `${ref} 복사했어요` : "복사했어요") : "복사하지 못했어요. 길게 눌러 직접 복사해 주세요.");
@@ -755,8 +761,8 @@ if (!route()) {
     clearTimeout(timer);
     timer = setTimeout(() => {
       const info = readSel(); if (!info){ fab.hidden = true; return; }
-      picked = info; const ref = refOf(info);
-      fabRef.textContent = ref; fabRef.hidden = !ref; fabCopy.hidden = !(ref && coarse());  // 휴대폰에는 오른쪽 클릭이 없어 복사 단추를 함께
+      picked = info; const ref = refOf(info), x = span(info);
+      fabRef.textContent = ref ? ref + " ↗" : ""; fabRef.hidden = !ref; if (x) fabRef.href = gaeUrl(x.c1, x.v1); fabCopy.hidden = !(ref && coarse());  // 휴대폰에는 오른쪽 클릭이 없어 복사 단추를 함께
       place(fab, info);
     }, 220);
   });
