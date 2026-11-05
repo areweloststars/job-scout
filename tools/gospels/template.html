@@ -100,7 +100,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .pt + .pt{border-top:1px solid var(--rule)}
 .pt + .pt::before{content:"";position:absolute;top:-5px;left:50%;width:9px;height:9px;transform:translateX(-50%) rotate(45deg);background:var(--paper);border:1px solid var(--gold)}
 .pt-head{display:grid;gap:2px}
-.pt-r{font-family:var(--ui);font-size:.8125rem;letter-spacing:.08em;color:var(--gold);font-variant-numeric:tabular-nums}
+.pt-r{font-family:var(--ui);font-size:.8125rem;letter-spacing:.04em;color:var(--gold);font-variant-numeric:tabular-nums}
 .pt h3{font-family:var(--body);font-weight:700;font-size:clamp(1.3rem,4.8vw,1.55rem);line-height:1.4}
 .pic{margin:2px 0;display:grid;gap:10px;justify-items:center}
 .pic img{display:block;width:100%;height:auto;padding:7px;background:var(--paper);border:1px solid var(--rule);box-shadow:0 14px 26px -20px var(--shadow)}
@@ -373,10 +373,16 @@ panel.addEventListener("click", ev => {
 });
 
 const qm = s => s.replace(/[“”‘’]/g, '<span class="qm">$&</span>');  // 따옴표를 작게 표시하려고 감싼다
+// 요점 범위를 ‘마가복음 1:2 – 1:8’처럼 책 이름과 장:절을 다 적어 보인다(사용자 요청). 장을 넘는 범위('13:53–14:2')와 한 절('1:1')도
+function rangeLabel(r){
+  const m = /^(\d+):(\d+)(?:–(?:(\d+):)?(\d+))?$/.exec(r);
+  if (!m) return `${book.name} ${r}`;
+  return m[4] ? `${book.name} ${m[1]}:${m[2]} – ${m[3] || m[1]}:${m[4]}` : `${book.name} ${m[1]}:${m[2]}`;
+}
 function pointHTML(n, p, i){
   const links = p.links.map(l => `<a href="${l.u}" target="_blank" rel="noopener">${l.t} · 개역한글 ↗</a>`).join("");
   return `<li class="pt" id="p${n}-${i + 1}">
-    <header class="pt-head"><p class="pt-r">${p.r}</p><h3>${p.t}</h3></header>
+    <header class="pt-head"><p class="pt-r" data-r="${p.r}">${rangeLabel(p.r)}</p><h3>${p.t}</h3></header>
     ${p.img ? `<figure class="pic"><img src="${p.img}" width="${p.iw}" height="${p.ih}" loading="lazy" style="max-width:${Math.round(440 * p.iw / p.ih)}px" alt="${p.alt}"><figcaption>${p.cap}</figcaption></figure>` : ""}
     ${p.q ? `<blockquote class="vq"><p>“${p.q[1]}”</p><cite>${p.q[0]} · 개역한글</cite></blockquote>` : ""}
     <p class="d">${p.d}</p>
@@ -543,7 +549,7 @@ if (!route()) {
     const ch = chapter();
     if (!info) return { key: `ch|${ch.where}`, where: ch.where, title: ch.title, passage: ch.plot ? `이 장의 줄거리: ${cut(ch.plot, 800)}` : "", selected: "" };
     const pt = info.el.closest(".pt");
-    const r = pt ? (pt.querySelector(".pt-r")?.textContent || "").trim() : "";
+    const r = pt ? (pt.querySelector(".pt-r")?.dataset.r || "").trim() : "";
     const bt = info.el.closest(".bt");
     let where = r ? `${ch.name} ${r}` : ch.where;
     if (bt && r){ const vs = verses(bt, info.range); if (vs) where = `${ch.name} ${r.split(":")[0]}:${vs}`; }
