@@ -104,6 +104,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .pt-head{display:grid;gap:2px}
 .pt-r{font-family:var(--ui);font-size:.8125rem;letter-spacing:.04em;color:var(--gold);font-variant-numeric:tabular-nums}
 .pt h3{font-family:var(--body);font-weight:700;font-size:clamp(1.3rem,4.8vw,1.55rem);line-height:1.4}
+.pt-mk h3{color:var(--lake);font-size:clamp(1.45rem,5.6vw,1.75rem)}  /* 마가복음: 새 요점이 시작되는 것이 보이게(사용자 요청) */
 .pic{margin:2px 0;display:grid;gap:10px;justify-items:center}
 .pic img{display:block;width:100%;height:auto;padding:7px;background:var(--paper);border:1px solid var(--rule);box-shadow:0 14px 26px -20px var(--shadow)}
 .pic figcaption{justify-self:stretch;font-family:var(--ui);font-size:.8125rem;line-height:1.65;color:var(--ink-2)}
@@ -386,13 +387,26 @@ panel.addEventListener("click", ev => {
 const qm = s => s.replace(/[“”‘’]/g, '<span class="qm">$&</span>');  // 따옴표를 작게 표시하려고 감싼다
 // 요점 범위를 ‘마가복음 1:2 – 1:8’처럼 책 이름과 장:절을 다 적어 보인다(사용자 요청). 장을 넘는 범위('13:53–14:2')와 한 절('1:1')도
 function rangeLabel(r){
+  if (isMrk()){  // 마가복음: ‘14장 53절 – 14장 65절’처럼 장과 절을 글로(사용자 요청)
+    let ch = "";
+    const parts = r.split(/,\s*/).map(part => {
+      const m = /^(?:(\d+):)?(\d+)(?:–(?:(\d+):)?(\d+))?$/.exec(part);
+      if (!m || !(m[1] || ch)) return part;
+      if (m[1]) ch = m[1];
+      const a = `${ch}장 ${m[2]}절`;
+      if (!m[4]) return a;
+      const b = `${m[3] || ch}장 ${m[4]}절`; if (m[3]) ch = m[3];
+      return `${a} – ${b}`;
+    });
+    return `${book.name} ${parts.join(", ")}`;
+  }
   const m = /^(\d+):(\d+)(?:–(?:(\d+):)?(\d+))?$/.exec(r);
   if (!m) return `${book.name} ${r}`;
   return m[4] ? `${book.name} ${m[1]}:${m[2]} – ${m[3] || m[1]}:${m[4]}` : `${book.name} ${m[1]}:${m[2]}`;
 }
 function pointHTML(n, p, i){
   const links = p.links.map(l => `<a href="${l.u}" target="_blank" rel="noopener">${l.t} · 개역한글 ↗</a>`).join("");
-  return `<li class="pt" id="p${n}-${i + 1}">
+  return `<li class="pt${isMrk() ? " pt-mk" : ""}" id="p${n}-${i + 1}">
     <header class="pt-head"><p class="pt-r" data-r="${p.r}">${rangeLabel(p.r)}</p><h3>${p.t}</h3></header>
     ${p.img ? `<figure class="pic"><img src="${p.img}" width="${p.iw}" height="${p.ih}" loading="lazy" style="max-width:${Math.round(440 * p.iw / p.ih)}px" alt="${p.alt}"><figcaption>${p.cap}</figcaption></figure>` : ""}
     ${p.q ? `<blockquote class="vq"><p>“${p.q[1]}”</p><cite>${p.q[0]} · 개역한글</cite></blockquote>` : ""}
