@@ -165,7 +165,8 @@ h1,h2,h3{margin:0;text-wrap:balance}
 /* 본문을 골라 Claude에게 묻기(사용자 요청). 고르면 떠오르는 버튼, 컴퓨터의 오른쪽 클릭 메뉴, 묻고 답하는 창 */
 .ask-fab{position:absolute;z-index:40;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--gold);font-family:var(--ui);font-size:.9375rem;line-height:1.2;box-shadow:0 10px 24px -12px var(--shadow);cursor:pointer}
 .ask-fab svg,.ask-open svg{width:16px;height:16px;flex:none}
-.ask-open{position:fixed;z-index:39;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--gold);font-family:var(--ui);font-size:.9375rem;line-height:1.2;box-shadow:0 10px 24px -12px var(--shadow);cursor:pointer}
+.ask-open{position:fixed;z-index:39;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));display:grid;place-items:center;width:40px;height:40px;padding:0;border-radius:999px;border:1px solid var(--rule);background:var(--paper);color:var(--gold);opacity:.4;cursor:pointer;transition:opacity .15s ease}  /* 눈에 띄지 않게 작고 흐린 물음표(사용자 요청) */
+.ask-open:hover,.ask-open:focus-visible{opacity:1}
 .ask-fab:focus-visible,.ask-menu button:focus-visible,.ask-x:focus-visible,.ask-open:focus-visible,.ask-send:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .ask-menu{position:absolute;z-index:41;min-width:180px;padding:6px;border-radius:12px;border:1px solid var(--rule);background:var(--paper);box-shadow:0 16px 32px -16px var(--shadow);display:grid}
 .ask-menu button{all:unset;padding:9px 12px;border-radius:8px;font-family:var(--ui);font-size:.9375rem;color:var(--ink);cursor:pointer}
@@ -240,8 +241,8 @@ h1,h2,h3{margin:0;text-wrap:balance}
   <p class="to-top"><button type="button" class="top-btn" id="top-btn"><span aria-hidden="true">↑</span> 맨 위로</button></p>
 </div>
 
-<button type="button" class="ask-open" id="ask-open"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.1 6.4 6.4 2.1-6.4 2.1L12 19.5l-2.1-6.4L3.5 11l6.4-2.1z"/></svg>Claude에게 묻기</button>
-<button type="button" class="ask-fab" id="ask-fab" hidden><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.1 6.4 6.4 2.1-6.4 2.1L12 19.5l-2.1-6.4L3.5 11l6.4-2.1z"/></svg>Claude에게 묻기</button>
+<button type="button" class="ask-open" id="ask-open" aria-label="Claude에게 묻기" title="Claude에게 묻기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 9a3 3 0 1 1 4.2 2.75c-.75.33-1.2 1.07-1.2 1.9V14.5"/><path d="M12 18.2v.01"/></svg></button>
+<button type="button" class="ask-fab" id="ask-fab" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 9a3 3 0 1 1 4.2 2.75c-.75.33-1.2 1.07-1.2 1.9V14.5"/><path d="M12 18.2v.01"/></svg>Claude에게 묻기</button>
 <div class="ask-menu" id="ask-menu" role="menu" hidden>
   <button type="button" role="menuitem" data-act="ask">Claude에게 묻기</button>
   <button type="button" role="menuitem" data-act="copy">복사</button>
@@ -390,7 +391,7 @@ function pointHTML(n, p, i){
     <div class="me"><p class="lab">나에게</p><p>${p.me}</p></div>
     <details class="bible"><summary><span class="bt-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5.5c3-1 6.5-1 10 1.5v13c-3.5-2.5-7-2.5-10-1.5z"/><path d="M22 5.5c-3-1-6.5-1-10 1.5v13c3.5-2.5 7-2.5 10-1.5z"/></svg><span class="lb-o">본문 펼치기</span><span class="lb-c">본문 접기</span></span><span class="sm">${p.links[0].t} · 쉬운 번역</span></summary>
       <div class="bt">${qm(p.bt)}
-        <div class="bt-foot"><p>헬라어 원문(SBLGNT)을 이 페이지에서 쉬운 우리말로 옮긴 번역입니다. 공식 번역이 아닙니다.</p><p>본문을 길게 누르거나(휴대폰) 드래그해서(컴퓨터) 고르면 ‘Claude에게 묻기’ 버튼이 나옵니다. 컴퓨터에서는 절 위에서 오른쪽 클릭해도 됩니다. 아무것도 고르지 않고 물을 때는 화면 오른쪽 아래 ‘Claude에게 묻기’를 누르세요.</p><p class="bt-links">${links}</p></div>
+        <div class="bt-foot"><p>헬라어 원문(SBLGNT)을 이 페이지에서 쉬운 우리말로 옮긴 번역입니다. 공식 번역이 아닙니다.</p><p>본문을 길게 누르거나(휴대폰) 드래그해서(컴퓨터) 고르면 ‘Claude에게 묻기’ 버튼이 나옵니다. 컴퓨터에서는 절 위에서 오른쪽 클릭해도 됩니다. 아무것도 고르지 않고 물을 때는 화면 오른쪽 아래의 작은 물음표(?) 단추를 누르세요.</p><p class="bt-links">${links}</p></div>
       </div>
     </details>
   </li>`;
