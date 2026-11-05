@@ -129,6 +129,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .tn{font-family:var(--ui);font-weight:400;font-size:.8125rem;line-height:1.6;color:var(--ink-2)}
 .bt-foot{display:grid;gap:6px;padding-top:4px;font-family:var(--ui);font-weight:400;font-size:.75rem;line-height:1.6;color:var(--ink-2)}
 .bt-links{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.8125rem}
+.ask-link{all:unset;color:var(--lake);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;cursor:pointer}  /* 본문 아래 ‘AI에게 물어보기’(사용자 요청) */
 
 /* 장을 마치며 */
 .close{display:grid;gap:20px;padding-top:30px;border-top:3px double var(--rule)}
@@ -165,18 +166,14 @@ h1,h2,h3{margin:0;text-wrap:balance}
 /* 본문을 골라 Claude에게 묻기(사용자 요청). 고르면 떠오르는 버튼, 컴퓨터의 오른쪽 클릭 메뉴, 묻고 답하는 창 */
 .ask-fab{position:absolute;z-index:40;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--gold);font-family:var(--ui);font-size:.9375rem;line-height:1.2;box-shadow:0 10px 24px -12px var(--shadow);cursor:pointer}
 .ai-t{font:700 .8125rem/1 system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;letter-spacing:.03em}  /* 물음표 대신 ‘AI’(사용자 요청) */
-.ask-open{position:fixed;z-index:39;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));display:grid;place-items:center;width:40px;height:40px;padding:0;border-radius:999px;border:1px solid var(--rule);background:var(--paper);color:var(--gold);opacity:.4;cursor:pointer;transition:opacity .15s ease}  /* 눈에 띄지 않게 작고 흐린 ‘AI’ 단추(사용자 요청) */
-.ask-open .ai-t{opacity:.35}  /* 글자는 거의 안 보이게(사용자 요청) */
-@media (hover:hover){.ask-open:hover,.ask-open:hover .ai-t{opacity:1}}  /* 휴대폰에서 누른 뒤 진하게 남지 않게 */
-.ask-open:focus-visible,.ask-open:focus-visible .ai-t{opacity:1}
-.ask-fab:focus-visible,.ask-menu button:focus-visible,.ask-x:focus-visible,.ask-open:focus-visible,.ask-send:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.ask-fab:focus-visible,.ask-menu button:focus-visible,.ask-x:focus-visible,.ask-send:focus-visible,.ask-link:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .ask-menu{position:absolute;z-index:41;min-width:180px;padding:6px;border-radius:12px;border:1px solid var(--rule);background:var(--paper);box-shadow:0 16px 32px -16px var(--shadow);display:grid}
 .ask-menu button{all:unset;padding:9px 12px;border-radius:8px;font-family:var(--ui);font-size:.9375rem;color:var(--ink);cursor:pointer}
 .ask-menu button:hover{background:var(--gold-t)}
 .ask{position:fixed;z-index:50;right:0;bottom:0;display:flex;flex-direction:column;background:var(--paper);color:var(--ink);box-shadow:0 -12px 40px -16px var(--shadow);font-family:var(--ui)}
 @media (max-width:899px){.ask{left:0;max-height:78vh;border-radius:18px 18px 0 0;border-top:1px solid var(--rule)}}
 @media (min-width:900px){.ask{top:0;width:400px;border-left:1px solid var(--rule)}}
-.ask[hidden],.ask-fab[hidden],.ask-menu[hidden],.ask-open[hidden]{display:none}
+.ask[hidden],.ask-fab[hidden],.ask-menu[hidden]{display:none}
 .ask-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 12px 10px 16px;border-bottom:1px solid var(--rule)}
 .ask-head h2{margin:0;font-family:var(--ui);font-size:1rem;font-weight:400;color:var(--gold)}
 .ask-x{all:unset;width:36px;height:36px;display:grid;place-items:center;border-radius:999px;font-size:1.375rem;line-height:1;color:var(--ink-2);cursor:pointer}
@@ -243,7 +240,6 @@ h1,h2,h3{margin:0;text-wrap:balance}
   <p class="to-top"><button type="button" class="top-btn" id="top-btn"><span aria-hidden="true">↑</span> 맨 위로</button></p>
 </div>
 
-<button type="button" class="ask-open" id="ask-open" aria-label="Claude에게 묻기" title="Claude에게 묻기"><span class="ai-t" aria-hidden="true">AI</span></button>
 <button type="button" class="ask-fab" id="ask-fab" hidden><span class="ai-t" aria-hidden="true">AI</span>Claude에게 묻기</button>
 <div class="ask-menu" id="ask-menu" role="menu" hidden>
   <button type="button" role="menuitem" data-act="ask">Claude에게 묻기</button>
@@ -392,7 +388,7 @@ function pointHTML(n, p, i){
     <div class="me"><p class="lab">나에게</p><p>${p.me}</p></div>
     <details class="bible"><summary><span class="bt-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5.5c3-1 6.5-1 10 1.5v13c-3.5-2.5-7-2.5-10-1.5z"/><path d="M22 5.5c-3-1-6.5-1-10 1.5v13c3.5-2.5 7-2.5 10-1.5z"/></svg><span class="lb-o">본문 펼치기</span><span class="lb-c">본문 접기</span></span><span class="sm">${p.links[0].t} · 쉬운 번역</span></summary>
       <div class="bt">${qm(p.bt)}
-        <div class="bt-foot"><p>헬라어 원문(SBLGNT)을 이 페이지에서 쉬운 우리말로 옮긴 번역입니다. 공식 번역이 아닙니다.</p><p class="bt-links">${links}</p></div>
+        <div class="bt-foot"><p>헬라어 원문(SBLGNT)을 이 페이지에서 쉬운 우리말로 옮긴 번역입니다. 공식 번역이 아닙니다.</p><p class="bt-links">${links}</p><p class="bt-links"><button type="button" class="ask-link">AI에게 물어보기</button></p></div>
       </div>
     </details>
   </li>`;
@@ -487,11 +483,11 @@ if (!route()) {
 }
 </script>
 <script>
-/* Claude에게 묻기(사용자 요청). 글을 고르거나(휴대폰은 길게 눌러, 컴퓨터는 드래그나 오른쪽 클릭) 오른쪽 아래 단추로 언제든 묻는다.
+/* Claude에게 묻기(사용자 요청). 글을 고르거나(휴대폰은 길게 눌러, 컴퓨터는 드래그나 오른쪽 클릭) 본문 아래 ‘AI에게 물어보기’로 묻는다.
    Claude 앱(아티팩트)에서는 이 자리에서 Claude Opus 5.5가 답하고(sample 기능, 묻는 사람의 Claude 사용량),
    그 밖의 곳(GitHub Pages 등)에서는 질문을 복사해 Claude 앱으로 넘긴다. */
 (() => {
-  const opener = $("ask-open"), fab = $("ask-fab"), menu = $("ask-menu"), sheet = $("ask"), body = $("ask-body"), log = $("ask-log"),
+  const fab = $("ask-fab"), menu = $("ask-menu"), sheet = $("ask"), body = $("ask-body"), log = $("ask-log"),
         selBox = sheet.querySelector(".ask-sel"), quote = $("ask-quote"), refEl = $("ask-ref"), form = $("ask-form"), input = $("ask-in"), send = $("ask-send");
   const MODEL = "claude-opus-5-5";  // 사용자가 고른 모델. 못 쓰면 가장 뛰어난 등급(complex)이 대신 답한다
   const HIDE = ["not_granted", "sampling_disabled", "not_declared", "capability_disabled", "capability_removed"];
@@ -519,7 +515,7 @@ if (!route()) {
     const text = s.toString().replace(/\s+/g, " ").trim();
     if (text.length < 2) return null;
     const r = s.getRangeAt(0), n = r.commonAncestorContainer, el = n.nodeType === 1 ? n : n.parentElement;
-    if (!el || !document.body.contains(el) || el.closest("#ask, #ask-open, #ask-fab, #ask-menu, summary, button, a, input, textarea")) return null;
+    if (!el || !document.body.contains(el) || el.closest("#ask, #ask-fab, #ask-menu, summary, button, a, input, textarea")) return null;
     return { text, range: r.cloneRange(), el };
   }
   const cut = (t, n) => t.length > n ? t.slice(0, n) + "…" : t;
@@ -627,11 +623,11 @@ if (!route()) {
     selBox.hidden = !c.selected; quote.textContent = c.selected;
     refEl.textContent = c.where + (c.title ? ` · ${c.title}` : "");
     if (!c.selected){ selBox.hidden = false; quote.textContent = ""; quote.hidden = true; } else quote.hidden = false;
-    sheet.hidden = false; opener.hidden = true; fab.hidden = true; menu.hidden = true;
+    sheet.hidden = false; fab.hidden = true; menu.hidden = true;
     try { getSelection().removeAllRanges(); } catch (_) {}
     if (!coarse()) input.focus({ preventScroll: true });
   }
-  function closeAsk(){ if (busy && ctl) ctl.abort(); sheet.hidden = true; opener.hidden = false; }
+  function closeAsk(){ if (busy && ctl) ctl.abort(); sheet.hidden = true; }
 
   async function askClaude(q){
     turns.push({ role: "user", content: turns.length ? q : rules(ctx) + "\n\n[질문]\n" + q });
@@ -675,8 +671,11 @@ if (!route()) {
   });
   input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing){ e.preventDefault(); form.requestSubmit(); } });
   $("ask-x").addEventListener("click", closeAsk);
-  opener.addEventListener("pointerdown", e => e.preventDefault());
-  opener.addEventListener("click", () => openAsk(readSel()));
+  // 본문 아래 ‘AI에게 물어보기’: 글을 고르지 않고, 그 요점의 본문을 함께 보낸다
+  document.addEventListener("click", e => {
+    const b = e.target instanceof Element ? e.target.closest(".ask-link") : null; if (!b) return;
+    const pt = b.closest(".pt"); openAsk(pt ? { text: "", range: null, el: pt } : null);
+  });
 
   document.addEventListener("selectionchange", () => {
     clearTimeout(timer);
