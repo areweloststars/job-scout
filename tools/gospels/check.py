@@ -1,19 +1,24 @@
-# 장 원본 점검: 번역한 절이 SBLGNT와 같은지, 인용이 개역한글판과 같은지, 헬라어·히브리어 표기가 원문에 있는지, 그림 파일이 있는지
+# 장 원본 점검: 번역한 절이 원문(복음서는 SBLGNT, 잠언은 WLC)과 같은지, 인용이 개역한글판과 같은지, 헬라어·히브리어 표기가 원문에 있는지, 그림 파일이 있는지
 import glob, importlib.util, json, os, re, sys, unicodedata
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.dirname(os.path.dirname(HERE))
 REF = os.environ.get('GOSPEL_REF', '/tmp/claude-0/-home-user-job-scout/994516b7-6db5-5528-99fd-98d7f06f74c4/scratchpad/ref/dl')
 MORPH = {'mat': '61-Mt', 'mrk': '62-Mk', 'luk': '63-Lk', 'jhn': '64-Jn'}
 book = sys.argv[1]
 # 인용 대조는 개역한글판(dl_han.py로 받음)
-G = json.load(open(f'{REF}/han-{book}.json', encoding='utf-8')); S = json.load(open(f'{REF}/sbl-{book}.json', encoding='utf-8'))
+G = json.load(open(f'{REF}/han-{book}.json', encoding='utf-8'))
+OT = {'pro': 'Prov'}  # 구약: 히브리어 WLC(dl_refs.py가 받는 {책}.xml)의 절 목록과 대조
+if book in OT:
+    S = {}
+    for m_ in re.finditer(rf'<verse osisID="{OT[book]}\.(\d+)\.(\d+)"', open(f'{REF}/{OT[book]}.xml', encoding='utf-8').read()): S.setdefault(m_[1], []).append(m_[2])
+else: S = json.load(open(f'{REF}/sbl-{book}.json', encoding='utf-8'))
 norm = lambda s: re.sub(r'[\W_]', '', s)
 def gnorm(w):
     w = unicodedata.normalize('NFD', w.lower()); w = ''.join(ch for ch in w if unicodedata.category(ch) != 'Mn')
     return re.sub(r'[^\w]', '', w).replace('ς', 'σ')
 GK = {}
-for line in open(f'{REF}/{MORPH[book]}-morphgnt.txt', encoding='utf-8'):
+for line in (open(f'{REF}/{MORPH[book]}-morphgnt.txt', encoding='utf-8') if book in MORPH else []):
     f = line.split(); GK.setdefault(int(f[0][2:4]), set()).update({gnorm(f[4]), gnorm(f[5]), gnorm(f[6])})
-ALLG = set().union(*GK.values())
+ALLG = set().union(set(), *GK.values())
 def verses(c, a, b=None):
     ch = G[str(c)]['verses']; return ''.join(ch.get(str(x), '') for x in range(a, (b or a) + 1))
 def gae_has(ref, text):

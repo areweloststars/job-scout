@@ -84,6 +84,7 @@ warn, books, credits, total = [], [], [], {}
 for b in BOOKS:
     titles, cr, nv = build_book(b, warn); credits += cr; total[b['id']] = (len(titles), nv)
     meta = {k: b[k] for k in ('id', 'name', 'author', 'kicker', 'chapters', 'abbr')}
+    meta.update({k: b[k] for k in ('klang', 'src_lang', 'src_text', 'wide', 'lede') if k in b})  # 잠언: 히브리어 표제, WLC, 한 줄 단추
     if b['plate']:
         w, h = Image.open(f'{REPO}/{b["plate"]["img"]}').size; meta['plate'] = {**b['plate'], 'w': w, 'h': h}
     meta['why'] = [list(x) for x in b['why']]; meta['titles'] = titles; books.append(meta)

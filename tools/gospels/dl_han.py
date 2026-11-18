@@ -2,7 +2,7 @@
 # python3 tools/gospels/dl_han.py <폴더>  →  <폴더>/han-mat.json 등 {장: {"verses": {절: 본문}}}
 import json, os, re, sys, time, urllib.error, urllib.parse, urllib.request
 
-BOOKS = {'mat': '마태복음', 'mrk': '마가복음', 'luk': '누가복음', 'jhn': '요한복음'}
+BOOKS = {'mat': '마태복음', 'mrk': '마가복음', 'luk': '누가복음', 'jhn': '요한복음', 'pro': '잠언'}
 URL = 'https://ko.wikisource.org/wiki/{}?action=raw'
 UA = 'gospels-study-page/1.0 (personal Bible study page; https://github.com/areweloststars/job-scout)'
 

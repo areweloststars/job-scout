@@ -54,6 +54,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .front-acts{display:flex;gap:8px;margin-left:auto}  /* AI에게 물어보기 + 밤에 읽기(사용자 요청) */
 @media (max-width:380px){.front-bar{column-gap:8px}.front-bar .kicker{letter-spacing:.18em}.front-bar .mode{padding:8px 11px}}  /* 좁은 휴대폰에서도 한 줄로 */
 .kicker{font-family:var(--greek);font-size:.8125rem;letter-spacing:.26em;color:var(--gold)}
+.kicker:lang(he){font-family:var(--hebrew);font-size:1rem;letter-spacing:0}  /* 잠언: 히브리어 책 이름(미슐레)은 자간 없이 */
 .mode{font-family:var(--ui);font-size:.8125rem;line-height:1;padding:8px 14px;border-radius:999px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);cursor:pointer}
 .mode:hover{border-color:var(--ink-2)}
 .plate{margin:0;padding:10px 10px 8px;background:var(--paper);border:1px solid var(--rule);box-shadow:0 18px 36px -24px var(--shadow)}
@@ -68,6 +69,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .book small{font-size:.6875rem;letter-spacing:.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
 .book:hover{border-color:var(--ink-2)}
 .book[aria-pressed="true"]{border-color:var(--gold);background:var(--gold-t)}
+.book.wide{grid-column:1/-1;grid-template-columns:auto auto;justify-content:center;align-items:baseline;column-gap:10px;padding:8px 2px 7px}  /* 잠언: 복음서 넷 아래 한 줄 */
 .book[aria-pressed="true"] small{color:var(--gold)}
 
 /* 책장 */
@@ -228,7 +230,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
         <button type="button" class="mode" id="read-mode" aria-pressed="false">밤에 읽기</button>
       </div>
     </div>
-    <nav class="books" id="books" aria-label="복음서 고르기"></nav>
+    <nav class="books" id="books" aria-label="책 고르기"></nav>
     <figure class="plate" id="plate" hidden>
       <img id="plate-img" src="data:," alt="">
       <figcaption id="plate-cap"></figcaption>
@@ -252,7 +254,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
   <footer class="sources" id="sources">
     <h2>출처</h2>
     <p>성경 인용: 개역한글판(대한성서공회, 1961). 저작권 보호기간이 끝난 번역이며, 본문은 <a href="https://ko.wikisource.org/wiki/%EA%B0%9C%EC%97%AD%ED%95%9C%EA%B8%80%ED%8C%90" target="_blank" rel="noopener">한국어 위키문헌</a>에서 가져왔습니다. 헬라어는 SBLGNT, 히브리어는 WLC와 대조했습니다. 읽는 시간은 분당 약 475자로 자동 계산한 어림값입니다.</p>
-    <p>‘본문 펼치기’의 쉬운 번역은 헬라어 원문 SBL Greek New Testament(SBLGNT, Society of Biblical Literature)를 이 페이지에서 쉬운 우리말로 옮긴 것으로, 공식 번역이 아닙니다.</p>
+    <p>‘본문 펼치기’의 쉬운 번역은 복음서는 헬라어 원문 SBL Greek New Testament(SBLGNT, Society of Biblical Literature), 잠언은 히브리어 원문 Westminster Leningrad Codex(WLC)를 이 페이지에서 쉬운 우리말로 옮긴 것으로, 공식 번역이 아닙니다.</p>
     <p>그림: 모두 저작권이 만료된 퍼블릭 도메인(CC0 포함) 작품이며, 화면에 맞게 크기를 줄였습니다. 대부분은 제임스 티소의 〈예수의 생애〉 연작(1886–94, <a href="https://www.brooklynmuseum.org/" target="_blank" rel="noopener">브루클린 미술관</a> 소장)이고, 이름난 화가들의 작품은 <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener">위키미디어 공용</a>에서 가져왔습니다.</p>
     <details class="credits"><summary>그 밖의 그림 출처</summary><ul id="credits"></ul></details>
   </footer>
@@ -305,8 +307,9 @@ if (store.get("gospels.done.mrk", null) == null && store.get("mark16.done", null
 const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const tabs = $("tabs"), panel = $("ep"), booksNav = $("books");
 let book = null, cur = 0, done = new Set();
-const FULL = new Set(["mrk", "luk"]);  // 마가·누가복음에서만(사용자 요청): AI에게 묻기, 구절 고르기, 나에게 접기, 장·절 제목
+const FULL = new Set(["mrk", "luk", "pro"]);  // 마가·누가복음과 잠언에서만(사용자 요청): AI에게 묻기, 구절 고르기, 나에게 접기, 장·절 제목
 const isMrk = () => !!book && FULL.has(book.id);
+const src = b => `${b.src_lang || "헬라어"} 원문(${b.src_text || "SBLGNT"})`;  // 쉬운 번역의 바탕 본문
 $("credits").innerHTML = META.credits;
 
 // 장별 데이터(data/책/NN.js)는 그 장을 펼칠 때 불러온다.
@@ -335,7 +338,7 @@ const readyList = b => Object.keys(b.titles).map(Number).sort((x, y) => x - y);
 BOOKS.forEach(b => {
   const n = readyList(b).length;
   const btn = document.createElement("button");
-  btn.type = "button"; btn.className = "book"; btn.dataset.id = b.id;
+  btn.type = "button"; btn.className = b.wide ? "book wide" : "book"; btn.dataset.id = b.id;
   btn.innerHTML = `<b>${b.name}</b><small>${n === b.chapters ? b.chapters + "장" : n ? n + " / " + b.chapters + "장" : "준비 중"}</small>`;
   btn.addEventListener("click", () => { if (book !== b) { setBook(b.id); openFirst(false); } });
   booksNav.appendChild(btn);
@@ -345,13 +348,13 @@ function setBook(id){
   book = byId[id];
   done = new Set((store.get("gospels.done." + book.id, []) || []).filter(n => n >= 1 && n <= book.chapters));
   [...booksNav.children].forEach(x => x.setAttribute("aria-pressed", String(x.dataset.id === book.id)));
-  $("kicker").textContent = book.kicker;
+  const kk = $("kicker"); kk.textContent = book.kicker; kk.lang = book.klang || "grc"; kk.dir = book.klang === "he" ? "rtl" : "ltr";
   $("ask-top").hidden = !isMrk(); document.dispatchEvent(new Event("gospels:book"));
   const pl = book.plate;
   $("plate").hidden = !pl;
   if (pl) { const im = $("plate-img"); im.src = pl.img; im.width = pl.w; im.height = pl.h; im.alt = pl.alt; $("plate-cap").textContent = pl.cap; }
   $("book-title").innerHTML = `${book.name} <em>${book.chapters}</em>부작`;
-  $("lede").textContent = `하루 한 화. 장마다 본문의 요점을 그림과 함께 따라가고, 본문을 펼쳐 직접 읽습니다. 진도는 이 기기에 저장됩니다.`;
+  $("lede").textContent = book.lede || `하루 한 화. 장마다 본문의 요점을 그림과 함께 따라가고, 본문을 펼쳐 직접 읽습니다. 진도는 이 기기에 저장됩니다.`;
   tabs.innerHTML = "";
   for (let n = 1; n <= book.chapters; n++) {
     const t = document.createElement("button");
@@ -376,7 +379,7 @@ function nextUnread(){
 function openFirst(scroll){
   const n = nextUnread();
   if (n) { select(n, scroll); return; }
-  panel.innerHTML = `<div class="state"><p><b>${book.name}은 지금 만드는 중입니다.</b></p><p>장이 완성되는 대로 탭이 하나씩 열립니다. 그동안 다른 복음서를 읽어 보세요.</p></div>`;
+  panel.innerHTML = `<div class="state"><p><b>${book.name}은 지금 만드는 중입니다.</b></p><p>장이 완성되는 대로 탭이 하나씩 열립니다. 그동안 다른 책을 읽어 보세요.</p></div>`;
 }
 
 function refreshProgress(){
@@ -424,7 +427,7 @@ function pointHTML(n, p, i){
     ${isMrk() ? `<details class="me-fold"><summary>나에게</summary><div class="me"><p>${p.me}</p></div></details>` : `<div class="me"><p class="lab">나에게</p><p>${p.me}</p></div>`}
     <details class="bible"><summary><span class="bt-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5.5c3-1 6.5-1 10 1.5v13c-3.5-2.5-7-2.5-10-1.5z"/><path d="M22 5.5c-3-1-6.5-1-10 1.5v13c3.5-2.5 7-2.5 10-1.5z"/></svg><span class="lb-o">본문 펼치기</span><span class="lb-c">본문 접기</span></span><span class="sm">${p.links[0].t} · 쉬운 번역</span></summary>
       <div class="bt">${qm(p.bt)}
-        <div class="bt-foot"><p>헬라어 원문(SBLGNT)을 이 페이지에서 쉬운 우리말로 옮긴 번역입니다. 공식 번역이 아닙니다.</p><p class="bt-links">${links}</p></div>
+        <div class="bt-foot"><p>${src(book)}을 이 페이지에서 쉬운 우리말로 옮긴 번역입니다. 공식 번역이 아닙니다.</p><p class="bt-links">${links}</p></div>
       </div>
     </details>
   </li>`;
@@ -503,7 +506,7 @@ async function select(n, scroll){
 
 // #mat5, #mrk6처럼 책과 장을 주소에 붙여 바로 열 수 있다. 예전 주소 #ep6은 마가복음 6장.
 function route(){
-  const hm = /^#(?:(mat|mrk|luk|jhn)(\d{1,2})?|ep(\d{1,2}))$/.exec(location.hash || "");
+  const hm = /^#(?:(mat|mrk|luk|jhn|pro)(\d{1,2})?|ep(\d{1,2}))$/.exec(location.hash || "");
   if (!hm) return false;
   const id = hm[1] || "mrk";
   if (!book || book.id !== id) setBook(id);
@@ -605,7 +608,7 @@ if (!route()) {
       const key = (pt.querySelector(".vq p")?.textContent || "").trim();
       if (key) parts.push(`핵심 구절(개역한글): ${key}`);
       const text = plain(pt.querySelector(".bt"));
-      if (text) parts.push(`쉬운 번역(헬라어 원문에서 옮김), ${ch.name} ${r}: ${cut(text, 3500)}`);
+      if (text) parts.push(`쉬운 번역(${book.src_lang || "헬라어"} 원문에서 옮김), ${ch.name} ${r}: ${cut(text, 3500)}`);
       if (!bt){ const d = (pt.querySelector(".d")?.textContent || "").trim(); if (d) parts.push(`이 페이지의 설명: ${cut(d, 1200)}`); }
     } else parts.push(cut(plain(info.el.closest("section, li, p") || info.el), 1500));
     return { key: (pt ? pt.id : "page") + "|" + info.text, where, title: pt ? (pt.querySelector("h3")?.textContent || "").trim() : ch.title, passage: parts.join("\n\n"), selected: cut(info.text, 1500) };

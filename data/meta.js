@@ -173,6 +173,38 @@ const META = {
 ]
 ],
 "titles": {}
+},
+{
+"id": "pro",
+"name": "잠언",
+"author": "솔로몬",
+"kicker": "מִשְׁלֵי",
+"chapters": 31,
+"abbr": "잠",
+"klang": "he",
+"src_lang": "히브리어",
+"src_text": "WLC",
+"wide": true,
+"lede": "하루 한 장, 한 달에 한 번. 장마다 본문의 요점을 따라가고, 본문을 펼쳐 직접 읽습니다. 진도는 이 기기에 저장됩니다.",
+"why": [
+[
+"첫 줄",
+"“다윗의 아들 이스라엘 왕 솔로몬의 잠언이라”(1:1)."
+],
+[
+"목적",
+"본문이 직접 밝힌 목적입니다. “이는 지혜와 훈계를 알게 하며 명철의 말씀을 깨닫게 하며”(1:2)."
+],
+[
+"마지막",
+"“그 손의 열매가 그에게로 돌아갈 것이요 그 행한 일을 인하여 성문에서 칭찬을 받으리라”(31:31)."
+]
+],
+"titles": {
+"1": "여호와를 경외하는 것이 지식의 근본",
+"2": "은을 구하는 것 같이 지혜를 구하면",
+"3": "마음을 다하여 여호와를 의뢰하라"
+}
 }
 ],
 "credits": "<li>윌리엄 블레이크, 〈슬기 있는 처녀와 미련한 처녀 비유〉(1799–1800년경, 수채) · <a href=\"https://www.metmuseum.org/art/collection/search/340853\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(The Met Open Access, CC0)</li><li>하르먼 얀스 뮐러(헤라르트 반 흐루닝언 원화), 〈종들에게 달란트를 맡기는 주인〉(1565년경, 동판화) · <a href=\"https://commons.wikimedia.org/wiki/File:Man_geeft_talenten_aan_zijn_dienaren_Gelijkenis_van_de_talenten_(serietitel),_RP-P-OB-2370.jpg\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(Rijksmuseum, CC0)</li><li>하르먼 얀스 뮐러(헤라르트 반 흐루닝언 원화), 〈자기 달란트를 땅에 묻는 종〉(1565년경, 동판화) · <a href=\"https://commons.wikimedia.org/wiki/File:Dienaar_begraaft_zijn_talent_Gelijkenis_van_de_talenten_(serietitel),_RP-P-OB-7347.jpg\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(Rijksmuseum, CC0)</li><li>〈양과 염소를 가르심〉(6세기 초 라벤나 산타폴리나레 누오보 성당 모자이크를 20세기 초에 본뜬 복제품) · <a href=\"https://www.metmuseum.org/art/collection/search/466573\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(The Met Open Access, CC0)</li><li>‘자비의 행위’ 거장, 〈목마른 자에게 마실 것을 주다〉(1465년경, 오스트리아 잘츠부르크) · <a href=\"https://www.metmuseum.org/art/collection/search/436990\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(The Met Open Access, CC0)</li><li>두초 디 부오닌세냐, 〈갈릴리 산에 나타나신 그리스도〉(1308–11, 시에나 대성당 제단화 〈마에스타〉의 한 장면) · <a href=\"https://commons.wikimedia.org/wiki/File:Duccio_di_Buoninsegna_-_Appearance_on_the_Mountain_in_Galilee_-_WGA06737.jpg\" target=\"_blank\" rel=\"noopener\">출처</a> · Public domain</li><li>로마 산 사바 성당의 프레스코, 〈가버나움의 중풍병자를 고치시는 그리스도〉(중세) · <a href=\"https://commons.wikimedia.org/wiki/File:Fresco_of_Christ_healing_the_paralytic_at_Capernaum_(S._Saba,_Rome).jpg\" target=\"_blank\" rel=\"noopener\">출처</a> · Public domain</li><li>피터르 브뤼헐(아버지), 〈추수하는 사람들〉(1565) · <a href=\"https://www.metmuseum.org/art/collection/search/435809\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(The Met Open Access, CC0)</li><li>헤르만 아돌프 쾰러, 〈흑겨자〉(《쾰러의 약용식물》 도판) · <a href=\"https://commons.wikimedia.org/wiki/File:Brassica_nigra_(K%C3%B6hler).jpg\" target=\"_blank\" rel=\"noopener\">출처</a> · Public domain</li><li>한스 쇼이펠라인, 〈귀 먹고 말 더듬는 사람을 고치시는 그리스도〉(1517, 목판화) · <a href=\"https://www.metmuseum.org/art/collection/search/670826\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(The Met Open Access, CC0)</li><li>매트슨 사진 컬렉션, 〈맷돌 앞의 베두인 남자〉(1900년경) · <a href=\"https://www.loc.gov/item/2019703853/\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(미국 의회도서관)</li><li>알브레히트 뒤러, 〈아담과 하와〉(1504, 동판화) · <a href=\"https://www.metmuseum.org/art/collection/search/336222\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(The Met Open Access, CC0)</li><li>〈낙타〉(12세기 전반, 스페인 산 바우델리오 성당 벽화) · <a href=\"https://www.metmuseum.org/art/collection/search/471906\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(The Met Open Access, CC0)</li><li>도메니키노, 〈떨기나무 앞의 모세가 있는 풍경〉(1610–16) · <a href=\"https://www.metmuseum.org/art/collection/search/436205\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(The Met Open Access, CC0)</li><li>웬체슬라우스 홀라르, 〈예루살렘 전경〉(1660, 동판화) · <a href=\"https://www.metmuseum.org/art/collection/search/360075\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(The Met Open Access, CC0)</li><li>얀 반 에이크, 〈십자가 처형; 최후의 심판〉(1436–38년경) · <a href=\"https://www.metmuseum.org/art/collection/search/436282\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(The Met Open Access, CC0)</li><li>작자 미상(얀 라위컨의 판화를 본뜸), 〈반석 위의 집〉(1681–1762, 에칭) · <a href=\"https://commons.wikimedia.org/wiki/File:Het_huis_op_de_rots_Vierentwintig_scènes_uit_het_Nieuwe_Testament_(serietitel),_RP-P-OB-44.079.jpg\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(Rijksmuseum, CC0)</li><li>윌리엄 블레이크, 〈슬기 있는 처녀와 미련한 처녀 비유〉(1799–1800년경, 수채) · <a href=\"https://www.metmuseum.org/art/collection/search/340853\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(The Met Open Access, CC0)</li><li>존 에버렛 밀레이(달지엘 형제 판각), 〈누룩 비유〉(1864, 목판화) · <a href=\"https://www.metmuseum.org/art/collection/search/382267\" target=\"_blank\" rel=\"noopener\">출처</a> · 퍼블릭 도메인(The Met Open Access, CC0)</li>"
