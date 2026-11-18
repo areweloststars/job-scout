@@ -34,7 +34,10 @@
 - [x] 마태·마가 설명(d) 늘리기와 새 ‘나에게’ 질문 (아티팩트 24·25판). 누가 1–14장은 아직 옛 질문
 - [x] 마태·마가 설명을 2/3로 줄이기(마태 평균 339자, 마가 401자)와 이단 해석 검토(누가 1–14장의 설명·질문·회차 소개 포함). 아티팩트 26판
 - [x] 본문 요약 원칙 적용(10/28 사용자 요청): 마가 1–16장(30판), 마태 1–28장과 그림 설명(32판), 누가 1–14장(38판) 완료. 앞으로 쓸 누가 15–24장과 요한복음도 같은 원칙
-- [ ] 누가복음 1–24장: 1–14장 완성(점검 오류 0). 1–12장은 아티팩트 17판에 게시, 13–14장은 다음 게시 때 함께. 15장부터 이어서
+- [ ] 누가복음 1–24장: 1–20장 완성(점검 오류 0, 11/14). **21장부터 이어서.** 21–24장은 마가·누가처럼 요점 4–6개, 설명 200–260자, 본문 요약 원칙.
+  - 다음 세션 준비(참조 본문은 스크래치에 있어 세션마다 다시 받는다): `export GOSPEL_REF=<스크래치>/ref/dl` 뒤 그 폴더에서 `curl -o sbl-Luke.txt https://raw.githubusercontent.com/LogosBible/SBLGNT/master/data/sblgnt/text/Luke.txt`, `curl -o 63-Lk-morphgnt.txt https://raw.githubusercontent.com/morphgnt/sblgnt/master/63-Lk-morphgnt.txt`, `python3 tools/gospels/dl_han.py $GOSPEL_REF`(개역한글). sbl-luk.json은 refs.py 앞부분처럼 `sbl-Luke.txt`를 장:절로 바꿔 만든다.
+  - 쓰기 도구: `side.py 21 22`(헬라어와 개역한글 나란히), `check.py luk 21 22`(인용·헬라어 점검), `qcheck.py 21 22`(‘…’ 인용이 개역한글에 있는지, 설명 길이), `build.py`.
+  - 새 아티팩트(11/13, 누가복음 기능 포함): https://claude.ai/artifact/Ap1SbGrqB48JKyswveRDri. 15–20장은 아직 게시 전이라 다음 게시 때 `data/meta.js`와 `data/luk/15–20.js`를 함께 올린다.
 - [ ] 요한복음 1–21장
 - [x] `books.py`의 why 인용을 개역개정과 대조 (요 21:20 고침)
 - [ ] 누가·요한 속표지 그림 (마태는 images/mat/05-1.jpg)
