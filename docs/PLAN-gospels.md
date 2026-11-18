@@ -1,4 +1,4 @@
-# 사복음서 89부작 작업 계획
+# 사복음서와 잠언 작업 계획
 
 요청(2026-10-26): 마태·마가·누가·요한복음을 마가복음 16부작과 같은 방식으로 볼 수 있게.
 
@@ -11,7 +11,7 @@
   - `TX`: 쉬운 번역 {"장:절": 본문}
 - `images/`: 마가복음 그림은 `p장-번호.jpg`, 다른 책은 `images/{책}/장-번호.jpg`. 같은 장면은 다른 책의 그림을 다시 써도 된다. 아티팩트는 버전당 파일 511개까지라 그림을 아껴 쓴다.
 - 빌드: `python3 tools/gospels/build.py && python3 tools/gospels/assemble.py <아티팩트용 index.html 경로>`
-- 아티팩트: https://claude.ai/artifact/3joQGgqopk3RHkes8hmSwD (files: `data/meta.js`, `data/{책}/NN.js`, `images/…`)
+- 예전 아티팩트(복음서만, 11/5 이전): https://claude.ai/artifact/3joQGgqopk3RHkes8hmSwD (files: `data/meta.js`, `data/{책}/NN.js`, `images/…`)
 
 ## 장 하나 만드는 순서
 1. 개역개정 소제목을 기준으로 요점을 나눈다(장당 5–9개). 범위가 장 전체를 빈틈없이 덮어야 한다.
@@ -37,7 +37,7 @@
 - [ ] 누가복음 1–24장: 1–20장 완성(점검 오류 0, 11/14). **21장부터 이어서.** 21–24장은 마가·누가처럼 요점 4–6개, 설명 200–260자, 본문 요약 원칙.
   - 다음 세션 준비(참조 본문은 스크래치에 있어 세션마다 다시 받는다): `export GOSPEL_REF=<스크래치>/ref/dl` 뒤 그 폴더에서 `curl -o sbl-Luke.txt https://raw.githubusercontent.com/LogosBible/SBLGNT/master/data/sblgnt/text/Luke.txt`, `curl -o 63-Lk-morphgnt.txt https://raw.githubusercontent.com/morphgnt/sblgnt/master/63-Lk-morphgnt.txt`, `python3 tools/gospels/dl_han.py $GOSPEL_REF`(개역한글). sbl-luk.json은 refs.py 앞부분처럼 `sbl-Luke.txt`를 장:절로 바꿔 만든다.
   - 쓰기 도구: `side.py 21 22`(헬라어와 개역한글 나란히), `check.py luk 21 22`(인용·헬라어 점검), `qcheck.py 21 22`(‘…’ 인용이 개역한글에 있는지, 설명 길이), `build.py`.
-  - 새 아티팩트(11/13, 누가복음 기능 포함): https://claude.ai/artifact/Ap1SbGrqB48JKyswveRDri. 15–20장은 아직 게시 전이라 다음 게시 때 `data/meta.js`와 `data/luk/15–20.js`를 함께 올린다.
+  - 아티팩트 ‘사복음서와 잠언’: https://claude.ai/artifact/Ap1SbGrqB48JKyswveRDri. 3판(11/18)에 누가 1–20장과 잠언 1–3장까지 게시. 다음 게시 때는 바뀐 `index.html`, `data/meta.js`, 새 장 파일만 `files`로 올린다(빠진 파일은 그대로 남는다).
 - [ ] 요한복음 1–21장
 - [x] `books.py`의 why 인용을 개역개정과 대조 (요 21:20 고침)
 - [ ] 누가·요한 속표지 그림 (마태는 images/mat/05-1.jpg)
