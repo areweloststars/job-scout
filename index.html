@@ -308,7 +308,7 @@ if (store.get("gospels.done.mrk", null) == null && store.get("mark16.done", null
 const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const tabs = $("tabs"), panel = $("ep"), booksNav = $("books");
 let book = null, cur = 0, done = new Set();
-const FULL = new Set(["mrk", "luk", "pro"]);  // 마가·누가복음과 잠언에서만(사용자 요청): AI에게 묻기, 구절 고르기, 나에게 접기, 장·절 제목
+const FULL = new Set(["mat", "mrk", "luk", "jhn", "pro"]);  // 모든 책에서(사용자 요청: 사복음서와 잠언 모두 누가복음처럼): AI에게 묻기, 구절 고르기, 나에게 접기, 장·절 제목
 const isMrk = () => !!book && FULL.has(book.id);
 const src = b => `${b.src_lang || "헬라어"} 원문(${b.src_text || "SBLGNT"})`;  // 쉬운 번역의 바탕 본문
 $("credits").innerHTML = META.credits;
