@@ -86,7 +86,9 @@ for b in BOOKS:
     meta = {k: b[k] for k in ('id', 'name', 'author', 'kicker', 'chapters', 'abbr')}
     meta.update({k: b[k] for k in ('klang', 'src_lang', 'src_text', 'wide', 'lede') if k in b})  # 잠언: 히브리어 표제, WLC, 한 줄 단추
     if b['plate']:
-        w, h = Image.open(f'{REPO}/{b["plate"]["img"]}').size; meta['plate'] = {**b['plate'], 'w': w, 'h': h}
+        w, h = Image.open(f'{REPO}/{b["plate"]["img"]}').size; meta['plate'] = {k: v for k, v in b['plate'].items() if k != 'credit'} | {'w': w, 'h': h}
+        if b['plate'].get('credit'):  # 속표지 그림 출처(잠언 도레 판화처럼 위키미디어에서 가져온 것)
+            u, lic = b['plate']['credit']; credits.append(f'<li>{html.escape(b["plate"]["cap"].split(". ")[0].rstrip("."))} · <a href="{html.escape(u)}" target="_blank" rel="noopener">출처</a> · {html.escape(lic)}</li>')
     meta['why'] = [list(x) for x in b['why']]; meta['titles'] = titles; books.append(meta)
 js = '// 책 목록과 장 제목, 그림 출처. tools/gospels/build.py가 만듭니다.\nconst META = ' + json.dumps({'books': books, 'credits': ''.join(credits)}, ensure_ascii=False, indent=0) + ';\n'
 open(f'{REPO}/data/meta.js', 'w', encoding='utf-8').write(js)

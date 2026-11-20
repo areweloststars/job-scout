@@ -26,7 +26,10 @@ BOOKS = [
   # 구약. 쉬운 번역은 히브리어 WLC에서 옮기고, 표제는 히브리어 책 이름(미슐레)
   dict(id='pro', name='잠언', author='솔로몬', kicker='מִשְׁלֵי', klang='he', src_lang='히브리어', src_text='WLC', wide=True,
        lede='하루 한 장, 한 달에 한 번. 장마다 본문의 요점을 따라가고, 본문을 펼쳐 직접 읽습니다. 진도는 이 기기에 저장됩니다.',
-       chapters=31, abbr='잠', plate=None,
+       chapters=31, abbr='잠',
+       plate=dict(img='images/pro/plate.jpg', alt='돌의자에 앉아 두루마리를 든 늙은 솔로몬 왕',
+                  cap='귀스타브 도레, 〈늙은 솔로몬 왕〉(1866, 판화). 잠언은 ‘다윗의 아들 이스라엘 왕 솔로몬의 잠언이라’(1:1)는 말로 시작합니다.',
+                  credit=('https://commons.wikimedia.org/wiki/File:087.King_Solomon_in_Old_Age.jpg', '퍼블릭 도메인')),
        why=[('첫 줄', '“다윗의 아들 이스라엘 왕 솔로몬의 잠언이라”(1:1).'),
             ('목적', '본문이 직접 밝힌 목적입니다. “이는 지혜와 훈계를 알게 하며 명철의 말씀을 깨닫게 하며”(1:2).'),
             ('마지막', '“그 손의 열매가 그에게로 돌아갈 것이요 그 행한 일을 인하여 성문에서 칭찬을 받으리라”(31:31).')]),
