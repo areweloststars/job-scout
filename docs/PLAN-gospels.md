@@ -39,7 +39,7 @@
   - 다음 세션 준비(참조 본문은 스크래치에 있어 세션마다 다시 받는다): `export GOSPEL_REF=<스크래치>/ref/dl` 뒤 그 폴더에서 `curl -o sbl-Luke.txt https://raw.githubusercontent.com/LogosBible/SBLGNT/master/data/sblgnt/text/Luke.txt`, `curl -o 63-Lk-morphgnt.txt https://raw.githubusercontent.com/morphgnt/sblgnt/master/63-Lk-morphgnt.txt`, `python3 tools/gospels/dl_han.py $GOSPEL_REF`(개역한글). sbl-luk.json은 refs.py 앞부분처럼 `sbl-Luke.txt`를 장:절로 바꿔 만든다.
   - 쓰기 도구: `side.py 21 22`(헬라어와 개역한글 나란히), `check.py luk 21 22`(인용·헬라어 점검), `qcheck.py 21 22`(‘…’ 인용이 개역한글에 있는지, 설명 길이), `build.py`.
   - 아티팩트: 다른 세션이 만든 ‘사복음서와 잠언’(Ap1SbGrqB48JKyswveRDri)은 이 계정에서 열리지 않아, 11/20부터 원래 아티팩트 https://claude.ai/artifact/3joQGgqopk3RHkes8hmSwD 에 같은 내용을 올린다(60판: 누가 1–20장·잠언 1–3장·모든 책 기능). 다음 게시 때는 바뀐 `index.html`, `data/meta.js`, 새 장 파일과 새 그림만 `files`로 올린다(빠진 파일은 그대로 남는다). 아티팩트는 버전당 파일 511개까지.
-- [ ] 요한복음 1–21장
+- [x] 요한복음 1–21장(11/20, 878절, check.py 오류 0). 요점 3–7개, 설명 평균 200자 안팎, 인용은 개역한글. 쉬운 번역의 서술은 마태·마가·누가처럼 ‘예수님께서’로 통일하고(rw/jesus_hon.py로 점검), 예수님의 말씀은 해라체, 아버지께 드리는 기도(11:41–42, 12:27–28, 17장)는 합니다체로 썼다. 사본 차이는 본문에 덧붙이지 않고 〔 〕로만 알린다: 1:34(‘하나님의 아들’/‘택하신 자’), 5:3 끝–5:4, 7:53–8:11. 개역한글 참조본의 오타(6:69 ‘거룩한신’, 18:11 ‘꽃으라’·‘아버지깨서’)가 있는 절은 인용하지 않았다. 그림은 티소 그림 45점(새로 받은 30점은 images/jhn/, 나머지 15점은 마가·마태에 쓴 같은 장면을 다시 씀). 7·16·17장은 맞는 그림이 없어 넣지 않았다. 화가가 붙인 제목이 본문보다 더 말하는 경우(요한과 안드레, 무덤으로 달려가는 베드로와 요한 등)는 캡션에 ‘제목은 화가가 붙인 것’이라고 밝혔다.
 - [x] `books.py`의 why 인용을 개역개정과 대조 (요 21:20 고침)
 - [ ] 누가·요한 속표지 그림 (마태는 images/mat/05-1.jpg)
 - [ ] `verify.py`, 그림 내려받기 스크립트를 content/ 구조에 맞게 고치기
