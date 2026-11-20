@@ -525,12 +525,13 @@ if (!route()) {
 </script>
 <script>
 /* Claude에게 묻기(사용자 요청). 글을 고르거나(휴대폰은 길게 눌러, 컴퓨터는 드래그나 오른쪽 클릭) 맨 위와 화 맨 아래의 ‘AI에게 물어보기’ 단추로 묻는다.
-   Claude 앱(아티팩트)에서는 이 자리에서 Claude Opus 5.5가 답하고(sample 기능, 묻는 사람의 Claude 사용량),
+   Claude 앱(아티팩트)에서는 이 자리에서 Claude Opus 5.5가 노력 높음(effort high)으로 답하고(sample 기능, 묻는 사람의 Claude 사용량),
    그 밖의 곳(GitHub Pages 등)에서는 질문을 복사해 Claude 앱으로 넘긴다. */
 (() => {
   const fab = $("ask-fab"), fabRef = $("fab-ref"), fabCopy = $("fab-copy"), fabAsk = $("fab-ask"), toastEl = $("toast"), menu = $("ask-menu"), sheet = $("ask"), body = $("ask-body"), log = $("ask-log"),
         selBox = sheet.querySelector(".ask-sel"), quote = $("ask-quote"), refEl = $("ask-ref"), form = $("ask-form"), input = $("ask-in"), send = $("ask-send");
   const MODEL = "claude-opus-5-5";  // 사용자가 고른 모델. 못 쓰면 가장 뛰어난 등급(complex)이 대신 답한다
+  const EFFORT = "high";            // 사용자 요청(11/20): 노력 중간 → 높음
   const HIDE = ["not_granted", "sampling_disabled", "not_declared", "capability_disabled", "capability_removed"];
   const SAY = {
     rate_limited: "지금은 Claude 사용량이 많아요. 잠시 뒤에 다시 물어보세요.",
@@ -703,10 +704,10 @@ if (!route()) {
     const out = say("ai wait", "생각하는 중… 깊이 생각하는 모델이라 조금 걸릴 수 있어요.");
     ctl = new AbortController(); busy = true; label();
     try {
-      const res = await sample(turns, { model: MODEL, modelTier: "complex", cache: false, signal: ctl.signal,
+      const res = await sample(turns, { model: MODEL, modelTier: "complex", effort: EFFORT, cache: false, signal: ctl.signal,
         onText: ({ text }) => { out.innerHTML = md(text); out.classList.remove("wait"); toEnd(); } });
       out.innerHTML = md(res.text); out.classList.remove("wait"); turns.push({ role: "assistant", content: res.text });
-      const who = res.modelApplied === MODEL ? "Claude Opus 5.5" : TIER[res.modelTierApplied];
+      const who = res.modelApplied === MODEL ? "Claude Opus 5.5 · 노력 높음" : TIER[res.modelTierApplied];
       if (who) say("model", `답한 모델: ${who}`);
       if (res.truncated) say("note", "답이 길어 중간에 끊겼어요. 조금 좁혀서 물어보세요.");
     } catch (e) {
