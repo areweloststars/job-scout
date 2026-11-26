@@ -218,6 +218,9 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .ask-row textarea:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
 .ask-send{all:unset;padding:10px 14px;border-radius:12px;background:var(--gold-t);color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 45%,transparent);font-size:.9375rem;text-align:center;cursor:pointer}
 .ask-note{margin:0;font-size:.75rem;line-height:1.5;color:var(--ink-2)}
+.ask-new{position:sticky;bottom:8px;justify-self:center;z-index:1;padding:7px 14px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--gold);font-family:var(--ui);font-size:.8125rem;line-height:1.2;box-shadow:0 8px 20px -10px var(--shadow);cursor:pointer}  /* 새 답이 아래에 쓰일 때 읽던 자리는 그대로 두고 이 단추만 띄운다(사용자 요청) */
+.ask-new[hidden]{display:none}
+.ask-new:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
 </head>
@@ -274,6 +277,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
   <div class="ask-body" id="ask-body">
     <figure class="ask-sel"><blockquote id="ask-quote"></blockquote><figcaption id="ask-ref"></figcaption></figure>
     <div class="ask-log" id="ask-log" aria-live="polite"></div>
+    <button type="button" class="ask-new" id="ask-new" hidden>새 답 보기 ↓</button>
   </div>
   <form class="ask-form" id="ask-form">
     <div class="ask-row"><textarea id="ask-in" rows="2" placeholder="궁금한 것을 적어 보세요" aria-label="질문"></textarea><button type="submit" class="ask-send" id="ask-send">묻기</button></div>
@@ -685,11 +689,19 @@ if (!route()) {
   }
   function pickVerse(bt, e){ const sup = supAt(bt, caretAt(e)); return sup ? selectVerse(bt, sup) : null; }  // 누르거나 오른쪽 클릭한 자리의 절을 고른다
 
-  const toEnd = () => { body.scrollTop = body.scrollHeight; };
+  // 새 글이 쓰이는 동안에도 읽던 자리를 그대로 둔다(사용자 요청: 이어서 물어볼 때 화면이 새 답 쪽으로 끌려가지 않게).
+  // 스크롤은 옮기지 않고, 이번 질문이 보이는 곳 아래에 있으면 ‘새 답 보기’ 단추만 띄운다
+  const pill = $("ask-new");
+  let fresh = null;  // 이번 질문 말풍선: 새 답이 시작되는 곳
+  const seen = () => !fresh || fresh.getBoundingClientRect().top < body.getBoundingClientRect().bottom - 24;
+  const toEnd = () => { pill.hidden = seen(); };
+  const pillLabel = () => { pill.textContent = busy ? "새 답을 쓰고 있어요 ↓" : "새 답 보기 ↓"; };
+  body.addEventListener("scroll", () => { if (!pill.hidden && seen()) pill.hidden = true; }, { passive: true });
+  pill.addEventListener("click", () => { if (fresh) body.scrollTop += fresh.getBoundingClientRect().top - body.getBoundingClientRect().top - 8; pill.hidden = true; });
   function say(kind, text){ const p = document.createElement(kind.startsWith("ai") ? "div" : "p"); p.className = "ask-msg " + kind; p.textContent = text; log.append(p); toEnd(); return p; }
   function openAsk(info){
     const c = context(info);
-    if (!ctx || ctx.key !== c.key){ if (busy && ctl) ctl.abort(); ctx = c; turns = []; log.textContent = ""; }
+    if (!ctx || ctx.key !== c.key){ if (busy && ctl) ctl.abort(); ctx = c; turns = []; log.textContent = ""; fresh = null; pill.hidden = true; }
     selBox.hidden = !c.selected; quote.textContent = c.selected;
     refEl.textContent = c.where + (c.title ? ` · ${c.title}` : "");
     if (!c.selected){ selBox.hidden = false; quote.textContent = ""; quote.hidden = true; } else quote.hidden = false;
@@ -701,9 +713,9 @@ if (!route()) {
 
   async function askClaude(q){
     turns.push({ role: "user", content: turns.length ? q : rules(ctx) + "\n\n[질문]\n" + q });
-    say("me", q);
+    fresh = say("me", q);
     const out = say("ai wait", "생각하는 중… 깊이 생각하는 모델이라 조금 걸릴 수 있어요.");
-    ctl = new AbortController(); busy = true; label();
+    ctl = new AbortController(); busy = true; label(); pillLabel(); toEnd();
     try {
       const res = await sample(turns, { model: MODEL, modelTier: "complex", effort: EFFORT, cache: false, signal: ctl.signal,
         onText: ({ text }) => { out.innerHTML = md(text); out.classList.remove("wait"); toEnd(); } });
@@ -717,11 +729,11 @@ if (!route()) {
       else { out.remove(); turns.pop(); }
       if (HIDE.includes(code)){ mode = "copy"; say("note", "이 화면에서는 Claude가 바로 답할 수 없어요. ‘복사해서 묻기’를 누르면 질문이 복사되고, Claude 앱에 붙여 넣어 물어볼 수 있어요."); }
       else if (code !== "cancelled") say("note", SAY[code] || "연결이 끊겼어요. 다시 물어보세요.");
-    } finally { busy = false; ctl = null; label(); }
+    } finally { busy = false; ctl = null; label(); pillLabel(); }
   }
   async function copyAsk(q){
     const text = rules(ctx) + "\n\n[질문]\n" + q;
-    say("me", q);
+    fresh = say("me", q); pillLabel();
     let ok = false;
     try { await navigator.clipboard.writeText(text); ok = true; } catch (_) {}
     const p = say("note", ok ? "질문을 복사했어요. " : "아래 글을 복사해 Claude에 붙여 넣으세요. ");
@@ -736,6 +748,7 @@ if (!route()) {
     const q = input.value.trim();
     if (!q || !ctx) return;
     input.value = "";
+    if (coarse()) input.blur();  // 휴대폰: 보내면 자판을 내려 읽던 글을 가리지 않게
     await ready;
     if (mode === "claude") askClaude(q); else copyAsk(q);
   });
