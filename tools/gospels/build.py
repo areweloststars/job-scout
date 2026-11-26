@@ -32,7 +32,7 @@ def segs(r, lastv):  # 범위 → [(장, [절...])]
         a, _, b = part.strip().partition('–'); out.append((int(c), list(range(int(a), int(b or a) + 1))))
     return out
 
-def passage(r, tx, lastv):
+def passage(r, tx, lastv, per_verse=False):  # per_verse: 잠언은 절마다 새 줄에서 시작(사용자 요청)
     parts, miss, S = [], [], segs(r, lastv)
     for i, (c, vs) in enumerate(S):
         chunk = []
@@ -41,7 +41,8 @@ def passage(r, tx, lastv):
             if t is None: miss.append(f'{c}:{v}'); continue
             chunk.append(f'<sup>{v}</sup>' + re.sub(r'〔(.+?)〕', r'<span class="tn">〔\1〕</span>', t))
         lead = '' if i == 0 else (f'<span class="ch">{c}장</span>' if c != S[i - 1][0] else '<span class="ch">⋯</span>')
-        parts.append(f'<p>{lead}{" ".join(chunk)}</p>')
+        if per_verse and chunk: parts.append(f'<p>{lead}{chunk[0]}</p>' + ''.join(f'<p>{x}</p>' for x in chunk[1:]))
+        else: parts.append(f'<p>{lead}{" ".join(chunk)}</p>')
     if miss: parts.append(f'<p class="tn">※ {", ".join(miss)}절은 가장 오래된 사본들에 없어서 싣지 않았습니다.</p>')
     return ''.join(parts), miss
 
@@ -59,7 +60,7 @@ def build_book(b, warn):
             links = [{'t': lab, 'u': han_url(b['id'], c, v)}]
             if p.get('also'):
                 ob, oc, ov, ol = p['also']; links.append({'t': f'그림 속 장면: {NAMES[ob]} {ol}', 'u': han_url(ob, oc, ov)})
-            bt, miss = passage(p['r'], tx, lastv)
+            bt, miss = passage(p['r'], tx, lastv, b['id'] == 'pro')
             for sc, vs in segs(p['r'], lastv): covered.update(f'{sc}:{x}' for x in vs)
             rec = {'r': p['r'], 't': p['t'], 'd': mark(p['d']), 'me': p['me']}
             if p.get('q'): rec['q'] = list(p['q'])

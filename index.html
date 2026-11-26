@@ -141,6 +141,8 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .pt-mk .bt sup{display:none}  /* 마가·누가복음: 절 번호는 숨기고, 본문을 누르면 그 절을 골라 장·절을 보여 준다(사용자 요청) */
 .pt-mk .bt .qm{font-size:inherit;color:inherit}  /* 마가·누가복음: 따옴표도 설명 글과 같은 모양으로(사용자 요청) */
 .tn{font-family:var(--ui);font-weight:400;font-size:.8125rem;line-height:1.6;color:var(--ink-2)}
+.bt.vv{gap:.4em}  /* 잠언: 절마다 새 줄에서 시작하고(사용자 요청), 절 사이는 문단보다 좁게 */
+.bt.vv .bt-foot{margin-top:.6em}
 .bt-foot{display:grid;gap:6px;padding-top:4px;font-family:var(--ui);font-weight:400;font-size:.75rem;line-height:1.6;color:var(--ink-2)}
 .bt-links{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.8125rem}
 
@@ -427,7 +429,7 @@ function pointHTML(n, p, i){
     <p class="d">${p.d}</p>
     ${isMrk() ? `<details class="me-fold"><summary>나에게</summary><div class="me"><p>${p.me}</p></div></details>` : `<div class="me"><p class="lab">나에게</p><p>${p.me}</p></div>`}
     <details class="bible"><summary><span class="bt-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5.5c3-1 6.5-1 10 1.5v13c-3.5-2.5-7-2.5-10-1.5z"/><path d="M22 5.5c-3-1-6.5-1-10 1.5v13c3.5-2.5 7-2.5 10-1.5z"/></svg><span class="lb-o">본문 펼치기</span><span class="lb-c">본문 접기</span></span><span class="sm">${p.links[0].t} · 쉬운 번역</span></summary>
-      <div class="bt">${qm(p.bt)}
+      <div class="bt${book.id === "pro" ? " vv" : ""}">${qm(p.bt)}
         <div class="bt-foot"><p>${src(book)}을 이 페이지에서 쉬운 우리말로 옮긴 번역입니다. 공식 번역이 아닙니다.</p><p class="bt-links">${links}</p></div>
       </div>
     </details>
