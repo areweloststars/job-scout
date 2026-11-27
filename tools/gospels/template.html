@@ -231,10 +231,22 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .ask-msg.ai p,.ask-msg.ai ul,.ask-msg.ai ol{margin:0 0 .6em}.ask-msg.ai>:last-child{margin-bottom:0}.ask-msg.ai ul,.ask-msg.ai ol{padding-left:1.3em}.ask-msg.ai .h{font-weight:600}
 .ask-msg.ai code{font-size:.9em;padding:0 .25em;border-radius:4px;background:var(--gold-t)}
 .ask-msg.ai p{margin:0 0 .85em}  /* 문단 사이를 띄워 읽기 편하게(사용자 요청 11/27 오후) */
-.ask-msg.ai .cs{cursor:pointer;border-radius:4px}  /* 근거가 있는 문장: 밑줄 없이(읽을 때 눈에 걸리지 않게), 누르면 맨 아래 그 출처로 */
-.ask-msg.ai .cs:hover{background:var(--gold-t)}
+.ask-msg.ai .cg{cursor:pointer;-webkit-tap-highlight-color:transparent}  /* 근거가 있는 문장과 번호: 누르면 바로 밑에 출처가 펼쳐지고, 다시 누르면 접힌다(사용자 요청 11/27 3:50) */
+.ask-msg.ai .cs{border-radius:4px}
+.ask-msg.ai .cg.on .cs{background:color-mix(in srgb,var(--gold) 22%,transparent)}
+@media (hover:hover){.ask-msg.ai .cg:hover .cs{background:var(--gold-t)}}
 .ask-msg.ai .cite{all:unset;display:inline-block;min-width:1.2em;margin:0 1px 0 3px;padding:0 4px;border-radius:6px;font-size:.6875rem;line-height:1.45;text-align:center;vertical-align:.35em;color:var(--gold);background:var(--gold-t);cursor:pointer;font-variant-numeric:tabular-nums}
-.ask-msg.ai .cite:focus-visible,.ask-msg.ai .cs:focus-visible{outline:2px solid var(--gold);outline-offset:1px;border-radius:4px}
+.ask-msg.ai .cg:focus-visible{outline:2px solid var(--gold);outline-offset:1px;border-radius:4px}
+.src-in{display:block;margin:.5em 0 .75em;padding:.65em .8em;border-radius:10px;background:var(--gold-t);color:var(--ink);font-size:.875rem;line-height:1.7;cursor:default}  /* 문장 바로 밑에 펼친 출처 */
+.src-in .si{display:block}
+.src-in .si + .si{margin-top:.6em;padding-top:.6em;border-top:1px solid var(--rule)}
+.src-in .si-h{display:block;margin-bottom:.25em;font-size:.75rem;color:var(--ink-2)}
+.src-in .sn{display:inline-block;min-width:1.4em;color:var(--gold);font-variant-numeric:tabular-nums}
+.src-in .sx{display:block;overflow-wrap:anywhere}
+.src-in .sl{display:inline-block;margin-top:.35em;color:var(--lake);font-size:.75rem}
+.src-in .ol{display:block}
+.src-in .ol[dir="rtl"]{text-align:right;font-family:var(--hebrew);font-size:1.0625rem}
+.src-in .on{display:block;font-size:.75rem;color:var(--ink-2)}
 .srcs{margin:1em 0 0;padding:.75em 0 0;border-top:1px solid var(--rule);font-size:.8125rem;line-height:1.55;color:var(--ink-2)}
 .srcs .sh{margin:0 0 .35em;font-weight:600}
 .src{margin:0;padding:.2em 0;border-radius:6px}
@@ -1064,14 +1076,21 @@ if (!route()) {
     const parts = []; let last = 0, m; const re = new RegExp(CITE.source, "g");
     while ((m = re.exec(line))){ parts.push({ t: line.slice(last, m.index) }); parts.push({ c: m[1].trim() }); last = re.lastIndex; }
     parts.push({ t: line.slice(last) });
-    let out = "";
-    for (let i = 0; i < parts.length; i++){
+    let out = "", i = 0;
+    while (i < parts.length){
       const p = parts[i];
-      if (p.t == null){ const n = num.get(p.c); if (n) out += `<button type="button" class="cite" data-n="${n}" aria-label="출처 ${n} 보기">${n}</button>`; continue; }
-      let n = 0; for (let j = i + 1; j < parts.length && parts[j].t == null; j++){ n = num.get(parts[j].c) || 0; if (n) break; }
-      if (!n || !p.t.trim()){ out += inline(p.t); continue; }
-      const k = tailStart(p.t);
-      out += inline(p.t.slice(0, k)) + `<span class="cs" data-n="${n}" role="button" tabindex="0">${inline(p.t.slice(k))}</span>`;
+      if (p.t == null){ i++; continue; }  // 앞 글 없이 나온 표시는 버린다
+      const ns = []; let j = i + 1;
+      while (j < parts.length){  // 글 바로 뒤의 표시들(사이의 빈칸은 건너뛴다)
+        if (parts[j].t == null){ const n = num.get(parts[j].c); if (n && !ns.includes(n)) ns.push(n); j++; continue; }
+        if (!parts[j].t.trim() && j + 1 < parts.length && parts[j + 1].t == null){ j++; continue; }
+        break;
+      }
+      if (ns.length && p.t.trim()){
+        const k = tailStart(p.t);
+        out += inline(p.t.slice(0, k)) + `<span class="cg" data-ns="${ns.join(",")}" role="button" tabindex="0" aria-expanded="false"><span class="cs">${inline(p.t.slice(k))}</span>${ns.map(n => `<span class="cite" aria-hidden="true">${n}</span>`).join("")}</span>`;
+      } else out += inline(p.t);
+      i = j;
     }
     return out;
   }
@@ -1082,12 +1101,26 @@ if (!route()) {
     const at = he ? ' dir="rtl" lang="he"' : ' lang="grc"';
     return (pre ? `<span class="on">${esc(pre)}</span><span class="ol"${at}>${esc(title)}</span>` : "") + (t ? `<span class="ol"${at}>${esc(t)}</span>` : "") + (note ? `<span class="on">${esc(note)}</span>` : "");
   }
+  const SRC = new WeakMap();  // 답 칸 → 그 답의 출처 목록
+  const srcBody = x => (x.rows ? x.rows.map(r => origRow(r, x.he)).join("") : esc(x.text).replace(/\n/g, "<br>"));
+  const srcLink = x => (x.url ? `<a class="sl" href="${x.url}" target="_blank" rel="noopener">대한성서공회 개역개정으로 보기 ↗</a>` : "");
   async function renderAnswer(el, text){
     const { num, list } = await resolveAll(text);
     const srcs = list.map((x, i) => `<details class="src" data-n="${i + 1}"><summary><span class="sn">${i + 1}</span>${esc(x.label)}</summary>`
-      + `<div class="sx"${x.lang ? ` lang="${x.lang}"` : ""}>${x.rows ? x.rows.map(r => origRow(r, x.he)).join("") : esc(x.text).replace(/\n/g, "<br>")}</div>`
-      + (x.url ? `<a class="sl" href="${x.url}" target="_blank" rel="noopener">대한성서공회 개역개정으로 보기 ↗</a>` : "") + `</details>`).join("");
+      + `<div class="sx"${x.lang ? ` lang="${x.lang}"` : ""}>${srcBody(x)}</div>${srcLink(x)}</details>`).join("");
     el.innerHTML = md(text, l => citeInline(l, num)) + (srcs ? `<div class="srcs"><p class="sh">출처</p>${srcs}</div>` : "");
+    SRC.set(el, list);
+  }
+  function toggleCite(g){  // 그 문장 바로 밑에 출처를 펼치고, 다시 누르면 접는다
+    const next = g.nextElementSibling;
+    if (next && next.classList.contains("src-in")){ next.remove(); g.classList.remove("on"); g.setAttribute("aria-expanded", "false"); return; }
+    const list = SRC.get(g.closest(".ask-msg.ai")) || [];
+    const box = document.createElement("span"); box.className = "src-in";
+    box.innerHTML = g.dataset.ns.split(",").map(Number).filter(n => list[n - 1]).map(n => { const x = list[n - 1];
+      return `<span class="si"><span class="si-h"><span class="sn">${n}</span>${esc(x.label)}</span><span class="sx"${x.lang ? ` lang="${x.lang}"` : ""}>${srcBody(x)}</span>${srcLink(x)}</span>`; }).join("");
+    if (!box.innerHTML) return;
+    g.after(box); g.classList.add("on"); g.setAttribute("aria-expanded", "true");
+    box.scrollIntoView({ block: "nearest", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   }
 
   function place(el, info){
@@ -1204,14 +1237,8 @@ if (!route()) {
     if (was && fresh) requestAnimationFrame(() => { body.scrollTop += fresh.getBoundingClientRect().top - body.getBoundingClientRect().top - 8; toEnd(); });  // 새 답의 처음부터
   }
   $("ask-dock-open").addEventListener("click", expand);
-  function goSource(t){
-    const box = t.closest(".ask-msg.ai"), src = box && box.querySelector(`.src[data-n="${t.dataset.n}"]`); if (!src) return;
-    src.open = true;
-    body.scrollTop += src.getBoundingClientRect().top - body.getBoundingClientRect().top - body.clientHeight * .25;
-    src.classList.remove("v-flash"); void src.offsetWidth; src.classList.add("v-flash");
-  }
-  log.addEventListener("click", e => { const t = e.target instanceof Element && e.target.closest(".cs, .cite"); if (t) goSource(t); });
-  log.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target instanceof Element && e.target.matches(".cs")){ e.preventDefault(); goSource(e.target); } });
+  log.addEventListener("click", e => { const g = e.target instanceof Element && !e.target.closest(".src-in") && e.target.closest(".cg"); if (g) toggleCite(g); });
+  log.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target instanceof Element && e.target.matches(".cg")){ e.preventDefault(); toggleCite(e.target); } });
   dockX.addEventListener("click", () => { if (busy) return; docked = false; renderDock(); });
   // 휴대폰: 창 바깥(본문)을 누르면 접는다. 그 한 번의 누름은 접기만 하고 절 고르기나 링크로 넘어가지 않는다
   document.addEventListener("click", e => {
