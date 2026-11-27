@@ -285,6 +285,8 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .ask-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:end}
 .ask-row textarea{box-sizing:border-box;width:100%;resize:none;padding:9px 11px;border-radius:12px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);font:inherit;font-size:1rem;line-height:1.5}
 .ask-row textarea:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+.ask-row textarea.got{animation:got 1.2s ease-out}
+@keyframes got{0%,30%{background:color-mix(in srgb,var(--gold) 20%,var(--paper))}100%{background:var(--paper)}}
 .ask-send{all:unset;padding:10px 14px;border-radius:12px;background:var(--gold-t);color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 45%,transparent);font-size:.9375rem;text-align:center;cursor:pointer}
 .ask-note{margin:0;font-size:.75rem;line-height:1.5;color:var(--ink-2)}
 .ask-new{position:sticky;bottom:8px;justify-self:center;z-index:1;padding:7px 14px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--gold);font-family:var(--ui);font-size:.8125rem;line-height:1.2;box-shadow:0 8px 20px -10px var(--shadow);cursor:pointer}  /* 새 답이 아래에 쓰일 때 읽던 자리는 그대로 두고 이 단추만 띄운다(사용자 요청) */
@@ -1200,7 +1202,12 @@ if (!route()) {
   function pasteText(t){  // 질문 칸의 커서 자리에 “고른 글”을 넣는다
     const ins = `“${t}” `, a = input.selectionStart ?? input.value.length, z = input.selectionEnd ?? a;
     input.value = input.value.slice(0, a) + ins + input.value.slice(z);
-    const at = a + ins.length; input.focus({ preventScroll: true }); try { input.setSelectionRange(at, at); } catch (_) {}
+    const at = a + ins.length;
+    // 휴대폰에서는 자판을 띄우지 않는다: 스크립트로 질문 칸에 커서를 두면 자판이 묻는 창을 덮어 질문 칸이 안 보였다(사용자 요청 11/27 4:14).
+    // 넣은 글은 질문 칸에 보이고, 이어서 쓰려면 질문 칸을 누르면 된다
+    if (!coarse()) input.focus({ preventScroll: true });
+    try { input.setSelectionRange(at, at); } catch (_) {}
+    input.classList.remove("got"); void input.offsetWidth; input.classList.add("got");  // 들어간 것을 알 수 있게 질문 칸을 잠깐 금빛으로
   }
   const qp = document.createElement("button"); qp.type = "button"; qp.className = "q-paste q-float"; qp.textContent = "붙여넣기"; qp.hidden = true;
   const hs = document.createElement("span"), he = document.createElement("span");  // 시작·끝 손잡이
