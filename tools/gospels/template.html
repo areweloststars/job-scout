@@ -288,7 +288,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .dk-x{all:unset;width:34px;height:34px;margin-right:4px;display:grid;place-items:center;border-radius:999px;color:var(--ink-2);font-size:1.125rem;line-height:1;cursor:pointer}
 .dk-open:focus-visible,.dk-x:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:999px}
 .dk-i{flex:none;width:11px;height:11px;border-radius:50%;box-sizing:border-box}
-.ask-dock[data-state="busy"] .dk-i{border:2px solid color-mix(in srgb,var(--gold) 55%,transparent)}  /* 답변 준비 중: 움직이지 않는 고리(사용자 요청 11/27 3:34) */
+.ask-dock[data-state="busy"] .dk-i{display:none}  /* 답변 준비 중: 글만, 왼쪽 원 없이(사용자 요청 11/27: 3:34 ‘돌지 않게’ → 그 뒤 ‘원을 아예 지워 줘’) */
 .ask-dock[data-state="new"]{border-color:var(--gold);animation:dk-blink 1.1s ease-in-out infinite}  /* 답이 오면 눌러 볼 때까지 깜박깜박(사용자 요청 11/27 오후) */
 .ask-dock[data-state="new"] .dk-i{border:2px solid var(--gold-t);border-top-color:var(--gold);animation:dk-spin .9s linear infinite}  /* 답이 오면 그제서야 굴러가는 고리 */
 .ask-dock[data-state="new"] .dk-t{color:var(--gold);font-weight:600}
