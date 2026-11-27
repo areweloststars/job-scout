@@ -53,7 +53,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 /* 속표지 */
 .front{display:grid;gap:16px}
 .front-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 12px}
-.front-acts{display:flex;gap:8px;margin-left:auto}  /* AI에게 물어보기 + 밤에 읽기(사용자 요청) */
+.front-acts{display:flex;gap:8px;margin-left:auto}  /* AI에게 물어보기 + 어둡게 읽기(사용자 요청) */
 @media (max-width:380px){.front-bar{column-gap:8px}.front-bar .kicker{letter-spacing:.18em}.front-bar .mode{padding:8px 11px}}  /* 좁은 휴대폰에서도 한 줄로 */
 .kicker{font-family:var(--greek);font-size:.8125rem;letter-spacing:.26em;color:var(--gold)}
 .kicker:lang(he){font-family:var(--hebrew);font-size:1rem;letter-spacing:0}  /* 잠언: 히브리어 책 이름(미슐레)은 자간 없이 */
@@ -210,18 +210,19 @@ h1,h2,h3{margin:0;text-wrap:balance}
 @media (max-width:899px){.ask{left:0;max-height:78vh;border-radius:18px 18px 0 0;border-top:1px solid var(--rule)}}
 @media (min-width:900px){.ask{top:0;width:400px;border-left:1px solid var(--rule)}}
 .ask[hidden],.ask-fab[hidden],.ask-fab [hidden],.ask-menu[hidden],.toast[hidden]{display:none}
-.toast{position:fixed;z-index:60;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);max-width:calc(100vw - 32px);padding:9px 16px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--ink);font-family:var(--ui);font-size:.875rem;line-height:1.3;box-shadow:0 10px 24px -12px var(--shadow);pointer-events:none}  /* 복사했다는 알림 */
+.toast{position:fixed;z-index:60;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);width:max-content;max-width:calc(100vw - 32px);padding:9px 16px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--ink);font-family:var(--ui);font-size:.875rem;line-height:1.3;box-shadow:0 10px 24px -12px var(--shadow);pointer-events:none}  /* 복사했다는 알림 */
 .ask-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 12px 10px 16px;border-bottom:1px solid var(--rule)}
 .ask-head h2{margin:0;font-family:var(--ui);font-size:1rem;font-weight:400;color:var(--gold)}
 .ask-x{all:unset;display:inline-flex;align-items:center;gap:3px;padding:7px 8px 7px 12px;border-radius:999px;font-size:.875rem;line-height:1;color:var(--ink-2);cursor:pointer}  /* ‘접기’: 창을 닫지 않고 아래로 접는다(사용자 요청) */
 .ask-x svg{width:18px;height:18px}
 .ask-x:hover{background:var(--gold-t);color:var(--ink)}
-.ask-body{flex:1;min-height:0;overflow:auto;padding:14px 16px;display:grid;gap:12px;align-content:start}
+.ask-body{position:relative;flex:1;min-height:0;overflow:auto;padding:14px 16px;display:grid;gap:12px;align-content:start}  /* 고른 글의 손잡이·붙여넣기가 글과 함께 움직이게 */
 .ask-sel{margin:0;padding:10px 12px;border-radius:12px;background:var(--gold-t)}
 .ask-sel blockquote{margin:0;font-family:var(--scripture);font-size:.9375rem;line-height:1.7;max-height:7em;overflow:auto}
 .ask-sel blockquote{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}  /* 휴대폰의 꾹 누르기 선택 대신 이 페이지의 낱말 고르기(사용자 요청 11/27) */
 .ask-sel .qw{cursor:pointer;-webkit-tap-highlight-color:transparent;border-radius:2px}
-.ask-sel .qw.sel{background:rgba(66,133,244,.32)}  /* 한 번 누르면 파랗게(휴대폰 기본 선택 색과 비슷하게) */
+.ask .qw.sel{background:rgba(66,133,244,.32)}
+.ask-msg.ai .qw{-webkit-tap-highlight-color:transparent;border-radius:2px}  /* AI의 답도 한 번 누르면 낱말이 골라진다(사용자 요청 11/27 4:23) */  /* 한 번 누르면 파랗게(휴대폰 기본 선택 색과 비슷하게) */
 .q-h{position:absolute;z-index:4;width:20px;height:20px;background:#3b78e7;touch-action:none;cursor:grab}  /* 범위를 넓히고 좁히는 파란 손잡이 */
 .q-h::before{content:"";position:absolute;inset:-14px}  /* 손가락으로 잡기 쉽게 */
 .q-h-s{margin-left:-20px;border-radius:50% 0 50% 50%}
@@ -234,6 +235,13 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .q-paste.q-float[hidden]{display:none}
 .ask-sel figcaption{margin-top:6px;font-size:.8125rem;color:var(--ink-2)}
 .ask-log{display:grid;gap:10px}
+.ask-log>.ask-sel:not(:first-child),.ask-log>.ask-th:not(:first-child){margin-top:18px}  /* 본문마다 대화를 띄어(사용자 요청 11/27 4:04) */
+.ask-th{margin:0;padding:8px 12px;border-radius:12px;background:var(--gold-t)}  /* 앞서 물은 본문: 다른 본문을 고르면 카드가 이렇게 작아진다 */
+.ask-th p{margin:0}
+.ask-th .th-q{font-family:var(--scripture);font-size:.875rem;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ask-th .th-r{margin-top:3px;font-size:.75rem;color:var(--ink-2)}
+.w-stop{all:unset;margin-left:12px;font-size:.75rem;color:var(--ink-2);text-decoration:underline;text-underline-offset:2px;cursor:pointer}  /* 답변 준비 중 옆의 작은 멈추기 */
+.w-stop:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .ask-msg{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.75;font-size:.96875rem}
 .ask-msg.me{justify-self:end;max-width:85%;padding:8px 12px;border-radius:14px 14px 4px 14px;background:var(--lake-t)}
 .ask-msg.ai{white-space:normal;font-family:system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif}  /* 답은 평소 Claude 앱처럼 보통 글씨체로(사용자 요청) */
@@ -285,8 +293,6 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .ask-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:end}
 .ask-row textarea{box-sizing:border-box;width:100%;resize:none;padding:9px 11px;border-radius:12px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);font:inherit;font-size:1rem;line-height:1.5}
 .ask-row textarea:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
-.ask-row textarea.got{animation:got 1.2s ease-out}
-@keyframes got{0%,30%{background:color-mix(in srgb,var(--gold) 20%,var(--paper))}100%{background:var(--paper)}}
 .ask-send{all:unset;padding:10px 14px;border-radius:12px;background:var(--gold-t);color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 45%,transparent);font-size:.9375rem;text-align:center;cursor:pointer}
 .ask-note{margin:0;font-size:.75rem;line-height:1.5;color:var(--ink-2)}
 .ask-new{position:sticky;bottom:8px;justify-self:center;z-index:1;padding:7px 14px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--gold);font-family:var(--ui);font-size:.8125rem;line-height:1.2;box-shadow:0 8px 20px -10px var(--shadow);cursor:pointer}  /* 새 답이 아래에 쓰일 때 읽던 자리는 그대로 두고 이 단추만 띄운다(사용자 요청) */
@@ -325,7 +331,7 @@ html.ask-docked body{padding-bottom:76px}  /* 접힌 단추가 맨 아래 글을
       <p class="kicker" lang="grc" id="kicker">ΚΑΤΑ ΜΑΡΚΟΝ</p>
       <div class="front-acts">
         <button type="button" class="mode" id="ask-top">AI에게 물어보기</button>
-        <button type="button" class="mode" id="read-mode" aria-pressed="false">밤에 읽기</button>
+        <button type="button" class="mode" id="read-mode" aria-pressed="false">어둡게 읽기</button>
       </div>
     </div>
     <nav class="books" id="books" aria-label="책 고르기"></nav>
@@ -370,8 +376,7 @@ html.ask-docked body{padding-bottom:76px}  /* 접힌 단추가 맨 아래 글을
 <aside class="ask" id="ask" role="dialog" aria-labelledby="ask-h" hidden>
   <header class="ask-head"><h2 id="ask-h">AI Claude에게 묻기</h2><button type="button" class="ask-x" id="ask-x" aria-label="창을 아래로 접기">접기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></header>
   <div class="ask-body" id="ask-body">
-    <figure class="ask-sel"><blockquote id="ask-quote"></blockquote><figcaption id="ask-ref"></figcaption></figure>
-    <div class="ask-log" id="ask-log" aria-live="polite"></div>
+    <div class="ask-log" id="ask-log" aria-live="polite"><figure class="ask-sel"><blockquote id="ask-quote"></blockquote><figcaption id="ask-ref"></figcaption></figure></div>
     <button type="button" class="ask-new" id="ask-new" hidden>새 답 보기 ↓</button>
   </div>
   <form class="ask-form" id="ask-form">
@@ -393,7 +398,7 @@ const modeBtn = $("read-mode");
 function setMode(m){
   if (m === "night") root.setAttribute("data-read", "night"); else root.removeAttribute("data-read");
   modeBtn.setAttribute("aria-pressed", String(m === "night"));
-  modeBtn.textContent = m === "night" ? "낮에 읽기" : "밤에 읽기";
+  modeBtn.textContent = m === "night" ? "밝게 읽기" : "어둡게 읽기";  // ‘낮에/밤에 읽기’ 대신(사용자 요청 11/27 4:27)
 }
 setMode(store.get("gospels.mode", store.get("mark16.mode", "day")));
 modeBtn.addEventListener("click", () => {
@@ -711,9 +716,9 @@ if (!route()) {
     prompt_too_large: "고른 부분이 너무 길어요. 조금 줄여서 다시 물어보세요."
   };
   const TIER = { complex: "가장 뛰어난 등급", default: "기본 등급", quick: "빠른 등급" };
-  let sample = null, mode = "pending", ctx = null, turns = [], ctl = null, busy = false, picked = null, timer = 0, canTools = false;
+  let sample = null, mode = "pending", picked = null, timer = 0, canTools = false;
   const coarse = () => matchMedia("(pointer: coarse)").matches;
-  const label = () => { send.textContent = busy ? "멈추기" : mode === "copy" ? "복사해서 묻기" : "묻기"; };
+  const label = () => { send.textContent = mode === "copy" ? "복사해서 묻기" : "묻기"; };  // 답을 쓰는 동안에도 ‘묻기’(멈추기는 답 자리의 작은 단추)
   const ready = (async () => {
     try { sample = window.claude && typeof window.claude.use === "function" ? await window.claude.use("sample") : null; } catch (_) { sample = null; }
     if (sample){ try { const caps = await sample.limits(); canTools = !!(caps && caps.tools && caps.tools.maxCount >= 1); } catch (_) {} }  // 본문 찾기 도구를 쓸 수 있는 화면인지
@@ -1011,22 +1016,22 @@ if (!route()) {
     "",
     "다시 쓴 답만 출력하세요. 설명이나 머리말은 붙이지 않습니다."
   ].join("\n");
-  function easyInput(c, draft){  // 쉽게 다시 쓰기: 자료 없이 질문·문맥·초안만(빠르게, 새 사실을 보태지 않게)
-    const n = turns.length, prev = [];
+  function easyInput(t, draft){  // 쉽게 다시 쓰기: 자료 없이 질문·문맥·초안만(빠르게, 새 사실을 보태지 않게)
+    const c = t.c, turns = t.turns, n = turns.length, prev = [];
     for (let i = Math.max(0, n - 6); i < n - 2; i++) prev.push(`${turns[i].role === "user" ? "질문" : "답"}: ${cut(qOf(turns[i]), 800)}`);
     return [EASY(), "", `[읽고 있는 곳] ${c.where}${c.title ? " · " + c.title : ""}`, ...(c.selected ? ["", "[고른 부분]", c.selected] : []),
-      ...(prev.length ? ["", "[앞의 대화]", ...prev] : []), "", "[질문]", qOf(turns[n - 2]), "", "[초안]", draft].join("\n");
+      ...(t.prior ? ["", "[앞의 대화 — 다른 본문]", t.prior] : []), ...(prev.length ? ["", "[앞의 대화]", ...prev] : []), "", "[질문]", qOf(turns[n - 2]), "", "[초안]", draft].join("\n");
   }
   const Q = "\n\n[질문]\n";
   const HINT = / ⟨근거 표시: [^⟩]*⟩/g;  // [자료] 제목의 근거 표시 안내(근거 표시를 쓰지 않는 복사해서 묻기에서는 지운다)
   const head = (c, tools, cites) => [RULES(tools, cites), "", `[읽고 있는 곳] ${c.where}${c.title ? " · " + c.title : ""}`, "", "[자료]", cites ? c.material : c.material.replace(HINT, ""),
     ...(c.selected ? ["", "[고른 부분] 읽는 사람이 화면에서 고른 글", c.selected] : [])].join("\n");
   const qOf = t => t.content.includes(Q) ? t.content.slice(t.content.lastIndexOf(Q) + Q.length) : t.content;
-  function reviewInput(c, srcs){  // 검토: 원칙·자료·앞의 대화·질문·답, 그리고 근거 표시가 가리키는 출처 글을 한 번에(검토하는 Claude도 앞 대화를 기억하지 않으므로)
-    const n = turns.length, prev = [];
+  function reviewInput(t, srcs){  // 검토: 원칙·자료·앞의 대화·질문·답, 그리고 근거 표시가 가리키는 출처 글을 한 번에(검토하는 Claude도 앞 대화를 기억하지 않으므로)
+    const c = t.c, turns = t.turns, n = turns.length, prev = [];
     for (let i = 0; i < n - 2; i++) prev.push(`${turns[i].role === "user" ? "질문" : "답"}: ${cut(qOf(turns[i]), 2000)}`);
     return [REVIEW(), "", "[답변이 따라야 했던 원칙]", RULES(true, true), "", `[읽고 있는 곳] ${c.where}${c.title ? " · " + c.title : ""}`, "", "[자료]", c.material,
-      ...(c.selected ? ["", "[고른 부분]", c.selected] : []), ...(prev.length ? ["", "[앞의 대화]", ...prev] : []),
+      ...(c.selected ? ["", "[고른 부분]", c.selected] : []), ...(t.prior ? ["", "[앞의 대화 — 다른 본문]", t.prior] : []), ...(prev.length ? ["", "[앞의 대화]", ...prev] : []),
       "", "[질문]", qOf(turns[n - 2]), "", "[검토할 답변]", turns[n - 1].content,
       "", "[근거 표시가 가리키는 출처 글]", ...(srcs.length ? srcs.map(x => `[[${x.raw}]] → ${x.src ? `${x.src.label}: ${cut(x.src.text, 1500)}` : "찾지 못함"}`) : ["(근거 표시 없음)"])].join("\n");
   }
@@ -1179,56 +1184,105 @@ if (!route()) {
   }
   function pickVerse(bt, e){ const sup = supAt(bt, caretAt(e)); return sup ? selectVerse(bt, sup) : null; }  // 누르거나 오른쪽 클릭한 자리의 절을 고른다
 
+  // ── 대화 줄기(사용자 요청 11/27 4:04: AI에게 물은 뒤 본문을 더 읽다가 다른 본문을 물어도 그 본문으로 답하게) ──
+  // 고른 본문마다 대화 줄기가 하나. 다른 본문을 고르면 앞 본문의 카드는 작게 줄어 창에 그대로 남고, 새 본문 카드가 맨 아래에 열린다.
+  // 앞의 답을 쓰는 중이어도 기다리지 않고 새 본문을 물을 수 있다: 본문이 다르면 함께 쓰고, 같은 본문의 이어지는 질문은 앞의 답 뒤에 차례로
+  const threads = [];  // 연 차례대로
+  let th = null;       // 지금 묻는 본문의 줄기 { c: 문맥, turns, asked: 물은 수, tail: 차례, prior: 앞의 대화(다른 본문), card: 창 속 본문 카드 }
+  const jobs = new Set();  // 답을 쓰고 있거나 차례를 기다리는 질문
+  const AT_ONCE = 2;       // 한꺼번에 쓰는 답의 수. 넘으면 앞의 답이 끝나기를 기다린다
+  let slots = 0; const waiters = [];
+  const slot = () => slots < AT_ONCE ? (slots++, Promise.resolve()) : new Promise(r => waiters.push(r));
+  const unslot = () => { const w = waiters.shift(); if (w) w(); else slots--; };
+
   // 새 글이 쓰이는 동안에도 읽던 자리를 그대로 둔다(사용자 요청: 이어서 물어볼 때 화면이 새 답 쪽으로 끌려가지 않게).
-  // 스크롤은 옮기지 않고, 이번 질문이 보이는 곳 아래에 있으면 ‘새 답 보기’ 단추만 띄운다
+  // 스크롤은 옮기지 않고, 아직 보지 못한 새 답이 보이는 곳 밖에 있으면 ‘새 답 보기’ 단추만 띄운다
   const pill = $("ask-new");
-  let fresh = null;  // 이번 질문 말풍선: 새 답이 시작되는 곳
-  const seen = () => !fresh || fresh.getBoundingClientRect().top < body.getBoundingClientRect().bottom - 24;
-  const toEnd = () => { pill.hidden = seen(); };
-  const pillLabel = () => { pill.textContent = busy ? "새 답을 쓰고 있어요 ↓" : "새 답 보기 ↓"; };
-  body.addEventListener("scroll", () => { if (!pill.hidden && seen()) pill.hidden = true; }, { passive: true });
-  pill.addEventListener("click", () => { if (fresh) body.scrollTop += fresh.getBoundingClientRect().top - body.getBoundingClientRect().top - 8; pill.hidden = true; });
-  function say(kind, text){ const p = document.createElement(kind.startsWith("ai") ? "div" : "p"); p.className = "ask-msg " + kind; p.textContent = text; log.append(p); toEnd(); return p; }
-  // 인용 상자(사용자 요청 11/27: “꾹 누르지 않아도 그냥 누르면 이미지처럼 글자 범위가 선택되어 붙여넣기”).
-  // 그냥 한 번 누르면 그 낱말이 파랗게 골라지고, 양 끝의 파란 손잡이를 끌어 범위를 넓히거나 좁힌다. 고른 곳 바로 아래의 ‘붙여넣기’를
-  // 누르면 질문 칸에 넣는다. 휴대폰의 꾹 누르기 선택과 문장 통째 고르기는 쓰지 않는다(사용자 요청으로 지움)
-  let qa = -1, qb = -1;  // 고른 낱말 범위(처음, 끝)
-  const qWords = () => [...quote.querySelectorAll(".qw")];
-  function fillQuote(t){
-    quote.textContent = ""; qa = qb = -1;
-    for (const m of String(t || "").matchAll(/\S+\s*/g)){ const w = document.createElement("span"); w.className = "qw"; w.textContent = m[0]; quote.append(w); }
-    drawSel();
+  const news = [];  // 아직 보지 못한 새 답 { job, el, fail }
+  let pillTo = null;
+  function inView(el){
+    if (sheet.hidden || !el || !el.isConnected) return false;
+    const r = el.getBoundingClientRect(), b = body.getBoundingClientRect();
+    return r.bottom > b.top + 24 && r.top < b.bottom - 24;
   }
+  // 새 답은 그 질문부터, 본문의 첫 질문이면 본문 카드부터 보이게(사용자 요청 11/27 4:22: “무슨 질문을 했었지?” 하고 다시 위로 올리지 않게)
+  const startOf = job => job.first && job.t.card && job.t.card.isConnected ? job.t.card : job.me;
+  const scrollToEl = el => { body.scrollTop += el.getBoundingClientRect().top - body.getBoundingClientRect().top - 8; };
+  function updPill(){
+    if (sheet.hidden){ pill.hidden = true; return; }
+    for (let i = news.length - 1; i >= 0; i--) if (!news[i].el.isConnected || inView(news[i].el)) news.splice(i, 1);
+    const b = body.getBoundingClientRect(); let to = null, txt = "";
+    if (news.length){ to = startOf(news[0].job); txt = to.getBoundingClientRect().top < b.top ? "새 답 보기 ↑" : "새 답 보기 ↓"; }
+    else { const w = [...jobs].pop(); if (w && w.me.getBoundingClientRect().top >= b.bottom - 24){ to = w.me; txt = "새 답을 쓰고 있어요 ↓"; } }
+    pillTo = to; pill.hidden = !to; if (to && pill.textContent !== txt) pill.textContent = txt;
+  }
+  let pillRaf = 0;
+  body.addEventListener("scroll", () => { if (!pillRaf) pillRaf = requestAnimationFrame(() => { pillRaf = 0; updPill(); }); }, { passive: true });
+  pill.addEventListener("click", () => { if (pillTo) scrollToEl(pillTo); updPill(); });
+  const mk = (kind, text) => { const p = document.createElement(kind.startsWith("ai") ? "div" : "p"); p.className = "ask-msg " + kind; p.textContent = text; return p; };
+  function say(kind, text){ const p = mk(kind, text); log.append(p); updPill(); return p; }
+  function after(job, kind, text){ const p = mk(kind, text); job.last.after(p); job.last = p; return p; }  // 그 질문의 답 바로 뒤에(뒤에 다른 본문의 대화가 이어져 있어도)
+
+  // 고른 글 붙여넣기(사용자 요청 11/27: “꾹 누르지 않아도 그냥 누르면 이미지처럼 글자 범위가 선택되어 붙여넣기”, 4:23 “AI 답변도 마찬가지로”).
+  // 인용 상자와 AI의 답에서 그냥 한 번 누르면 그 낱말이 파랗게 골라지고, 양 끝의 파란 손잡이를 끌어 범위를 넓히거나 좁힌다. 고른 곳 바로 아래의
+  // ‘붙여넣기’를 누르면 이어서 묻는 질문 칸에 넣는다. 답의 근거 문장(번호가 붙은 문장)은 누르면 지금처럼 출처가 펼쳐지고, 손잡이로 끌어 범위에 넣을 수 있다.
+  // 답에서 꾹 눌러 고른 글(휴대폰 기본 선택: 복사·공유)에도 ‘붙여넣기’가 함께 뜬다. 인용 상자는 꾹 누르기 선택을 쓰지 않는다(사용자 요청으로 지움)
+  let area = null, qa = -1, qb = -1, nat = "";  // 고른 낱말이 있는 곳(인용 상자나 답 하나)과 범위(처음, 끝), 꾹 눌러 고른 답의 글
+  const qWords = () => area ? [...area.querySelectorAll(".qw")] : [];
+  function wrapWords(root, skip){  // 글을 낱말 단위 span(.qw)으로. skip에 걸리는 곳(출처 목록, 번호)은 그대로
+    const tw = document.createTreeWalker(root, NodeFilter.SHOW_TEXT), nodes = [];
+    while (tw.nextNode()){ const n = tw.currentNode; if (n.data.trim() && !(skip && n.parentElement.closest(skip))) nodes.push(n); }
+    for (const n of nodes){
+      const f = document.createDocumentFragment();
+      for (const m of n.data.match(/\s+|\S+\s*/g)){ if (!m.trim()) f.append(m); else { const w = document.createElement("span"); w.className = "qw"; w.textContent = m; f.append(w); } }
+      n.replaceWith(f);
+    }
+  }
+  function fillQuote(t){ if (area === quote) clearSel(); quote.textContent = String(t || ""); wrapWords(quote); }
   function pasteText(t){  // 질문 칸의 커서 자리에 “고른 글”을 넣는다
     const ins = `“${t}” `, a = input.selectionStart ?? input.value.length, z = input.selectionEnd ?? a;
     input.value = input.value.slice(0, a) + ins + input.value.slice(z);
     const at = a + ins.length;
     // 휴대폰에서는 자판을 띄우지 않는다: 스크립트로 질문 칸에 커서를 두면 자판이 묻는 창을 덮어 질문 칸이 안 보였다(사용자 요청 11/27 4:14).
-    // 넣은 글은 질문 칸에 보이고, 이어서 쓰려면 질문 칸을 누르면 된다
+    // 넣은 글은 질문 칸에 보이고, 이어서 쓰려면 질문 칸을 누르면 된다. 질문 칸은 깜박이지 않는다(사용자 요청 11/27 4:27)
     if (!coarse()) input.focus({ preventScroll: true });
     try { input.setSelectionRange(at, at); } catch (_) {}
-    input.classList.remove("got"); void input.offsetWidth; input.classList.add("got");  // 들어간 것을 알 수 있게 질문 칸을 잠깐 금빛으로
   }
   const qp = document.createElement("button"); qp.type = "button"; qp.className = "q-paste q-float"; qp.textContent = "붙여넣기"; qp.hidden = true;
   const hs = document.createElement("span"), he = document.createElement("span");  // 시작·끝 손잡이
   hs.className = "q-h q-h-s"; he.className = "q-h q-h-e"; hs.hidden = he.hidden = true;
   hs.setAttribute("aria-hidden", "true"); he.setAttribute("aria-hidden", "true");
-  selBox.append(qp, hs, he);
+  body.append(qp, hs, he);  // 창의 스크롤 안에 얹어 글과 함께 움직이게
+  function floatAt(end){  // ‘붙여넣기’를 고른 곳 끝(손잡이) 바로 아래에
+    qp.hidden = false;
+    const b = body.getBoundingClientRect(), w = qp.offsetWidth;
+    qp.style.left = Math.max(6, Math.min(end.right - b.left - w / 2, body.clientWidth - w - 6)) + "px";
+    qp.style.top = (end.bottom - b.top + body.scrollTop + 26) + "px";
+  }
   function drawSel(){
     const ws = qWords(); ws.forEach((w, i) => w.classList.toggle("sel", qa >= 0 && i >= qa && i <= qb));
-    if (qa < 0 || !ws[qa] || !ws[qb] || sheet.hidden){ hs.hidden = he.hidden = qp.hidden = true; return; }
-    const box = selBox.getBoundingClientRect(), q = quote.getBoundingClientRect();
+    if (qa < 0 || !ws[qa] || !ws[qb] || sheet.hidden || !area.isConnected){ hs.hidden = he.hidden = true; if (!nat) qp.hidden = true; return; }
+    const b = body.getBoundingClientRect(), y0 = body.scrollTop - b.top;
     const first = ws[qa].getClientRects()[0], last = [...ws[qb].getClientRects()].pop();
-    const inView = r => r && r.bottom > q.top + 2 && r.top < q.bottom - 2;  // 인용 상자 안에서 스크롤로 가려진 끝은 손잡이를 감춘다
-    hs.hidden = !inView(first); he.hidden = !inView(last);
-    if (first){ hs.style.left = (first.left - box.left) + "px"; hs.style.top = (first.bottom - box.top) + "px"; }
-    if (last){ he.style.left = (last.right - box.left) + "px"; he.style.top = (last.bottom - box.top) + "px"; }
-    const end = last || first; qp.hidden = false;
-    const w = qp.offsetWidth;
-    qp.style.left = Math.max(6, Math.min(end.right - box.left - w / 2, box.width - w - 6)) + "px";
-    qp.style.top = (end.bottom - box.top + 26) + "px";  // 손잡이 아래
+    let okS = !!first, okE = !!last;
+    if (area === quote){ const q = quote.getBoundingClientRect(), inQ = r => !!r && r.bottom > q.top + 2 && r.top < q.bottom - 2; okS = inQ(first); okE = inQ(last); }  // 인용 상자 안에서 스크롤로 가려진 끝은 손잡이를 감춘다
+    hs.hidden = !okS; he.hidden = !okE;
+    if (first){ hs.style.left = (first.left - b.left) + "px"; hs.style.top = (first.bottom + y0) + "px"; }
+    if (last){ he.style.left = (last.right - b.left) + "px"; he.style.top = (last.bottom + y0) + "px"; }
+    if (last || first) floatAt(last || first);
   }
-  const selText = () => qWords().slice(qa, qb + 1).map(w => w.textContent).join("").replace(/\s+/g, " ").trim();
+  function clearSel(){ if (area) for (const w of area.querySelectorAll(".qw.sel")) w.classList.remove("sel"); qa = qb = -1; drawSel(); }
+  function pick(a, i){ if (area !== a){ clearSel(); area = a; } nat = ""; qa = qb = i; drawSel(); }
+  function rangeText(r){  // 고른 범위의 글: 번호 칩과 펼친 출처는 빼고, 문단 사이는 띄어
+    const f = r.cloneContents(); f.querySelectorAll(".cite, .src-in, .q-h, .q-float").forEach(x => x.remove());
+    f.querySelectorAll("p, li").forEach(x => x.append(" "));
+    return f.textContent.replace(/\s+/g, " ").trim();
+  }
+  function selText(){
+    const ws = qWords(); if (qa < 0 || !ws[qa] || !ws[qb]) return "";
+    const r = document.createRange(); r.setStartBefore(ws[qa]); r.setEndAfter(ws[qb]);
+    return rangeText(r);
+  }
   function wordAt(x, y){  // 손가락 자리에 가장 가까운 낱말
     let best = -1, bs = Infinity;
     qWords().forEach((w, i) => { for (const r of w.getClientRects()){
@@ -1236,17 +1290,22 @@ if (!route()) {
       if (sc < bs){ bs = sc; best = i; } } });
     return best;
   }
-  quote.addEventListener("click", e => {
-    const w = e.target instanceof Element && e.target.closest(".qw"); if (!w) return;
-    const i = qWords().indexOf(w);
-    if (qa === i && qb === i) qa = qb = -1; else qa = qb = i;  // 골라 둔 낱말 하나를 다시 누르면 푼다
-    drawSel();
+  log.addEventListener("click", e => {
+    if (!(e.target instanceof Element)) return;
+    const g = !e.target.closest(".src-in") && e.target.closest(".cg");
+    if (g){ toggleCite(g); return; }  // 근거 문장: 바로 밑에 출처를 펼치고, 다시 누르면 접는다(그대로)
+    const w = e.target.closest(".qw"), a = w && w.closest("#ask-quote, .ask-msg.ai");
+    if (!a){ clearSel(); return; }  // 글이 아닌 곳을 누르면 고른 것을 푼다
+    const s = getSelection(); if (s && !s.isCollapsed && a.contains(s.anchorNode)) return;  // 끌어서 고른 글(컴퓨터)은 그대로
+    const i = [...a.querySelectorAll(".qw")].indexOf(w);
+    if (area === a && qa === i && qb === i) clearSel(); else pick(a, i);  // 골라 둔 낱말 하나를 다시 누르면 푼다
   });
-  function dragHandle(h, isStart){  // 손잡이를 끌면 손가락 조금 위의 낱말까지 범위가 바뀐다
+  function dragHandle(h, isStart){  // 손잡이를 끌면 손가락 조금 위의 낱말까지 범위가 바뀐다. 창의 위아래 끝까지 끌면 창이 따라 움직인다
     h.addEventListener("pointerdown", e => {
       e.preventDefault(); e.stopPropagation();
       try { h.setPointerCapture(e.pointerId); } catch (_) {}
       const move = ev => {
+        if (area !== quote){ const b = body.getBoundingClientRect(); if (ev.clientY > b.bottom - 28) body.scrollTop += 14; else if (ev.clientY < b.top + 28) body.scrollTop -= 14; }
         const i = wordAt(ev.clientX, ev.clientY - 18); if (i < 0) return;
         if (isStart) qa = Math.min(i, qb); else qb = Math.max(i, qa);
         drawSel();
@@ -1256,57 +1315,96 @@ if (!route()) {
     });
   }
   dragHandle(hs, true); dragHandle(he, false);
-  quote.addEventListener("scroll", () => { if (qa >= 0) drawSel(); }, { passive: true });
+  quote.addEventListener("scroll", () => { if (area === quote && qa >= 0) drawSel(); }, { passive: true });
   addEventListener("resize", () => { if (qa >= 0) drawSel(); });
-  qp.addEventListener("pointerdown", e => e.preventDefault());
-  qp.addEventListener("click", ev => { ev.stopPropagation(); if (qa < 0) return; const t = selText(); qa = qb = -1; drawSel(); if (t) pasteText(t); });
+  // 답에서 꾹 눌러 고른 글: 휴대폰의 복사·공유 메뉴는 그대로 두고, 고른 곳 아래에 ‘붙여넣기’를 함께 띄운다
+  function placeNat(){ const s = getSelection(); if (!nat || !s || !s.rangeCount || s.isCollapsed) return; const r = s.getRangeAt(0), rs = r.getClientRects(); floatAt(rs[rs.length - 1] || r.getBoundingClientRect()); }
+  let natT = 0;
+  document.addEventListener("selectionchange", () => {
+    clearTimeout(natT);
+    natT = setTimeout(() => {
+      const s = getSelection(), r = s && s.rangeCount && !s.isCollapsed ? s.getRangeAt(0) : null;
+      const n = r && r.commonAncestorContainer, el = n && (n.nodeType === 1 ? n : n.parentElement);
+      const a = el && !el.closest(".srcs, .src-in") ? el.closest("#ask-log .ask-msg.ai") : null;
+      const t = a && !sheet.hidden ? rangeText(r) : "";
+      if (!t){ if (nat){ nat = ""; if (qa < 0) qp.hidden = true; } return; }
+      if (qa >= 0) clearSel();
+      nat = t; placeNat();
+    }, 200);
+  });
+  new ResizeObserver(() => { if (qa >= 0) drawSel(); else if (nat) placeNat(); }).observe(log);  // 다른 답이 들어와 글 자리가 바뀌어도 손잡이가 따라가게
+  qp.addEventListener("pointerdown", e => e.preventDefault());  // 누르는 동안 고른 글이 풀리지 않게
+  qp.addEventListener("click", ev => {
+    ev.stopPropagation();
+    const t = qa >= 0 ? selText() : nat;
+    if (nat){ try { getSelection().removeAllRanges(); } catch (_) {} nat = ""; }
+    clearSel(); qp.hidden = true;
+    if (t) pasteText(t);
+  });
+
+  function threadCard(t){  // 앞서 물은 본문의 카드(작게): 고른 글 두 줄과 그 자리
+    const f = document.createElement("div"); f.className = "ask-th";
+    if (t.c.selected){ const q = document.createElement("p"); q.className = "th-q"; q.textContent = t.c.selected; f.append(q); }
+    const r = document.createElement("p"); r.className = "th-r"; r.textContent = t.c.where + (t.c.title ? ` · ${t.c.title}` : ""); f.append(r);
+    return f;
+  }
   function openAsk(info){
-    const c = context(info);
-    if (busy && ctx && ctx.key !== c.key){  // 답을 쓰는 중에 다른 곳을 물으면, 쓰던 답을 멈추지 않고 그 대화를 보여 준다
-      fab.hidden = true; menu.hidden = true; expand();
-      try { getSelection().removeAllRanges(); } catch (_) {}
-      toast("앞의 질문에 답하는 중이에요. 답이 온 뒤에 새로 물어보세요.");
-      return;
+    const c = context(info), changed = !th || th.c.key !== c.key;
+    clearSel();
+    if (changed){
+      if (th && th.asked){  // 앞 본문의 대화는 창에 그대로 두고 카드만 작게 줄인다. 새 본문 카드는 맨 아래에(앞의 답은 멈추지 않고 계속 쓴다)
+        const old = threadCard(th); selBox.before(old); th.card = old; log.append(selBox);
+        if (jobs.size) toast("앞의 질문 답도 계속 준비하고 있어요");
+      }
+      if (th && !th.asked) th.c = c;  // 아직 묻지 않은 카드는 새 본문으로 바꾸기만
+      else { th = { c, turns: [], asked: 0, tail: Promise.resolve(), prior: "", card: selBox }; threads.push(th); }
     }
-    if (!ctx || ctx.key !== c.key){ ctx = c; turns = []; log.textContent = ""; fresh = null; pill.hidden = true; unseen = false; failed = false; }
-    selBox.hidden = !c.selected; fillQuote(c.selected); qp.hidden = true;
+    fillQuote(c.selected);
     refEl.textContent = c.where + (c.title ? ` · ${c.title}` : "");
     const s0 = c.focus || c.segs[0] || { c1: 1, v1: 1 }, kbs = document.createElement("span"), link = (t, u) => { const a = document.createElement("a"); a.href = u; a.target = "_blank"; a.rel = "noopener"; a.textContent = t; return a; };
     kbs.className = "ask-kbs"; kbs.append(" · 대한성서공회 ", link("개역개정", kbsUrl("GAE", s0.c1, s0.v1)), " · ", link("새번역", kbsUrl("SAENEW", s0.c1, s0.v1)));
     refEl.append(kbs);  // 답을 읽다 의심이 들면 공식 번역과 바로 대조하게(사용자 요청)
-    if (!c.selected){ selBox.hidden = false; quote.textContent = ""; quote.hidden = true; } else quote.hidden = false;
-    fab.hidden = true; menu.hidden = true; expand();
+    selBox.hidden = false; quote.hidden = !c.selected;
+    fab.hidden = true; menu.hidden = true; expand(changed ? selBox : null);
     try { getSelection().removeAllRanges(); } catch (_) {}
     if (!coarse()) input.focus({ preventScroll: true });
   }
 
   // 접기(사용자 요청 11/27: “AI에게 묻는 동안 나머지 성경 구절을 읽을 수 있게 창을 잠시 밑으로 접고, 답이 완성되면 알 수 있게”).
-  // ‘접기’나 본문(휴대폰)을 누르면 창이 아래로 접히고, 답은 멈추지 않고 계속 쓰인다. 접힌 동안은 화면 아래 작은 단추가
-  // 진행 상황(살피는 중 → 구절을 찾는 중 → 쓰는 중 → 확인하는 중)을 보여 주고, 답이 오면 ‘답이 왔어요’로 바뀌어 한두 번 반짝인다.
+  // ‘접기’나 본문(휴대폰)을 누르면 창이 아래로 접히고, 답은 멈추지 않고 계속 쓰인다. 접힌 동안은 화면 아래 작은 단추가 ‘답변 준비 중…’을
+  // 보여 주고, 새 답이 하나라도 오면(다른 답을 아직 쓰고 있어도) ‘답이 왔어요’로 바뀌어 깜박인다. 누르면 그 답의 본문 카드나 질문부터 보인다
   const dockEl = $("ask-dock"), dockT = $("ask-dock-t"), dockX = $("ask-dock-x");
   const wide = () => matchMedia("(min-width: 900px)").matches;  // 컴퓨터: 창이 오른쪽 옆 칸이라 본문을 가리지 않는다
-  let unseen = false, failed = false, docked = false, waitEl = null;
+  let docked = false;
   const WAIT_HTML = `답변 준비 중<span class="dots" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span>`;  // 점 셋은 움직인다
   function renderDock(){
     const show = sheet.hidden && docked;
     dockEl.hidden = !show; document.documentElement.classList.toggle("ask-docked", show);
     toastEl.style.bottom = show ? "calc(76px + env(safe-area-inset-bottom))" : "";
     if (!show) return;
-    const st = busy ? "busy" : unseen ? (failed ? "error" : "new") : "seen";
-    if (dockEl.dataset.state !== st) dockEl.dataset.state = st;  // 바뀔 때만
-    if (busy) dockT.innerHTML = WAIT_HTML; else dockT.textContent = st === "error" ? "답을 받지 못했어요 · 보기" : st === "new" ? "답이 왔어요 · 눌러서 보기" : "AI 대화 다시 보기";
-    dockX.hidden = busy || unseen;  // 쓰는 중이거나 아직 안 본 답이 있으면 닫기 단추를 숨긴다
+    const st = news.some(x => !x.fail) ? "new" : news.length ? "error" : jobs.size ? "busy" : "seen";
+    if (dockEl.dataset.state !== st){  // 바뀔 때만(점 셋의 움직임이 끊기지 않게)
+      dockEl.dataset.state = st;
+      if (st === "busy") dockT.innerHTML = WAIT_HTML; else dockT.textContent = st === "error" ? "답을 받지 못했어요 · 보기" : st === "new" ? "답이 왔어요 · 눌러서 보기" : "AI 대화 다시 보기";
+    }
+    dockX.hidden = jobs.size > 0 || news.length > 0;  // 쓰는 중이거나 아직 안 본 답이 있으면 닫기 단추를 숨긴다
   }
-  function collapse(){ if (sheet.hidden) return; sheet.hidden = true; docked = true; try { input.blur(); } catch (_) {} renderDock(); }
-  function expand(){
-    const was = unseen; sheet.hidden = false; unseen = false; failed = false; renderDock();
-    if (qa >= 0) requestAnimationFrame(drawSel);  // 접혀 있던 동안 고른 낱말의 손잡이 자리를 다시
-    if (was && fresh) requestAnimationFrame(() => { body.scrollTop += fresh.getBoundingClientRect().top - body.getBoundingClientRect().top - 8; toEnd(); });  // 새 답의 처음부터
+  function collapse(){
+    if (sheet.hidden) return;
+    if (nat){ try { getSelection().removeAllRanges(); } catch (_) {} nat = ""; }
+    sheet.hidden = true; docked = true; try { input.blur(); } catch (_) {} drawSel(); renderDock();
   }
-  $("ask-dock-open").addEventListener("click", expand);
-  log.addEventListener("click", e => { const g = e.target instanceof Element && !e.target.closest(".src-in") && e.target.closest(".cg"); if (g) toggleCite(g); });
+  function expand(to){  // to: 이 자리부터 보이게. 없으면 아직 보지 못한 새 답(그 본문 카드나 질문)부터
+    sheet.hidden = false; renderDock();
+    requestAnimationFrame(() => {
+      const el = to || (news.length ? startOf(news[0].job) : null);
+      if (el) scrollToEl(el);
+      updPill(); if (qa >= 0) drawSel();
+    });
+  }
+  $("ask-dock-open").addEventListener("click", () => expand());
   log.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target instanceof Element && e.target.matches(".cg")){ e.preventDefault(); toggleCite(e.target); } });
-  dockX.addEventListener("click", () => { if (busy) return; docked = false; renderDock(); });
+  dockX.addEventListener("click", () => { if (jobs.size) return; docked = false; renderDock(); });
   // 휴대폰: 창 바깥(본문)을 누르면 접는다. 그 한 번의 누름은 접기만 하고 절 고르기나 링크로 넘어가지 않는다
   document.addEventListener("click", e => {
     if (sheet.hidden || wide() || !(e.target instanceof Element)) return;
@@ -1330,75 +1428,109 @@ if (!route()) {
   // 11/27 오후: 검토는 근거 표시가 가리키는 출처 글(이 페이지 자료)을 함께 받아 도구 없이 확인한다. 기다리는 시간을 줄이려고 검토만 노력 ‘중간’
   // (답 자체는 그대로 Opus 5.5 노력 높음)
   const REVIEW_EFFORT = EFFORT;  // 11/27 3:34 사용자 요청(“시간이 많이 걸려도 좋으니 쉽게 이해하게”)으로 다시 ‘높음’
-  async function review(draft, signal){
+  async function review(t, draft, signal){
     try {
       const { pairs } = await resolveAll(draft);
-      const v = await askJSON(reviewInput(ctx, pairs), { model: MODEL, modelTier: "complex", effort: REVIEW_EFFORT, cache: false, signal });
+      const v = await askJSON(reviewInput(t, pairs), { model: MODEL, modelTier: "complex", effort: REVIEW_EFFORT, cache: false, signal });
       return v?.verdict === "fixed" && typeof v.answer === "string" && v.answer.trim() ? v.answer.trim() : draft;
     } catch (_) { return draft; }  // 멈추기를 눌렀거나 검토가 실패해도 지금까지의 답을 보여 준다
   }
-  async function simplify(draft, signal){  // 실패하거나 멈추면 초안을 그대로
+  async function simplify(t, draft, signal){  // 실패하거나 멈추면 초안을 그대로
     try {
-      const r = await sample(easyInput(ctx, draft), { model: MODEL, modelTier: "complex", effort: EFFORT, cache: false, signal });
-      const t = (r.text || "").trim();
-      return t.length >= 80 && !r.truncated ? t : draft;
+      const r = await sample(easyInput(t, draft), { model: MODEL, modelTier: "complex", effort: EFFORT, cache: false, signal });
+      const easy = (r.text || "").trim();
+      return easy.length >= 80 && !r.truncated ? easy : draft;
     } catch (_) { return draft; }
   }
-  async function askClaude(q){
-    const first = !turns.length;
-    fresh = say("me", q);
-    const out = document.createElement("div"); out.className = "ask-msg ai wait"; out.innerHTML = WAIT_HTML; log.append(out); waitEl = out;
-    ctl = new AbortController(); busy = true; label(); pillLabel(); renderDock(); toEnd();
-    const onFind = () => {};
-    const signal = ctl.signal; let pushed = false;
+  function priorTalk(t){  // 앞서 다른 본문을 두고 나눈 대화(가장 최근 세 번, 줄여서): 이번 질문이 그 대화를 가리킬 때를 위해
+    const out = [];
+    for (const o of threads){
+      if (o === t) continue;
+      for (let i = 0; i + 1 < o.turns.length; i += 2){
+        const u = o.turns[i], a = o.turns[i + 1];
+        if (u.role === "user" && a.role === "assistant") out.push(`(${o.c.where}) 질문: ${cut(qOf(u), 300)}\n답: ${cut(a.content.replace(CITE, ""), 700)}`);
+      }
+    }
+    return out.slice(-3).join("\n\n");
+  }
+  const priorBlock = p => p ? "\n\n[앞의 대화 — 다른 본문] 읽는 사람이 이 창에서 앞서 다른 본문을 두고 나눈 대화예요. 이번 질문이 그 대화를 가리킬 때만 참고하고, 답은 이번 [읽고 있는 곳]과 [자료]를 바탕으로 하세요.\n" + p : "";
+  function askClaude(q, t){
+    const first = !t.asked++, me = say("me", q), out = mk("ai wait", "");
+    out.innerHTML = WAIT_HTML;
+    const stop = document.createElement("button"); stop.type = "button"; stop.className = "w-stop"; stop.textContent = "멈추기"; out.append(stop);
+    log.append(out);
+    const job = { t, me, out, last: out, first, ctl: new AbortController(), started: false, done: false };
+    stop.addEventListener("click", () => { if (job.done) return; job.ctl.abort(); if (!job.started) finish(job, "cancelled"); });  // 차례를 기다리던 질문은 바로 거둔다
+    jobs.add(job); renderDock(); updPill();
+    t.tail = t.tail.then(() => runJob(job, q)).catch(() => {});  // 같은 본문의 이어지는 질문은 앞의 답을 받은 뒤에(그 답을 바탕으로)
+  }
+  async function runJob(job, q){
+    if (job.done) return;
+    await slot();
+    if (job.done){ unslot(); return; }
+    job.started = true;
+    const { t, out } = job, signal = job.ctl.signal, turns = t.turns;
+    const lastUser = () => turns.length && turns[turns.length - 1].role === "user";
+    let pushed = false;
     try {
-      if (first && ctx.material == null) ctx.material = await material(ctx);
+      const first = !turns.length;
+      if (first && t.c.material == null) t.c.material = await material(t.c);
       if (signal.aborted) throw { code: "cancelled" };
-      turns.push({ role: "user", content: first ? head(ctx, canTools, true) + Q + q : q }); pushed = true;
-      const run = tools => sample(turns, { model: MODEL, modelTier: "complex", effort: EFFORT, cache: false, signal, ...(tools ? { tools: [findTool(onFind)] } : {}) });  // 답은 다 확인한 뒤에 한 번에 보여 준다
+      if (first) t.prior = priorTalk(t);
+      turns.push({ role: "user", content: first ? head(t.c, canTools, true) + priorBlock(t.prior) + Q + q : q }); pushed = true;
+      const run = tools => sample(turns, { model: MODEL, modelTier: "complex", effort: EFFORT, cache: false, signal, ...(tools ? { tools: [findTool(() => {})] } : {}) });  // 답은 다 확인한 뒤에 한 번에 보여 준다
       let res;
       try { res = await run(canTools); }
       catch (e) { if (e && e.code === "tools_unavailable"){ canTools = false; res = await run(false); } else throw e; }  // 도구를 못 쓰는 화면이면 도구 없이 한 번만 다시
       turns.push({ role: "assistant", content: res.text });
-      const easy = signal.aborted ? res.text : await simplify(res.text, signal);  // 질문 의도에 맞게 쉽게 다시 쓰기
+      const easy = signal.aborted ? res.text : await simplify(t, res.text, signal);  // 질문 의도에 맞게 쉽게 다시 쓰기
       turns[turns.length - 1].content = easy;
-      const answer = signal.aborted ? easy : await review(easy, signal);  // 쉽게 쓴 답이 자료·원칙에 맞는지 마지막으로 확인
+      const answer = signal.aborted ? easy : await review(t, easy, signal);  // 쉽게 쓴 답이 자료·원칙에 맞는지 마지막으로 확인
       turns[turns.length - 1].content = answer;  // 이어 묻는 질문도 확인한 답을 바탕으로
-      await renderAnswer(out, answer); out.className = "ask-msg ai"; waitEl = null;
-      if (res.truncated && answer === res.text) say("note", "답이 길어 중간에 끊겼어요. 조금 좁혀서 물어보세요.");
+      await renderAnswer(out, answer); out.className = "ask-msg ai"; wrapWords(out, ".srcs, .cite");
+      if (res.truncated && answer === res.text) after(job, "note", "답이 길어 중간에 끊겼어요. 조금 좁혀서 물어보세요.");
       const who = res.modelApplied === MODEL ? "Claude Opus 5.5 · 노력 높음(가장 높은 단계)" : TIER[res.modelTierApplied];
-      if (who) say("model", `답한 모델: ${who}`);
-      if (sheet.hidden) unseen = true;  // 접어 둔 동안 답이 오면 아래 단추로 알린다
+      if (who) after(job, "model", `답한 모델: ${who}`);
+      finish(job, null);
     } catch (e) {
-      const code = e && e.code; waitEl = null;
-      if (e && e.text && code !== "refused"){ await renderAnswer(out, e.text).catch(() => { out.textContent = e.text.replace(CITE, ""); }); out.className = "ask-msg ai"; if (pushed) turns.push({ role: "assistant", content: e.text }); }
-      else { out.remove(); if (pushed) turns.pop(); }
-      if (HIDE.includes(code)){ mode = "copy"; say("note", "이 화면에서는 Claude가 바로 답할 수 없어요. ‘복사해서 묻기’를 누르면 질문이 복사되고, Claude 앱에 붙여 넣어 물어볼 수 있어요."); }
-      else if (code !== "cancelled") say("note", SAY[code] || "연결이 끊겼어요. 다시 물어보세요.");
-      if (sheet.hidden && code !== "cancelled"){ unseen = true; failed = true; }
-    } finally { busy = false; ctl = null; label(); pillLabel(); toEnd(); renderDock(); }
+      const code = (e && e.code) || "upstream_error";
+      if (e && e.text && code !== "refused"){
+        await renderAnswer(out, e.text).catch(() => { out.textContent = e.text.replace(CITE, ""); });
+        out.className = "ask-msg ai"; wrapWords(out, ".srcs, .cite");
+        if (pushed && lastUser()) turns.push({ role: "assistant", content: e.text });
+      } else { out.remove(); job.last = job.me; if (pushed && lastUser()) turns.pop(); }
+      if (HIDE.includes(code)){ mode = "copy"; label(); after(job, "note", "이 화면에서는 Claude가 바로 답할 수 없어요. ‘복사해서 묻기’를 누르면 질문이 복사되고, Claude 앱에 붙여 넣어 물어볼 수 있어요."); }
+      else if (code !== "cancelled") after(job, "note", SAY[code] || "연결이 끊겼어요. 다시 물어보세요.");
+      finish(job, code);
+    } finally { unslot(); }
   }
-  async function copyAsk(q){
-    fresh = say("me", q); pillLabel();
-    if (ctx.material == null) ctx.material = await material(ctx);
-    const text = head(ctx, false, false) + Q + q;
+  function finish(job, code){  // 답이 왔거나(code 없음), 받지 못했거나, 멈춘 질문을 정리한다
+    if (job.done) return;
+    job.done = true; jobs.delete(job);
+    if (code === "cancelled"){ if (job.out.classList.contains("wait")){ job.out.remove(); job.last = job.me; } after(job, "note", "멈췄어요."); }
+    else { const el = code ? job.last : job.out; if (!inView(el)) news.push({ job, el, fail: !!code }); }  // 보이지 않는 곳에 온 답은 ‘새 답’으로 알린다
+    renderDock(); updPill();
+  }
+  async function copyAsk(q, t){
+    t.asked++; say("me", q);
+    if (t.c.material == null) t.c.material = await material(t.c);
+    const text = head(t.c, false, false) + Q + q;
     let ok = false;
     try { await navigator.clipboard.writeText(text); ok = true; } catch (_) {}
     const p = say("note", ok ? "질문을 복사했어요. " : "아래 글을 복사해 Claude에 붙여 넣으세요. ");
     const a = document.createElement("a"); a.href = "https://claude.ai/new"; a.target = "_blank"; a.rel = "noopener"; a.textContent = "Claude 열기 ↗";
     p.append(a, ok ? " 대화창에 붙여 넣으면 됩니다. 본문과 연구 노트도 함께 들어 있어요." : "");
-    if (!ok){ const ta = document.createElement("textarea"); ta.className = "ask-copy"; ta.readOnly = true; ta.value = text; log.append(ta); toEnd(); }
+    if (!ok){ const ta = document.createElement("textarea"); ta.className = "ask-copy"; ta.readOnly = true; ta.value = text; log.append(ta); updPill(); }
   }
 
   form.addEventListener("submit", async e => {
     e.preventDefault();
-    if (busy){ if (ctl) ctl.abort(); return; }
-    const q = input.value.trim();
-    if (!q || !ctx) return;
+    const q = input.value.trim(), t = th;  // 답을 쓰는 중에도 물을 수 있다(사용자 요청 11/27 4:04)
+    if (!q || !t) return;
     input.value = "";
     if (coarse()) input.blur();  // 휴대폰: 보내면 자판을 내려 읽던 글을 가리지 않게
     await ready;
-    if (mode === "claude") askClaude(q); else copyAsk(q);
+    if (mode === "claude") askClaude(q, t); else copyAsk(q, t);
   });
   input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing){ e.preventDefault(); form.requestSubmit(); } });
   $("ask-x").addEventListener("click", collapse);
