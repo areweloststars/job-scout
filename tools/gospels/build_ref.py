@@ -31,7 +31,7 @@ def wlc(osis):
         s = ''
         for t in re.finditer(r'<w\b[^>]*>(.*?)</w>|<seg type="([^"]+)">(.*?)</seg>', body, re.S):
             if t[1] is not None:
-                word = re.sub('[֑-ֽ֯]', '', t[1].replace('/', ''))
+                word = re.sub('[֑-ֽ֯]', '', re.sub(r'<[^>]+>', '', t[1]).replace('/', ''))  # 낱말 안의 표시(작은 글자 seg 등)도 걷어 낸다
                 s += ('' if not s or s.endswith('־') else ' ') + word
             elif t[2] in ('x-maqqef', 'x-sof-pasuq'): s += t[3]
         out[f'{m[1]}:{m[2]}'] = s.strip()
