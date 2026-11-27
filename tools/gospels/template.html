@@ -214,6 +214,13 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .ask-msg.wait{color:var(--ink-2)}
 .ask-msg.note{font-size:.8125rem;line-height:1.6;color:var(--ink-2)}
 .ask-msg.note a{color:var(--lake)}
+.ask-msg.note ul{margin:.35em 0 0;padding-left:1.2em;white-space:normal}
+.ask-msg.ai[data-state]::before{display:block;margin-bottom:.5em;font-size:.75rem;line-height:1.4;color:var(--ink-2)}  /* 답이 검토 전인지, 검토했는지 */
+.ask-msg.ai[data-state="draft"]::before{content:"초안 · 검토하기 전"}
+.ask-msg.ai[data-state="ok"]::before{content:"✓ 검토한 답"}
+.ask-msg.ai[data-state="fixed"]::before{content:"✓ 검토 뒤 고친 답"}
+.ask-msg.ai[data-state="unchecked"]::before{content:"검토하지 못한 답"}
+.ask-kbs a{color:var(--lake)}
 .ask-copy{box-sizing:border-box;width:100%;min-height:8em;padding:8px 10px;border-radius:10px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);font:inherit;font-size:.8125rem}
 .ask-form{margin:0;padding:10px 16px 14px;border-top:1px solid var(--rule);display:grid;gap:8px}
 .ask-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:end}
@@ -263,6 +270,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
     <h2>출처</h2>
     <p>성경 인용: 개역한글판(대한성서공회, 1961). 저작권 보호기간이 끝난 번역이며, 본문은 <a href="https://ko.wikisource.org/wiki/%EA%B0%9C%EC%97%AD%ED%95%9C%EA%B8%80%ED%8C%90" target="_blank" rel="noopener">한국어 위키문헌</a>에서 가져왔습니다. 헬라어는 SBLGNT, 히브리어는 WLC와 대조했습니다. 읽는 시간은 분당 약 475자로 자동 계산한 어림값입니다.</p>
     <p>‘본문 펼치기’의 쉬운 번역은 복음서는 헬라어 원문 SBL Greek New Testament(SBLGNT, Society of Biblical Literature), 잠언은 히브리어 원문 Westminster Leningrad Codex(WLC)를 이 페이지에서 쉬운 우리말로 옮긴 것으로, 공식 번역이 아닙니다.</p>
+    <p>‘AI에게 묻기’는 답할 때 다음 자료를 함께 봅니다. 개역한글판(대한성서공회, 1961, 성경 66권), SBLGNT(Copyright 2010 Society of Biblical Literature and Logos Bible Software, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>, 사본 차이 표시는 지움), WLC(퍼블릭 도메인, <a href="https://github.com/openscriptures/morphhb" target="_blank" rel="noopener">Open Scriptures</a>), 그리고 Tyndale Open Study Notes(Copyright 2022 Tyndale House Publishers, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>, <a href="https://tyndaleopenresources.com/" target="_blank" rel="noopener">tyndaleopenresources.com</a>). 노트는 영어 원문 그대로 두었고, AI의 답에 나오는 노트 내용은 Claude가 우리말로 옮기거나 줄인 것입니다.</p>
     <p>그림: 모두 저작권이 만료된 퍼블릭 도메인(CC0 포함) 작품이며, 화면에 맞게 크기를 줄였습니다. 대부분은 제임스 티소의 〈예수의 생애〉 연작(1886–94, <a href="https://www.brooklynmuseum.org/" target="_blank" rel="noopener">브루클린 미술관</a> 소장)이고, 이름난 화가들의 작품은 <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener">위키미디어 공용</a>에서 가져왔습니다.</p>
     <details class="credits"><summary>그 밖의 그림 출처</summary><ul id="credits"></ul></details>
   </footer>
@@ -284,7 +292,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
   </div>
   <form class="ask-form" id="ask-form">
     <div class="ask-row"><textarea id="ask-in" rows="2" placeholder="궁금한 것을 적어 보세요" aria-label="질문"></textarea><button type="submit" class="ask-send" id="ask-send">묻기</button></div>
-    <p class="ask-note">본문이 아닌 것도 물어볼 수 있어요. 답은 Claude가 쓴 것이라 틀릴 수 있고, 물을 때마다 내 Claude 사용량이 쓰입니다.</p>
+    <p class="ask-note">본문이 아닌 것도 물어볼 수 있어요. 답은 개역한글판·원문·Tyndale 연구 노트를 바탕으로 Claude가 쓰고 한 번 더 검토하지만, 틀릴 수 있어요. 물을 때마다(검토까지) 내 Claude 사용량이 쓰입니다.</p>
   </form>
 </aside>
 
@@ -533,8 +541,10 @@ if (!route()) {
 </script>
 <script>
 /* Claude에게 묻기(사용자 요청). 글을 고르거나(휴대폰은 길게 눌러, 컴퓨터는 드래그나 오른쪽 클릭) 맨 위와 화 맨 아래의 ‘AI에게 물어보기’ 단추로 묻는다.
-   Claude 앱(아티팩트)에서는 이 자리에서 Claude Opus 5.5가 노력 높음(effort high)으로 답하고(sample 기능, 묻는 사람의 Claude 사용량),
-   그 밖의 곳(GitHub Pages 등)에서는 질문을 복사해 Claude 앱으로 넘긴다. */
+   Claude 앱(아티팩트)에서는 이 자리에서 Claude Opus 5.5가 노력 높음(effort high, sample 기능이 주는 가장 높은 단계)으로 답하고(묻는 사람의 Claude 사용량),
+   그 밖의 곳(GitHub Pages 등)에서는 질문을 복사해 Claude 앱으로 넘긴다.
+   답의 근거(사용자 요청 11/26): 개역한글판(대한성서공회)·원문(SBLGNT/WLC)·Tyndale Open Study Notes를 함께 보내고, 정통 신앙의 테두리와
+   이단 해석(신천지 등) 배제·출처 정직·확신 정도를 지키게 한다. 다른 구절은 본문 찾기 도구(find_verses)로 확인하고, 답마다 한 번 더 검토한다. */
 (() => {
   const fab = $("ask-fab"), fabRef = $("fab-ref"), fabCopy = $("fab-copy"), fabAsk = $("fab-ask"), toastEl = $("toast"), menu = $("ask-menu"), sheet = $("ask"), body = $("ask-body"), log = $("ask-log"),
         selBox = sheet.querySelector(".ask-sel"), quote = $("ask-quote"), refEl = $("ask-ref"), form = $("ask-form"), input = $("ask-in"), send = $("ask-send");
@@ -549,11 +559,12 @@ if (!route()) {
     prompt_too_large: "고른 부분이 너무 길어요. 조금 줄여서 다시 물어보세요."
   };
   const TIER = { complex: "가장 뛰어난 등급", default: "기본 등급", quick: "빠른 등급" };
-  let sample = null, mode = "pending", ctx = null, turns = [], ctl = null, busy = false, picked = null, timer = 0;
+  let sample = null, mode = "pending", ctx = null, turns = [], ctl = null, busy = false, picked = null, timer = 0, canTools = false;
   const coarse = () => matchMedia("(pointer: coarse)").matches;
   const label = () => { send.textContent = busy ? "멈추기" : mode === "copy" ? "복사해서 묻기" : "묻기"; };
   const ready = (async () => {
     try { sample = window.claude && typeof window.claude.use === "function" ? await window.claude.use("sample") : null; } catch (_) { sample = null; }
+    if (sample){ try { const caps = await sample.limits(); canTools = !!(caps && caps.tools && caps.tools.maxCount >= 1); } catch (_) {} }  // 본문 찾기 도구를 쓸 수 있는 화면인지
     if (mode === "pending") mode = sample ? "claude" : "copy";
     label();
   })();
@@ -597,7 +608,8 @@ if (!route()) {
     const { c1, v1, c2, v2 } = x, nm = book.name;
     return c1 === c2 ? (v1 === v2 ? `${nm} ${c1}:${v1}` : `${nm} ${c1}:${v1}–${v2}`) : `${nm} ${c1}:${v1}–${c2}:${v2}`;
   }
-  const gaeUrl = (c, v) => `https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=${book.id}&chap=${c}&sec=${v}#focus`;  // 대한성서공회 개역개정, 그 절로 바로
+  const kbsUrl = (ver, c, v) => `https://www.bskorea.or.kr/bible/korbibReadpage.php?version=${ver}&book=${book.id}&chap=${c}&sec=${v}#focus`;  // 대한성서공회 누리집, 그 절로 바로(GAE 개역개정, SAENEW 새번역)
+  const gaeUrl = (c, v) => kbsUrl("GAE", c, v);
   function chapter(){  // 지금 읽는 화
     const name = book ? book.name : "";
     const title = (panel.querySelector("h2")?.textContent || "").replace(/\s+/g, " ").replace(/^\d+화\s*/, "").trim();
@@ -605,35 +617,217 @@ if (!route()) {
     for (const lab of panel.querySelectorAll(".lab")) if (lab.textContent.trim() === "줄거리"){ plot = (lab.nextElementSibling?.textContent || "").trim(); break; }
     return { name, where: cur ? `${name} ${cur}장` : name, title, plot };
   }
-  function context(info){
-    const ch = chapter();
-    if (!info) return { key: `ch|${ch.where}`, where: ch.where, title: ch.title, passage: ch.plot ? `이 장의 줄거리: ${cut(ch.plot, 800)}` : "", selected: "" };
+
+  // ── 참고 자료(사용자 요청 11/26: 대한성서공회 본문과 공신력 있는 성경학자들의 검증된 자료를 바탕으로 답하게) ──
+  // data/ref/{책}.js: 사복음서와 잠언의 개역한글판(1961)·원문(SBLGNT/WLC)·Tyndale Open Study Notes(CC BY-SA 4.0)
+  // data/ref/bible-*.js: 나머지 61권의 개역한글판(AI가 다른 구절을 찾아볼 때만). 읽기 화면에는 쓰지 않고, AI에게 처음 물을 때 불러온다.
+  const REF = {}, loaded = {};
+  window.gospelRef = (b, d) => { REF[b] = d; };
+  window.gospelBible = (g, d) => { Object.assign(REF, d); };
+  function script(src){
+    return loaded[src] || (loaded[src] = new Promise((res, rej) => {
+      const s = document.createElement("script"); s.src = src;
+      s.onload = () => res();
+      s.onerror = () => { delete loaded[src]; s.remove(); rej(new Error("load")); };
+      document.head.appendChild(s);
+    }));
+  }
+  const BOOKS66 = ("gen:창세기:ot1,exo:출애굽기:ot1,lev:레위기:ot1,num:민수기:ot1,deu:신명기:ot1,jos:여호수아:ot2,jdg:사사기:ot2,rut:룻기:ot2,1sa:사무엘상:ot2,2sa:사무엘하:ot2,"
+    + "1ki:열왕기상:ot2,2ki:열왕기하:ot2,1ch:역대상:ot2,2ch:역대하:ot2,ezr:에스라:ot2,neh:느헤미야:ot2,est:에스더:ot2,job:욥기:ot3,psa:시편:ot3,pro:잠언:ref,ecc:전도서:ot3,"
+    + "sng:아가:ot3,isa:이사야:ot3,jer:예레미야:ot3,lam:예레미야 애가:ot3,ezk:에스겔:ot3,dan:다니엘:ot3,hos:호세아:ot3,jol:요엘:ot3,amo:아모스:ot3,oba:오바댜:ot3,jnh:요나:ot3,"
+    + "mic:미가:ot3,nam:나훔:ot3,hab:하박국:ot3,zep:스바냐:ot3,hag:학개:ot3,zec:스가랴:ot3,mal:말라기:ot3,mat:마태복음:ref,mrk:마가복음:ref,luk:누가복음:ref,jhn:요한복음:ref,"
+    + "act:사도행전:nt,rom:로마서:nt,1co:고린도전서:nt,2co:고린도후서:nt,gal:갈라디아서:nt,eph:에베소서:nt,php:빌립보서:nt,col:골로새서:nt,1th:데살로니가전서:nt,2th:데살로니가후서:nt,"
+    + "1ti:디모데전서:nt,2ti:디모데후서:nt,tit:디도서:nt,phm:빌레몬서:nt,heb:히브리서:nt,jas:야고보서:nt,1pe:베드로전서:nt,2pe:베드로후서:nt,1jn:요한일서:nt,2jn:요한이서:nt,"
+    + "3jn:요한삼서:nt,jud:유다서:nt,rev:요한계시록:nt").split(",").map(x => { const [id, name, file] = x.split(":"); return { id, name, file }; });
+  const BOOK66 = Object.fromEntries(BOOKS66.map(b => [b.id, b]));
+  const squash = s => String(s ?? "").replace(/\s+/g, "");
+  const BYNAME = Object.fromEntries(BOOKS66.map(b => [squash(b.name), b]).concat([["요한1서", BOOK66["1jn"]], ["요한2서", BOOK66["2jn"]], ["요한3서", BOOK66["3jn"]], ["애가", BOOK66.lam]]));
+  async function bookData(id){
+    const b = BOOK66[id]; if (!b) return null;
+    if (!REF[id]) await script(b.file === "ref" ? `data/ref/${id}.js` : `data/ref/bible-${b.file}.js`);
+    return REF[id] || null;
+  }
+  const at = (c, v) => `${c}:${v}`;
+  const order = (a, b) => a[0] - b[0] || a[1] - b[1];
+  function versesOf(d, s){  // 범위 {c1, v1, c2, v2} 안의 절 [장, 절], 차례대로
+    return Object.keys(d.han).map(k => k.split(":").map(Number))
+      .filter(x => order(x, [s.c1, s.v1]) >= 0 && order(x, [s.c2, s.v2]) <= 0).sort(order);
+  }
+  function notesOf(d, segs, max){  // 그 범위에 걸친 Tyndale 노트. 넓은 단락 노트가 먼저 오는 원래 차례대로, 모두 합쳐 max 글자까지
+    const out = []; let n = 0;
+    for (const x of d.notes || []){
+      if (!segs.some(s => order([x[2], x[3]], [s.c1, s.v1]) >= 0 && order([x[0], x[1]], [s.c2, s.v2]) <= 0)) continue;
+      const line = `[${x[4]}] ${x[5]}`;
+      if (n + line.length > max) continue;
+      n += line.length; out.push(line);
+    }
+    return out;
+  }
+  function segsOf(r){  // 요점 범위 ‘4:21–25’, ‘8:34–9:1’, ‘3:20–21, 31–35’, ‘16:8’ → [{c1, v1, c2, v2}]
+    const out = []; let ch = 0;
+    for (const part of String(r).split(/,\s*/)){
+      const m = /^(?:(\d+):)?(\d+)(?:[–-](?:(\d+):)?(\d+))?$/.exec(part.trim()); if (!m) continue;
+      if (m[1]) ch = +m[1];
+      if (!ch) continue;
+      const s = { c1: ch, v1: +m[2], c2: m[3] ? +m[3] : ch, v2: m[4] ? +m[4] : +m[2] };
+      ch = s.c2; out.push(s);
+    }
+    return out;
+  }
+  const segLabel = s => s.c1 === s.c2 ? (s.v1 === s.v2 ? `${s.c1}:${s.v1}` : `${s.c1}:${s.v1}–${s.v2}`) : `${s.c1}:${s.v1}–${s.c2}:${s.v2}`;
+
+  function context(info){  // 무엇을 묻는지: 고른 절(focus), 그 요점의 범위(segs), 이 페이지가 쓴 글(page, 참고만)
+    const ch = chapter(), whole = cur ? [{ c1: cur, v1: 1, c2: cur, v2: 999 }] : [];  // 펼친 장이 없으면 본문 없이
+    if (!info) return { key: `ch|${ch.where}`, book: book.id, where: ch.where, title: ch.title, segs: whole, focus: null, whole: true,
+      page: ch.plot ? [["이 장의 줄거리(이 페이지가 쓴 요약)", cut(ch.plot, 800)]] : [], selected: "" };
     const pt = info.el.closest(".pt");
     const r = pt ? (pt.querySelector(".pt-r")?.dataset.r || "").trim() : "";
-    const bt = info.el.closest(".bt");
+    const bt = info.el.closest(".bt"), x = bt ? span(info) : null;
     let where = r ? rangeLabel(r) : ch.where;
-    if (bt){ const ref = refOf(info); if (ref) where = ref; }
-    const parts = [];
+    if (x){ const ref = refOf(info); if (ref) where = ref; }
+    const segs = r ? segsOf(r) : [], page = [];
     if (pt){
-      const key = (pt.querySelector(".vq p")?.textContent || "").trim();
-      if (key) parts.push(`핵심 구절(개역한글): ${key}`);
       const text = plain(pt.querySelector(".bt"));
-      if (text) parts.push(`쉬운 번역(${book.src_lang || "헬라어"} 원문에서 옮김), ${ch.name} ${r}: ${cut(text, 3500)}`);
-      if (!bt){ const d = (pt.querySelector(".d")?.textContent || "").trim(); if (d) parts.push(`이 페이지의 설명: ${cut(d, 1200)}`); }
-    } else parts.push(cut(plain(info.el.closest("section, li, p") || info.el), 1500));
-    return { key: (pt ? pt.id : "page") + "|" + info.text, where, title: pt ? (pt.querySelector("h3")?.textContent || "").trim() : ch.title, passage: parts.join("\n\n"), selected: cut(info.text, 1500) };
+      if (text) page.push([`이 페이지의 쉬운 번역(이 페이지가 ${src(book)}에서 옮긴 것, 공식 번역 아님)`, cut(text, 2500)]);
+      if (!bt){
+        const d = (pt.querySelector(".d")?.textContent || "").trim(); if (d) page.push(["이 페이지의 설명", cut(d, 1200)]);
+        const me = info.el.closest(".me"); if (me) page.push(["이 페이지의 ‘나에게’(삶에 비추어 본 글)", cut(plain(me), 800)]);
+      }
+    } else page.push(["이 페이지에서 고른 글이 있는 곳", cut(plain(info.el.closest("section, li, p") || info.el), 1500)]);
+    return { key: (pt ? pt.id : "page") + "|" + info.text, book: book.id, where, title: pt ? (pt.querySelector("h3")?.textContent || "").trim() : ch.title,
+      segs: segs.length ? segs : whole, focus: x, whole: !segs.length, page, selected: cut(info.text, 1500) };
   }
-  const rules = c => [
-    "당신은 성경 읽기를 돕는 안내자입니다. 읽는 사람이 이 페이지를 읽다가 묻습니다. [본문]이나 [고른 부분]이 있으면 그것을 바탕으로 답하고, 성경 본문과 상관없는 질문이면 그 질문에 맞게 답합니다.",
-    "지켜 주세요:",
-    "- 한국어로, 쉬운 말로, 필요한 만큼만 간결하게 답합니다.",
-    "- 성경 본문에 직접 적힌 내용과 본문 밖의 설명(역사 배경, 학자나 교파의 해석)을 분명히 나누고, 본문 밖의 내용은 그렇다고 밝힙니다.",
-    "- 성경 구절을 들 때는 책 이름과 장:절을 적습니다.",
-    "- 확실하지 않은 것은 모른다고 말합니다. 사도신경으로 고백하는 정통 기독교 신앙에서 벗어나는 주장을 사실처럼 말하지 않습니다.",
-    "", `[읽고 있는 곳] ${c.where}${c.title ? " · " + c.title : ""}`,
-    ...(c.passage ? ["", "[본문]", c.passage] : []),
-    ...(c.selected ? ["", "[고른 부분]", c.selected] : [])
+  async function material(c){  // [자료]: 묻는 구절의 개역한글판과 원문, 그 장 전체(문맥), Tyndale 노트, 책 소개, 이 페이지의 글(참고만)
+    const d = await bookData(c.book).catch(() => null), nm = BOOK66[c.book]?.name || "", out = [];
+    if (!d) out.push("(참고 자료를 불러오지 못했습니다. 성경 본문을 기억에 기대어 따옴표로 인용하지 말고, 자료 없이 답한다는 것을 답에서 밝혀 주세요.)");
+    else {
+      const orig = d.lang === "hbo" ? "히브리어 WLC" : "헬라어 SBLGNT", focus = c.focus ? [c.focus] : c.segs;
+      const head = c.focus ? segLabel(c.focus) : c.whole ? `${c.segs[0]?.c1}장 전체` : c.segs.map(segLabel).join(", ");
+      if (focus.length) out.push(`### 묻는 구절: ${nm} ${head} — 개역한글판(대한성서공회, 1961)과 원문(${orig})`);
+      for (const s of focus) for (const [k, v] of versesOf(d, s)){
+        out.push(`${k}:${v} 개역한글: ${d.han[at(k, v)]}`);
+        out.push(`${k}:${v} 원문: ${d.orig?.[at(k, v)] || `(${orig}에는 없는 절: 사본 차이)`}`);
+      }
+      if (!c.whole){  // 문맥: 그 구절이 든 장 전체의 개역한글판
+        const c1 = Math.min(...c.segs.map(s => s.c1)), c2 = Math.max(...c.segs.map(s => s.c2));
+        for (let k = c1; k <= c2; k++){
+          out.push("", `### 문맥: ${nm} ${k}장 전체 — 개역한글판`);
+          for (const [kk, v] of versesOf(d, { c1: k, v1: 1, c2: k, v2: 999 })) out.push(`${kk}:${v} ${d.han[at(kk, v)]}`);
+        }
+      }
+      const ns = notesOf(d, c.segs, 14000);
+      if (ns.length) out.push("", "### Tyndale Open Study Notes — 이 구절과 그 단락에 단 연구 노트(영어 원문. © 2022 Tyndale House Publishers, CC BY-SA 4.0)", ...ns);
+      if (d.intro) out.push("", `### ${nm} 소개 — Tyndale Open Study Notes`, d.intro);
+    }
+    for (const [h, t] of c.page) out.push("", `### ${h} — 참고만, 틀릴 수 있음`, t);
+    return out.join("\n");
+  }
+
+  // 본문 찾기 도구: Claude가 다른 구절을 인용하거나 장:절을 확인할 때 이 페이지의 자료에서 그대로 찾아 준다
+  function findTool(onFind){
+    return {
+      name: "find_verses",
+      description: "성경 66권 어디든 구절을 찾아 개역한글판(대한성서공회, 1961) 본문을 글자 그대로 돌려줍니다. 마태·마가·누가·요한복음과 잠언은 원문(SBLGNT/WLC)과 Tyndale 연구 노트도 함께 돌려줍니다. 다른 구절을 따옴표로 인용하기 전, 평행 본문이나 구약 배경을 확인할 때, 장:절이 맞는지 확인할 때 쓰세요. 한 번에 한 장 안에서 30절까지.",
+      inputSchema: { type: "object", properties: {
+        book: { type: "string", enum: BOOKS66.map(b => b.name), description: "책 이름(개역한글판 이름)" },
+        chapter: { type: "integer", minimum: 1, description: "장" },
+        verse_from: { type: "integer", minimum: 1, description: "첫 절" },
+        verse_to: { type: "integer", minimum: 1, description: "끝 절(같은 장 안). 한 절만 찾으면 비워 둡니다." }
+      }, required: ["book", "chapter", "verse_from"] },
+      async execute(input){
+        const b = BYNAME[squash(input.book)] || BOOK66[String(input.book ?? "").toLowerCase()];
+        if (!b) throw new Error(`모르는 책 이름입니다: ${input.book}`);
+        const c = Math.trunc(Number(input.chapter)), v1 = Math.trunc(Number(input.verse_from));
+        let v2 = Math.trunc(Number(input.verse_to ?? input.verse_from));
+        if (!(c >= 1 && v1 >= 1)) throw new Error("장과 절은 1부터 세는 정수로 적어 주세요.");
+        if (!(v2 >= v1)) v2 = v1;
+        if (v2 - v1 > 29) v2 = v1 + 29;
+        const d = await bookData(b.id).catch(() => null);
+        if (!d) throw new Error("본문을 불러오지 못했습니다.");
+        const last = Math.max(0, ...Object.keys(d.han).filter(k => k.startsWith(c + ":")).map(k => +k.split(":")[1]));
+        const vs = versesOf(d, { c1: c, v1, c2: c, v2 });
+        if (!vs.length) throw new Error(last ? `${b.name} ${c}장은 ${last}절까지 있습니다.` : `${b.name}에는 ${c}장이 없습니다.`);
+        const end = vs[vs.length - 1][1], label = `${b.name} ${c}:${v1}${end > v1 ? "–" + end : ""}`;
+        onFind(label);
+        const lines = [`${label} (개역한글판)`, ...vs.map(([k, v]) => `${k}:${v} ${d.han[at(k, v)]}`)];
+        if (d.orig) lines.push("", `원문(${d.lang === "hbo" ? "WLC" : "SBLGNT"})`, ...vs.map(([k, v]) => `${k}:${v} ${d.orig[at(k, v)] || "(이 원문에는 없는 절: 사본 차이)"}`));
+        const ns = notesOf(d, [{ c1: c, v1, c2: c, v2: end }], 5000);
+        if (ns.length) lines.push("", "Tyndale Open Study Notes(영어 원문)", ...ns);
+        return lines.join("\n");
+      }
+    };
+  }
+
+  const RULES = tools => [
+    "당신은 성경을 읽는 사람을 돕는 신중한 성경 해설자입니다. 읽는 사람은 「사복음서와 잠언」 읽기 페이지에서 본문을 읽다가 묻습니다. 그동안 AI의 해석을 읽으며 ‘이게 맞는 해석일까?’ 하는 의심이 자주 들었다고 합니다. 그럴듯한 말보다, 정확하고 근거를 확인할 수 있는 답이 가장 중요합니다. 시간이 걸려도 괜찮으니 깊이 생각하고, 다 쓰기 전에 아래 원칙에 비추어 스스로 점검하세요.",
+    "",
+    "1. 무엇에 근거할까(차례대로)",
+    "- 성경 본문: [자료]의 개역한글판(대한성서공회, 1961)과 원문(헬라어 SBLGNT, 히브리어 WLC). 해석은 늘 본문에서 출발하고, 원문의 낱말 뜻과 문법을 확인합니다.",
+    "- 문맥: 앞뒤 문맥과 그 책 전체의 흐름, 같은 사건을 전하는 다른 복음서(평행 본문), 구약 배경, 1세기 유대와 로마의 역사·문화.",
+    "- 검증된 학술 자료: [자료]의 Tyndale Open Study Notes(미국 Tyndale House Publishers가 2022년에 공개한 연구 성경 노트)와, 국제적으로 인정받는 학술 주석(예: NICNT, NIGTC, WBC, BECNT, Pillar, ICC, Anchor Yale 시리즈)과 공신력 있는 성경학자들의 주류 견해.",
+    "- 우리말 번역: 대한성서공회 번역(개역한글, 개역개정, 새번역, 공동번역 개정판)의 표현 차이가 이해를 돕는다면 짧게 말해도 좋습니다. 다만 개역개정이나 새번역 문장을 기억에 기대어 따옴표로 옮기지는 마세요.",
+    "",
+    "2. 정통 신앙의 테두리",
+    "- 사도신경과 니케아 신경이 고백하는 역사적 정통 기독교 신앙(삼위일체 하나님, 참 하나님이시며 참 사람이신 예수 그리스도, 십자가의 대속과 몸의 부활, 은혜로 받는 구원, 성경의 권위) 안에서 답합니다.",
+    "- 한국의 주요 교단들이 이단·사이비로 규정한 단체의 해석을 따르거나 사실처럼 전하지 않습니다. 예: 신천지(신천지예수교 증거장막성전)의 ‘비유 풀이’·‘짝 풀이’·‘실상’ 해석과 ‘약속의 목자’·‘이긴 자’ 주장, 하나님의교회(안상홍증인회)의 ‘어머니 하나님’·‘재림 그리스도 안상홍’ 주장, JMS(기독교복음선교회), 구원파, 통일교. 여호와의 증인이나 몰몬교처럼 정통 신앙에서 벗어난 교리도 마찬가지입니다. 읽는 사람이 이런 해석을 물으면, 정통 교회가 왜 받아들이지 않는지 본문과 문맥으로 차분히 설명합니다.",
+    "- 본문의 사물·숫자·인물을 문맥의 근거 없이 다른 것과 짝지어 풀지 않습니다(예: ‘등불은 어떤 인물이다’, ‘씨는 어떤 단체다’). 비유는 문맥이 가리키는 중심 요점을 찾고, 본문이 스스로 풀이해 준 곳(예: 마가복음 4:14 “뿌리는 자는 말씀을 뿌리는 것이라”)은 그 풀이를 따릅니다.",
+    "- 날짜를 정하는 종말론, 숫자 풀이, 누군가 받았다는 새 계시나 꿈에 기댄 해석, 특정 인물을 재림주·보혜사·이긴 자로 세우는 해석은 하지 않습니다.",
+    "- 정통 교회 안에서도 견해가 갈리는 문제(예: 세례의 방식, 종말에 관한 세부 견해, 예정과 자유의지)는 한쪽을 정답처럼 말하지 말고 주요 견해를 공정하게 나란히 소개합니다. 비평 학계의 견해(예: 기적이나 부활의 역사성을 의심하는 견해)를 소개할 때는 그것이 정통 교회의 고백과 어떻게 다른지 밝힙니다.",
+    "",
+    "3. 정직하게",
+    "- 본문이 직접 말하는 것, 문맥과 배경에서 추론한 것, 학자들의 해석, 오늘의 삶에 비춘 적용을 분명히 나누어 씁니다.",
+    "- 모르면 모른다고, 학자들 사이에 견해가 갈리면 갈린다고 말합니다. 소수 견해를 정설처럼 말하지 않습니다.",
+    "- 학자 이름, 책 제목, 쪽수, 직접 인용을 지어내지 않습니다. 어떤 학자가 그 견해를 밝혔다고 확신할 때만 이름을 들고, 그렇지 않으면 ‘여러 주석가’처럼 쓰거나 아예 쓰지 않습니다. Tyndale 연구 노트는 [자료]에 실제로 있는 내용만, 뜻을 바꾸지 않고 우리말로 옮깁니다.",
+    `- 성경 구절을 들 때는 책 이름과 장:절을 정확히 적습니다. 따옴표로 직접 인용하는 성경 구절은 ${tools ? "[자료]에 있거나 find_verses 도구로 확인한" : "[자료]에 있는"} 개역한글판 본문만, 글자 그대로 씁니다. 확인하지 못한 구절은 뜻만 풀어 쓰고 장:절을 적습니다.`,
+    "- [자료] 가운데 제목이 ‘이 페이지의 …’인 글은 이 페이지가 읽기를 도우려고 만든 글이라 틀린 데가 있을 수 있습니다. 근거로 삼지 말고, 원문이나 개역한글판과 어긋나면 그렇다고 바로잡아 줍니다.",
+    "- 개역한글판에는 있지만 SBLGNT에는 없는 절이나, 마가복음 16:9–20·요한복음 7:53–8:11처럼 사본 문제가 있는 본문이 관련되면 학계의 일반적인 판단을 공정하게 알려 줍니다.",
+    "",
+    "4. 원문 다루기",
+    "- 핵심 낱말은 원어, 우리말 소리, 뜻을 함께 적습니다. 예: 헬라어 λύχνος(뤼크노스, 등불).",
+    "- 시제·태·접속사 같은 문법은 해석을 바꿀 때만 짧게 설명합니다. 어원이나 낱말 풀이만으로 원문에 없는 뜻을 끌어내지 않습니다.",
+    "",
+    "5. 답의 모양",
+    "- 한국어로, 쉬운 말로 씁니다. 전문 용어는 처음 쓸 때 풀어 줍니다.",
+    "- 아래 차례로 쓰되 필요 없는 칸은 뺍니다. 칸 제목은 ‘## ’로 시작합니다.",
+    "  ## 한마디로 — 질문에 대한 답을 한두 문장으로.",
+    "  ## 본문이 말하는 것 — 관련 구절(개역한글판)을 짧게 인용하고, 핵심 원어와 문맥을 설명.",
+    "  ## 해석 — 주류 학계와 정통 교회의 이해. Tyndale 연구 노트가 다룬 내용이면 ‘Tyndale 연구 노트는 …라고 설명합니다’처럼 밝힘. 견해가 갈리면 견해마다 근거와 함께 나란히.",
+    "  ## 확신 정도 — 높음·중간·낮음 가운데 하나와 그 까닭 한 줄(예: 높음 — 본문이 직접 말하고 학자들의 견해도 거의 같음).",
+    "  ## 더 확인하려면 — 읽는 사람이 직접 확인할 곳 한두 가지: 관련 구절(장:절), 대한성서공회 개역개정·새번역 대조, 확신하는 참고 주석.",
+    "- 보통 600–1,200자로 씁니다. 질문이 간단하면 더 짧게 씁니다.",
+    "- 성경 본문과 상관없는 질문이면 형식에 매이지 말고 그 질문에 맞게, 같은 정직함으로 답합니다.",
+    ...(tools ? ["- find_verses 도구는 필요한 만큼만 쓰고, 찾을 구절을 다 찾은 뒤에 답을 쓰기 시작합니다(도구를 부르기 전에는 글을 쓰지 않습니다)."] : []),
+    "- 이어지는 질문에도 이 원칙을 그대로 지킵니다."
   ].join("\n");
+  const REVIEW = tools => [
+    "당신은 성경 해설 답변을 검토하는 엄격한 검토자입니다. 읽는 사람은 AI의 해석이 맞는지 의심하고 있습니다. 아래 [검토할 답변]이 [자료], [질문], [답변이 따라야 했던 원칙]에 비추어 정확한지 꼼꼼히 검토하세요. 시간이 걸려도 좋습니다.",
+    "",
+    "하나하나 확인하세요.",
+    `1. 본문 대조 — 따옴표로 인용한 성경 구절이 [자료]${tools ? "나 find_verses 결과" : ""}의 개역한글판과 글자 그대로 맞는가? 장:절이 맞는가? 원어 낱말과 문법 설명이 원문에 맞는가?${tools ? " 의심스러운 구절은 find_verses 도구로 확인하세요." : ""}`,
+    "2. 정통성 — 역사적 정통 기독교 신앙에서 벗어나거나, 신천지 같은 이단의 비유 풀이·짝 풀이처럼 문맥에 근거 없는 상징 해석이 섞이지 않았는가?",
+    "3. 학술적 정확성 — 주류 학계의 견해를 바르게 전했는가? 소수 견해를 정설처럼 말하거나, 견해가 갈리는데 한쪽만 말하지 않았는가? 역사·문화 배경 설명이 사실인가?",
+    "4. 출처 정직성 — Tyndale 연구 노트에 없는 말을 노트가 했다고 하지 않았는가? 학자 이름·책·인용을 지어냈거나 확실하지 않은 귀속이 있는가?",
+    "5. 질문에 제대로 답했는가? 확신 정도가 내용에 맞는가?",
+    "",
+    "JSON 값 하나로만 답하세요.",
+    "- 고칠 것이 없으면: {\"verdict\":\"ok\",\"issues\":[],\"answer\":\"\"}",
+    "- 고칠 것이 있으면: {\"verdict\":\"fixed\",\"issues\":[\"무엇을 왜 고쳤는지 쉬운 말로 한 줄씩\"],\"answer\":\"고친 답변 전체(마크다운, 원래 답의 칸 차례 그대로)\"}",
+    "지킬 것:",
+    "- 사실·해석·인용·장:절·출처·교리에 문제가 하나라도 있으면 \"fixed\"입니다. 필요한 곳만 고치고, 좋은 부분과 형식은 그대로 두며, 새 추측을 보태지 않습니다.",
+    "- 맞춤법이나 말투 같은 사소한 것뿐이면 \"ok\"입니다.",
+    "- issues는 읽는 사람이 그대로 보는 글입니다. 많아야 다섯 개, 한 줄에 하나."
+  ].join("\n");
+  const Q = "\n\n[질문]\n";
+  const head = (c, tools) => [RULES(tools), "", `[읽고 있는 곳] ${c.where}${c.title ? " · " + c.title : ""}`, "", "[자료]", c.material,
+    ...(c.selected ? ["", "[고른 부분] 읽는 사람이 화면에서 고른 글", c.selected] : [])].join("\n");
+  const qOf = t => t.content.includes(Q) ? t.content.slice(t.content.lastIndexOf(Q) + Q.length) : t.content;
+  function reviewInput(c, tools){  // 검토: 원칙·자료·앞의 대화·질문·답을 한 번에 보낸다(검토하는 Claude도 앞 대화를 기억하지 않으므로)
+    const n = turns.length, prev = [];
+    for (let i = 0; i < n - 2; i++) prev.push(`${turns[i].role === "user" ? "질문" : "답"}: ${cut(qOf(turns[i]), 2000)}`);
+    return [REVIEW(tools), "", "[답변이 따라야 했던 원칙]", RULES(tools), "", `[읽고 있는 곳] ${c.where}${c.title ? " · " + c.title : ""}`, "", "[자료]", c.material,
+      ...(c.selected ? ["", "[고른 부분]", c.selected] : []), ...(prev.length ? ["", "[앞의 대화]", ...prev] : []),
+      "", "[질문]", qOf(turns[n - 2]), "", "[검토할 답변]", turns[n - 1].content].join("\n");
+  }
 
   // Claude가 쓴 마크다운을 보통 글로(제목, 목록, 굵은 글씨만). 글은 먼저 이스케이프한다
   const esc = t => t.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
@@ -707,6 +901,9 @@ if (!route()) {
     if (!ctx || ctx.key !== c.key){ if (busy && ctl) ctl.abort(); ctx = c; turns = []; log.textContent = ""; fresh = null; pill.hidden = true; }
     selBox.hidden = !c.selected; quote.textContent = c.selected;
     refEl.textContent = c.where + (c.title ? ` · ${c.title}` : "");
+    const s0 = c.focus || c.segs[0] || { c1: 1, v1: 1 }, kbs = document.createElement("span"), link = (t, u) => { const a = document.createElement("a"); a.href = u; a.target = "_blank"; a.rel = "noopener"; a.textContent = t; return a; };
+    kbs.className = "ask-kbs"; kbs.append(" · 대한성서공회 ", link("개역개정", kbsUrl("GAE", s0.c1, s0.v1)), " · ", link("새번역", kbsUrl("SAENEW", s0.c1, s0.v1)));
+    refEl.append(kbs);  // 답을 읽다 의심이 들면 공식 번역과 바로 대조하게(사용자 요청)
     if (!c.selected){ selBox.hidden = false; quote.textContent = ""; quote.hidden = true; } else quote.hidden = false;
     sheet.hidden = false; fab.hidden = true; menu.hidden = true;
     try { getSelection().removeAllRanges(); } catch (_) {}
@@ -714,34 +911,73 @@ if (!route()) {
   }
   function closeAsk(){ if (busy && ctl) ctl.abort(); sheet.hidden = true; }
 
-  async function askClaude(q){
-    turns.push({ role: "user", content: turns.length ? q : rules(ctx) + "\n\n[질문]\n" + q });
-    fresh = say("me", q);
-    const out = say("ai wait", "생각하는 중… 깊이 생각하는 모델이라 조금 걸릴 수 있어요.");
-    ctl = new AbortController(); busy = true; label(); pillLabel(); toEnd();
+  async function askJSON(input, opts){  // 검토 결과는 JSON으로. json이 없는 예전 앱에서는 글로 받아 직접 읽는다
+    if (typeof sample.json === "function"){
+      try { return await sample.json(input, opts); }
+      catch (e) { if (!e || e.code !== "capability_removed") throw e; }
+    }
+    const t = (await sample(input, opts)).text, i = t.indexOf("{"), j = t.lastIndexOf("}");
+    if (i < 0 || j < i) throw { code: "invalid_json" };
+    return JSON.parse(t.slice(i, j + 1));
+  }
+  // 검토(사용자 요청 11/26: 시간이 걸려도 검증된 답을). 다른 Claude 호출이 답을 자료·원칙과 맞춰 보고, 틀린 곳이 있으면 고친 답으로 바꾼다
+  async function review(out, onFind, signal){
+    const rv = document.createElement("div"); rv.className = "ask-msg note"; rv.textContent = "검토하는 중… 다른 눈으로 본문·원문·연구 노트와 맞춰 보고 있어요. 1–2분쯤 더 걸려요."; log.append(rv); toEnd();
     try {
-      const res = await sample(turns, { model: MODEL, modelTier: "complex", effort: EFFORT, cache: false, signal: ctl.signal,
-        onText: ({ text }) => { out.innerHTML = md(text); out.classList.remove("wait"); toEnd(); } });
-      out.innerHTML = md(res.text); out.classList.remove("wait"); turns.push({ role: "assistant", content: res.text });
-      const who = res.modelApplied === MODEL ? "Claude Opus 5.5 · 노력 높음" : TIER[res.modelTierApplied];
-      if (who) say("model", `답한 모델: ${who}`);
+      const v = await askJSON(reviewInput(ctx, canTools), { model: MODEL, modelTier: "complex", effort: EFFORT, cache: false, signal, ...(canTools ? { tools: [findTool(onFind)] } : {}) });
+      const issues = Array.isArray(v?.issues) ? v.issues.map(x => String(x).trim()).filter(Boolean).slice(0, 5) : [];
+      const fixed = v?.verdict === "fixed" && typeof v.answer === "string" && v.answer.trim();
+      if (fixed){
+        const a = v.answer.trim(); out.innerHTML = md(a); out.dataset.state = "fixed"; turns[turns.length - 1].content = a;  // 이어 묻는 질문도 고친 답을 바탕으로
+        rv.textContent = "검토에서 고친 곳";
+        if (issues.length){ const ul = document.createElement("ul"); for (const x of issues){ const li = document.createElement("li"); li.textContent = x; ul.append(li); } rv.append(ul); }
+      } else { out.dataset.state = "ok"; rv.textContent = "✓ 검토: 본문·원문·연구 노트와 맞춰 보았고, 고칠 곳을 찾지 못했어요."; }
+    } catch (e) {
+      out.dataset.state = "unchecked";
+      rv.textContent = e && e.code === "cancelled" ? "검토를 멈췄어요. 위 답은 검토하지 않은 답이에요."
+        : `검토는 하지 못했어요${e && e.code === "rate_limited" ? "(지금 Claude 사용량이 많아요)" : ""}. 위 답은 검토하지 않은 답이에요.`;
+    }
+    toEnd();
+  }
+  async function askClaude(q){
+    const first = !turns.length;
+    fresh = say("me", q);
+    const out = say("ai wait", "생각하는 중… 본문과 원문, 연구 노트를 살피고 있어요. 꼼꼼히 보느라 1–3분쯤 걸릴 수 있어요.");
+    const found = [], meta = say("note", ""); meta.hidden = true;  // 개역한글판에서 찾아본 구절
+    const onFind = l => { if (!found.includes(l)) found.push(l); meta.textContent = `개역한글판에서 찾아본 구절: ${found.join(" · ")}`; meta.hidden = false; toEnd(); };
+    ctl = new AbortController(); busy = true; label(); pillLabel(); toEnd();
+    const signal = ctl.signal; let pushed = false;
+    try {
+      if (first && ctx.material == null) ctx.material = await material(ctx);
+      if (signal.aborted) throw { code: "cancelled" };
+      turns.push({ role: "user", content: first ? head(ctx, canTools) + Q + q : q }); pushed = true;
+      const run = tools => sample(turns, { model: MODEL, modelTier: "complex", effort: EFFORT, cache: false, signal, ...(tools ? { tools: [findTool(onFind)] } : {}),
+        onText: ({ text }) => { out.innerHTML = md(text); out.classList.remove("wait"); out.dataset.state = "draft"; toEnd(); } });
+      let res;
+      try { res = await run(canTools); }
+      catch (e) { if (e && e.code === "tools_unavailable"){ canTools = false; res = await run(false); } else throw e; }  // 도구를 못 쓰는 화면이면 도구 없이 한 번만 다시
+      out.innerHTML = md(res.text); out.classList.remove("wait"); out.dataset.state = "draft"; turns.push({ role: "assistant", content: res.text });
       if (res.truncated) say("note", "답이 길어 중간에 끊겼어요. 조금 좁혀서 물어보세요.");
+      const who = res.modelApplied === MODEL ? "Claude Opus 5.5 · 노력 높음(가장 높은 단계)" : TIER[res.modelTierApplied];
+      await review(out, onFind, signal);
+      if (who) say("model", `답한 모델: ${who}`);
     } catch (e) {
       const code = e && e.code;
-      if (e && e.text && code !== "refused"){ out.innerHTML = md(e.text); out.classList.remove("wait"); turns.push({ role: "assistant", content: e.text }); }
-      else { out.remove(); turns.pop(); }
+      if (e && e.text && code !== "refused"){ out.innerHTML = md(e.text); out.classList.remove("wait"); out.dataset.state = "unchecked"; if (pushed) turns.push({ role: "assistant", content: e.text }); }
+      else { out.remove(); if (!found.length) meta.remove(); if (pushed) turns.pop(); }
       if (HIDE.includes(code)){ mode = "copy"; say("note", "이 화면에서는 Claude가 바로 답할 수 없어요. ‘복사해서 묻기’를 누르면 질문이 복사되고, Claude 앱에 붙여 넣어 물어볼 수 있어요."); }
       else if (code !== "cancelled") say("note", SAY[code] || "연결이 끊겼어요. 다시 물어보세요.");
     } finally { busy = false; ctl = null; label(); pillLabel(); }
   }
   async function copyAsk(q){
-    const text = rules(ctx) + "\n\n[질문]\n" + q;
     fresh = say("me", q); pillLabel();
+    if (ctx.material == null) ctx.material = await material(ctx);
+    const text = head(ctx, false) + Q + q;
     let ok = false;
     try { await navigator.clipboard.writeText(text); ok = true; } catch (_) {}
     const p = say("note", ok ? "질문을 복사했어요. " : "아래 글을 복사해 Claude에 붙여 넣으세요. ");
     const a = document.createElement("a"); a.href = "https://claude.ai/new"; a.target = "_blank"; a.rel = "noopener"; a.textContent = "Claude 열기 ↗";
-    p.append(a, ok ? " 대화창에 붙여 넣으면 됩니다." : "");
+    p.append(a, ok ? " 대화창에 붙여 넣으면 됩니다. 본문과 연구 노트도 함께 들어 있어요." : "");
     if (!ok){ const ta = document.createElement("textarea"); ta.className = "ask-copy"; ta.readOnly = true; ta.value = text; log.append(ta); toEnd(); }
   }
 
