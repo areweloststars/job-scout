@@ -268,7 +268,7 @@ const META = {
 "lines": true,
 "bundle": true,
 "plate": {
-"img": "images/pro/plate.jpg",
+"img": "images/pro/plate-b.jpg",
 "alt": "돌의자에 앉아 두루마리를 든 늙은 솔로몬 왕",
 "cap": "귀스타브 도레, 〈늙은 솔로몬 왕〉(1866, 판화). 잠언은 ‘다윗의 아들 이스라엘 왕 솔로몬의 잠언이라’(1:1)는 말로 시작합니다.",
 "w": 648,

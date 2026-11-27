@@ -41,7 +41,7 @@ BOOKS = [
        lines=True, bundle=True,
        lede='하루 한 장, 한 달에 한 번. 장마다 본문의 요점을 따라가고, 본문을 펼쳐 직접 읽습니다. 진도는 이 기기에 저장됩니다.',
        chapters=31, abbr='잠',
-       plate=dict(img='images/pro/plate.jpg', alt='돌의자에 앉아 두루마리를 든 늙은 솔로몬 왕',
+       plate=dict(img='images/pro/plate-b.jpg', alt='돌의자에 앉아 두루마리를 든 늙은 솔로몬 왕',
                   cap='귀스타브 도레, 〈늙은 솔로몬 왕〉(1866, 판화). 잠언은 ‘다윗의 아들 이스라엘 왕 솔로몬의 잠언이라’(1:1)는 말로 시작합니다.',
                   credit=('https://commons.wikimedia.org/wiki/File:087.King_Solomon_in_Old_Age.jpg', '퍼블릭 도메인')),
        why=[('첫 줄', '“다윗의 아들 이스라엘 왕 솔로몬의 잠언이라”(1:1).'),
