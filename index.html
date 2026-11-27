@@ -198,9 +198,10 @@ h1,h2,h3{margin:0;text-wrap:balance}
 /* 본문을 골라 Claude에게 묻기(사용자 요청). 고르면 떠오르는 버튼, 컴퓨터의 오른쪽 클릭 메뉴, 묻고 답하는 창 */
 .ask-fab{position:absolute;z-index:46;display:inline-flex;align-items:center;gap:0;padding:2px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--gold);font-family:var(--ui);font-size:.8125rem;line-height:1.2;box-shadow:0 10px 24px -12px var(--shadow);cursor:default}
 .fab-b{all:unset;cursor:pointer;color:var(--gold);font:inherit}
-.ask-fab > *{padding:3px 9px;white-space:nowrap}  /* 떠오르는 단추를 조금 더 작게(사용자 요청) */
+.ask-fab > *{display:inline-flex;align-items:center;min-height:42px;padding:0 15px;white-space:nowrap}  /* 손가락으로 누르기 쉽게 크게(사용자 요청 11/27: “작아서 누르기 어려워”. 그 전 ‘조금 더 작게’를 바꿈) */
+.ask-fab{max-width:calc(100vw - 24px);font-size:.9375rem}
 .ask-fab > * + *{border-left:1px solid var(--rule)}
-.fab-ref{font-size:.75rem;color:var(--gold);text-decoration:none;font-variant-numeric:tabular-nums}  /* 고른 절의 장·절: 누르면 개역개정의 그 절로(사용자 요청) */
+.fab-ref{min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:.875rem;color:var(--gold);text-decoration:none;font-variant-numeric:tabular-nums}  /* 고른 절의 장·절: 누르면 개역개정의 그 절로(사용자 요청) */
 .fab-ref:hover{text-decoration:underline}
 .fab-b:focus-visible,.ask-menu button:focus-visible,.ask-x:focus-visible,.ask-send:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .ask-menu{position:absolute;z-index:47;min-width:180px;padding:6px;border-radius:12px;border:1px solid var(--rule);background:var(--paper);box-shadow:0 16px 32px -16px var(--shadow);display:grid}
@@ -228,6 +229,13 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .q-h-s{margin-left:-20px;border-radius:50% 0 50% 50%}
 .q-h-e{border-radius:0 50% 50% 50%}
 .q-h[hidden]{display:none}
+.pg-h{z-index:44}  /* 페이지 글의 손잡이: 떠오르는 단추(46) 아래 */
+.wrap img{-webkit-touch-callout:none}  /* 그림을 꾹 누르면 휴대폰 기본 그림 메뉴 대신 이 페이지의 ‘AI 질문’(사용자 요청 11/27 저녁) */
+img.img-on{outline:3px solid #3b78e7;outline-offset:2px}  /* 꾹 눌러 고른 그림 */
+.ask-pic{display:block;max-width:100%;max-height:180px;margin:0 auto 8px;border-radius:6px}
+.ask-pic[hidden]{display:none}
+.ask-th .th-img{float:left;width:46px;height:46px;margin:0 10px 0 0;object-fit:cover;border-radius:6px}
+.ask-th::after{content:"";display:block;clear:both}
 .q-paste{all:unset;display:inline-block;margin:0 .3em;padding:1px 10px;border-radius:999px;font-family:var(--ui);font-size:.75rem;line-height:1.6;color:var(--paper);background:var(--gold);cursor:pointer;vertical-align:.08em}
 .q-paste:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .ask-sel{position:relative}
@@ -275,6 +283,12 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .src .ol{display:block}
 .src .ol[dir="rtl"]{text-align:right;font-family:var(--hebrew);font-size:1.0625rem}
 .src .on{display:block;font-size:.75rem;color:var(--ink-2)}
+.src-in .gl,.src .gl{display:block;margin-bottom:.4em;color:var(--ink);font-size:.875rem;line-height:1.6}  /* 원어 낱말의 우리말 소리와 뜻(사용자 요청 11/27 저녁) */
+.gl b{color:var(--gold);font-weight:600}
+.gl .gw[lang="he"]{font-family:var(--hebrew);font-size:1rem}
+.src-in .kr,.src .kr{display:block;margin-top:.45em;padding-top:.45em;border-top:1px dashed var(--rule);color:var(--ink)}  /* 그 절의 개역한글: 원문만 보면 뜻을 몰라서 */
+.kr .kl{display:block;font-size:.75rem;color:var(--ink-2)}
+.src-in mark,.src mark{padding:0 2px;border-radius:3px;background:color-mix(in srgb,var(--gold) 32%,transparent);color:inherit}
 .ask-msg.model{font-size:.75rem;color:var(--ink-2)}
 .ask-msg.wait{color:var(--ink-2)}
 .ask-msg.wait .st{margin:0}
@@ -304,20 +318,14 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .dk-t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .dk-x{all:unset;width:34px;height:34px;margin-right:4px;display:grid;place-items:center;border-radius:999px;color:var(--ink-2);font-size:1.125rem;line-height:1;cursor:pointer}
 .dk-open:focus-visible,.dk-x:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:999px}
-.dk-i{flex:none;width:11px;height:11px;border-radius:50%;box-sizing:border-box}
-.ask-dock[data-state="busy"] .dk-i{display:none}  /* 답변 준비 중: 글만, 왼쪽 원 없이(사용자 요청 11/27: 3:34 ‘돌지 않게’ → 그 뒤 ‘원을 아예 지워 줘’) */
-.ask-dock[data-state="new"]{border-color:var(--gold);animation:dk-blink 1.1s ease-in-out infinite}  /* 답이 오면 눌러 볼 때까지 깜박깜박(사용자 요청 11/27 오후) */
-.ask-dock[data-state="new"] .dk-i{border:2px solid var(--gold-t);border-top-color:var(--gold);animation:dk-spin .9s linear infinite}  /* 답이 오면 그제서야 굴러가는 고리 */
+.ask-dock[data-state="new"]{border-color:var(--gold);animation:dk-blink 1.1s ease-in-out infinite}  /* 답이 오면 눌러 볼 때까지 깜박깜박(사용자 요청 11/27 오후). 왼쪽 원은 모두 뺐다(11/27 저녁 “깜박이기만, 원은 불필요”) */
 .ask-dock[data-state="new"] .dk-t{color:var(--gold);font-weight:600}
-.ask-dock[data-state="seen"] .dk-i{border:2px solid var(--ink-2);opacity:.55}
-.ask-dock[data-state="error"] .dk-i{background:var(--ink-2)}
 .dots i{font-style:normal;animation:dot-wave 1.4s ease-in-out infinite both}  /* ‘답변 준비 중…’의 점 셋이 차례로 깜박인다(사용자 요청 11/27 4:04) */
 .dots i:nth-child(2){animation-delay:.2s}
 .dots i:nth-child(3){animation-delay:.4s}
 @keyframes dot-wave{0%,80%,100%{opacity:.15}40%{opacity:1}}
-@keyframes dk-spin{to{transform:rotate(360deg)}}
 @keyframes dk-blink{0%,100%{background:var(--paper)}50%{background:color-mix(in srgb,var(--gold) 34%,var(--paper))}}
-@media (prefers-reduced-motion: reduce){.dots i{animation:none!important;opacity:1}.ask-dock,.ask-dock .dk-i{animation:none!important}.ask-dock[data-state="new"]{background:color-mix(in srgb,var(--gold) 22%,var(--paper))}}
+@media (prefers-reduced-motion: reduce){.dots i{animation:none!important;opacity:1}.ask-dock{animation:none!important}.ask-dock[data-state="new"]{background:color-mix(in srgb,var(--gold) 22%,var(--paper))}}
 html.ask-docked body{padding-bottom:76px}  /* 접힌 단추가 맨 아래 글을 가리지 않게 */
 .ask-new:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
@@ -372,11 +380,11 @@ html.ask-docked body{padding-bottom:76px}  /* 접힌 단추가 맨 아래 글을
   <button type="button" role="menuitem" data-act="ask">AI 질문</button>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
-<div class="ask-dock" id="ask-dock" hidden><button type="button" class="dk-open" id="ask-dock-open"><span class="dk-i" aria-hidden="true"></span><span class="dk-t" id="ask-dock-t" role="status" aria-live="polite"></span></button><button type="button" class="dk-x" id="ask-dock-x" aria-label="AI 대화 닫기" hidden>×</button></div>
+<div class="ask-dock" id="ask-dock" hidden><button type="button" class="dk-open" id="ask-dock-open"><span class="dk-t" id="ask-dock-t" role="status" aria-live="polite"></span></button><button type="button" class="dk-x" id="ask-dock-x" aria-label="AI 대화 닫기" hidden>×</button></div>
 <aside class="ask" id="ask" role="dialog" aria-labelledby="ask-h" hidden>
   <header class="ask-head"><h2 id="ask-h">AI Claude에게 묻기</h2><button type="button" class="ask-x" id="ask-x" aria-label="창을 아래로 접기">접기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></header>
   <div class="ask-body" id="ask-body">
-    <div class="ask-log" id="ask-log" aria-live="polite"><figure class="ask-sel"><blockquote id="ask-quote"></blockquote><figcaption id="ask-ref"></figcaption></figure></div>
+    <div class="ask-log" id="ask-log" aria-live="polite"><figure class="ask-sel"><img class="ask-pic" id="ask-pic" alt="" hidden><blockquote id="ask-quote"></blockquote><figcaption id="ask-ref"></figcaption></figure></div>
     <button type="button" class="ask-new" id="ask-new" hidden>새 답 보기 ↓</button>
   </div>
   <form class="ask-form" id="ask-form">
@@ -716,12 +724,12 @@ if (!route()) {
     prompt_too_large: "고른 부분이 너무 길어요. 조금 줄여서 다시 물어보세요."
   };
   const TIER = { complex: "가장 뛰어난 등급", default: "기본 등급", quick: "빠른 등급" };
-  let sample = null, mode = "pending", picked = null, timer = 0, canTools = false;
+  let sample = null, mode = "pending", picked = null, timer = 0, canTools = false, canImg = false, pg = null, imgPick = null;  // pg: 한 번 눌러 고른 보통 글, imgPick: 꾹 눌러 고른 그림
   const coarse = () => matchMedia("(pointer: coarse)").matches;
   const label = () => { send.textContent = mode === "copy" ? "복사해서 묻기" : "묻기"; };  // 답을 쓰는 동안에도 ‘묻기’(멈추기는 답 자리의 작은 단추)
   const ready = (async () => {
     try { sample = window.claude && typeof window.claude.use === "function" ? await window.claude.use("sample") : null; } catch (_) { sample = null; }
-    if (sample){ try { const caps = await sample.limits(); canTools = !!(caps && caps.tools && caps.tools.maxCount >= 1); } catch (_) {} }  // 본문 찾기 도구를 쓸 수 있는 화면인지
+    if (sample){ try { const caps = await sample.limits(); canTools = !!(caps && caps.tools && caps.tools.maxCount >= 1); canImg = !!(caps && caps.images && caps.images.maxCount >= 1); } catch (_) {} }  // 본문 찾기 도구·그림 보내기를 쓸 수 있는 화면인지
     if (mode === "pending") mode = sample ? "claude" : "copy";
     label();
   })();
@@ -732,7 +740,7 @@ if (!route()) {
     const s = getSelection();
     if (!s || s.isCollapsed || !s.rangeCount) return null;
     const text = s.toString().replace(/\s+/g, " ").trim();
-    if (text.length < 2) return null;
+    if (text.length < 2 && !(pg && text)) return null;  // 한 번 눌러 고른 낱말은 한 글자여도(‘곧’, ‘그’)
     const r = s.getRangeAt(0), n = r.commonAncestorContainer, el = n.nodeType === 1 ? n : n.parentElement;
     if (!el || !document.body.contains(el) || el.closest("#ask, #ask-fab, #ask-menu, summary, button, a, input, textarea")) return null;
     return { text, range: r.cloneRange(), el };
@@ -840,6 +848,17 @@ if (!route()) {
     const ch = chapter(), whole = cur ? [{ c1: cur, v1: 1, c2: cur, v2: 999 }] : [];  // 펼친 장이 없으면 본문 없이
     if (!info) return { key: `ch|${ch.where}`, book: book.id, where: ch.where, title: ch.title, segs: whole, focus: null, whole: true,
       page: ch.plot ? [["이 장의 줄거리(이 페이지가 쓴 요약)", cut(ch.plot, 800)]] : [], selected: "" };
+    if (info.img){  // 꾹 눌러 고른 그림: 그림 설명과 그 요점의 본문을 함께(사용자 요청 11/27 저녁)
+      const ip = info.img.closest(".pt"), ir = ip ? (ip.querySelector(".pt-r")?.dataset.r || "").trim() : "", fig = info.img.closest("figure");
+      const cap = ((fig && fig.querySelector("figcaption")?.textContent) || info.img.alt || "").replace(/\s+/g, " ").trim(), isegs = ir ? segsOf(ir) : [], ipage = [];
+      if (ip){
+        const text = plain(ip.querySelector(".bt")); if (text) ipage.push([`이 페이지의 쉬운 번역(이 페이지가 ${src(book)}에서 옮긴 것, 공식 번역 아님)`, cut(text, 2500)]);
+        const d = (ip.querySelector(".d")?.textContent || "").trim(); if (d) ipage.push(["이 페이지의 설명", cut(d, 1200)]);
+      }
+      const url = info.img.currentSrc || info.img.src;
+      return { key: (ip ? ip.id : "page") + "|img|" + url, book: book.id, where: ir ? rangeLabel(ir) : ch.where, title: ip ? (ip.querySelector("h3")?.textContent || "").trim() : ch.title,
+        segs: isegs.length ? isegs : whole, focus: null, whole: !isegs.length, page: ipage, selected: "", img: url, imgEl: info.img, cap };
+    }
     const pt = info.el.closest(".pt");
     const r = pt ? (pt.querySelector(".pt-r")?.dataset.r || "").trim() : "";
     const bt = info.el.closest(".bt"), x = bt ? span(info) : null;
@@ -979,9 +998,14 @@ if (!route()) {
     "5. 질문 의도 — 첫 문장이 [질문]에 바로 답하는가? 질문에 부분이 여럿이면 모두 답했는가? 질문과 상관없는 곁가지로 흐르지 않았는가?",
     "6. 이해하기 쉬움 — 중학생이 한 번 읽고 이해할 수 있는가? 풀이 없는 어려운 낱말·학술 용어가 남아 있지 않은가? ‘앞을 내다보다’ 같은 흐릿한 비유나 막연한 말 대신 무엇을 뜻하는지 그대로 말하는 또렷한 말인가(일상의 예를 드는 것은 좋음)? 부드러운 해요체인가? 문단을 나누었는가? 길이(보통 500–900자, 많아야 1,200자)를 지켰는가? 답 안에 출처를 말하는 문장, 출처 목록, 확신 정도, 더 확인하려면, 번역 평가, 머리말, ‘질문 의도:’ 같은 작성 메모가 없는가?",
     "",
+    "7. 원문 낱말 풀이 — 읽는 사람은 히브리어·헬라어를 읽지 못합니다. 답에 [[원문 …]] 근거 표시가 있으면, 그 문장이 설명한 원어 낱말을 [근거 표시가 가리키는 출처 글]의 원문에서 찾아 words에 적습니다(원문 출처를 펼치면 이 풀이가 함께 보입니다).",
+    "   - cite: 그 근거 표시 안의 글 그대로(예: 원문 잠언 1:2). word: 원문에 적힌 꼴을 글자 그대로 복사(모음 부호 포함). sound: 그 낱말의 우리말 소리(예: 비나, 메타노이아). mean: 답이 설명한 뜻을 중학생도 알게 짧게(예: 깨달음, 옳고 그름을 가려내는 힘).",
+    "   - 답에 없는 새 뜻을 보태지 않습니다. 원문에서 그 낱말을 찾지 못하거나 확실하지 않으면 적지 않습니다. 원문 근거 표시가 없으면 빈 목록입니다. 고친 답이면 고친 답의 원문 근거 표시에 맞춥니다.",
+    "",
     "JSON 값 하나로만 답하세요.",
-    "- 고칠 것이 없으면: {\"verdict\":\"ok\",\"answer\":\"\"}",
-    "- 고칠 것이 있으면: {\"verdict\":\"fixed\",\"answer\":\"고친 답변 전체(마크다운, 근거 표시 [[…]]는 맞는 것만 그대로 두기)\"}",
+    "- 고칠 것이 없으면: {\"verdict\":\"ok\",\"answer\":\"\",\"words\":[…]}",
+    "- 고칠 것이 있으면: {\"verdict\":\"fixed\",\"answer\":\"고친 답변 전체(마크다운, 근거 표시 [[…]]는 맞는 것만 그대로 두기)\",\"words\":[…]}",
+    "- words의 한 항목: {\"cite\":\"원문 잠언 1:2\",\"word\":\"בִינָה\",\"sound\":\"비나\",\"mean\":\"깨달음, 옳고 그름을 가려내는 힘\"}",
     "지킬 것:",
     "- 사실·근거·인용·교리·질문 의도·쉬움에 문제가 하나라도 있으면 \"fixed\"입니다. 필요한 곳만 고치고 새 추측을 보태지 않습니다. 고칠 때도 쉬운 말투를 지키고 어려운 말을 보태지 않습니다. 너무 길면 핵심만 남겨 줄입니다.",
     "- 맞춤법 같은 아주 사소한 것뿐이면 \"ok\"입니다."
@@ -1020,18 +1044,22 @@ if (!route()) {
     const c = t.c, turns = t.turns, n = turns.length, prev = [];
     for (let i = Math.max(0, n - 6); i < n - 2; i++) prev.push(`${turns[i].role === "user" ? "질문" : "답"}: ${cut(qOf(turns[i]), 800)}`);
     return [EASY(), "", `[읽고 있는 곳] ${c.where}${c.title ? " · " + c.title : ""}`, ...(c.selected ? ["", "[고른 부분]", c.selected] : []),
+      ...(c.img ? ["", `[그림] 읽는 사람이 고른 그림에 대해 묻고 있어요. 그림 설명: ${c.cap || "(없음)"}`] : []),
       ...(t.prior ? ["", "[앞의 대화 — 다른 본문]", t.prior] : []), ...(prev.length ? ["", "[앞의 대화]", ...prev] : []), "", "[질문]", qOf(turns[n - 2]), "", "[초안]", draft].join("\n");
   }
   const Q = "\n\n[질문]\n";
   const HINT = / ⟨근거 표시: [^⟩]*⟩/g;  // [자료] 제목의 근거 표시 안내(근거 표시를 쓰지 않는 복사해서 묻기에서는 지운다)
   const head = (c, tools, cites) => [RULES(tools, cites), "", `[읽고 있는 곳] ${c.where}${c.title ? " · " + c.title : ""}`, "", "[자료]", cites ? c.material : c.material.replace(HINT, ""),
-    ...(c.selected ? ["", "[고른 부분] 읽는 사람이 화면에서 고른 글", c.selected] : [])].join("\n");
+    ...(c.selected ? ["", "[고른 부분] 읽는 사람이 화면에서 고른 글", c.selected] : []), ...(c.img ? ["", imgNote(c)] : [])].join("\n");
+  function imgNote(c){  // 꾹 눌러 고른 그림에 대해 물을 때
+    return `[그림] 읽는 사람이 이 페이지의 그림을 골랐어요${c.blobOk ? "(이 메시지에 그림이 함께 붙어 있어요)" : "(그림 파일은 함께 보내지 못했어요. 그림 설명만 보고 답하세요)"}. 그림 설명: ${c.cap || "(없음)"}\n그림에 대해 물으면 그림을 직접 보고, 그림 설명과 [자료]의 성경 본문을 바탕으로 쉽게 답하세요. 그림에 보이지 않는 것을 지어내지 말고, 누가 언제 그렸는지는 그림 설명에 적힌 만큼만 말하세요. 그림은 화가의 해석이니, 성경 본문과 다른 부분이 있으면 본문을 기준으로 부드럽게 알려 주세요.`;
+  }
   const qOf = t => t.content.includes(Q) ? t.content.slice(t.content.lastIndexOf(Q) + Q.length) : t.content;
   function reviewInput(t, srcs){  // 검토: 원칙·자료·앞의 대화·질문·답, 그리고 근거 표시가 가리키는 출처 글을 한 번에(검토하는 Claude도 앞 대화를 기억하지 않으므로)
     const c = t.c, turns = t.turns, n = turns.length, prev = [];
     for (let i = 0; i < n - 2; i++) prev.push(`${turns[i].role === "user" ? "질문" : "답"}: ${cut(qOf(turns[i]), 2000)}`);
     return [REVIEW(), "", "[답변이 따라야 했던 원칙]", RULES(true, true), "", `[읽고 있는 곳] ${c.where}${c.title ? " · " + c.title : ""}`, "", "[자료]", c.material,
-      ...(c.selected ? ["", "[고른 부분]", c.selected] : []), ...(t.prior ? ["", "[앞의 대화 — 다른 본문]", t.prior] : []), ...(prev.length ? ["", "[앞의 대화]", ...prev] : []),
+      ...(c.selected ? ["", "[고른 부분]", c.selected] : []), ...(c.img ? ["", imgNote(c)] : []), ...(t.prior ? ["", "[앞의 대화 — 다른 본문]", t.prior] : []), ...(prev.length ? ["", "[앞의 대화]", ...prev] : []),
       "", "[질문]", qOf(turns[n - 2]), "", "[검토할 답변]", turns[n - 1].content,
       "", "[근거 표시가 가리키는 출처 글]", ...(srcs.length ? srcs.map(x => `[[${x.raw}]] → ${x.src ? `${x.src.label}: ${cut(x.src.text, 1500)}` : "찾지 못함"}`) : ["(근거 표시 없음)"])].join("\n");
   }
@@ -1075,7 +1103,8 @@ if (!route()) {
       url: `https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=${k.b.id}&chap=${k.c1}&sec=${k.v1}#focus` };
     if (k.kind === "orig"){
       const t = d.orig && vs.map(([c, v]) => d.orig[at(c, v)]).filter(Boolean); if (!t || !t.length) return null;
-      return { ref, label: `${ref} · ${d.lang === "hbo" ? "히브리어 원문(WLC)" : "헬라어 원문(SBLGNT)"}`, text: t.join(" "), rows: t, he: d.lang === "hbo" };
+      const han = vs.map(([c, v]) => d.han[at(c, v)] ? (vs.length > 1 ? v + " " : "") + d.han[at(c, v)] : "").filter(Boolean);  // 우리말 뜻(사용자 요청 11/27: “히브리어만 나오면 뭔 말인지 몰라”)
+      return { ref, label: `${ref} · ${d.lang === "hbo" ? "히브리어 원문(WLC)" : "헬라어 원문(SBLGNT)"}`, text: t.join(" "), rows: t, han, he: d.lang === "hbo" };
     }
     const ns = (d.notes || []).filter(x => order([x[2], x[3]], [k.c1, k.v1]) >= 0 && order([x[0], x[1]], [k.c2, k.v2]) <= 0).sort((a, b) => noteSize(a) - noteSize(b)).slice(0, 2);
     return ns.length ? { ref, label: `${ref} · Tyndale 연구 노트(영어 원문)`, text: ns.map(x => `[${x[4]}] ${x[5]}`).join("\n"), lang: "en" } : null;
@@ -1115,18 +1144,49 @@ if (!route()) {
     }
     return out;
   }
-  function origRow(r, he){  // 원문 한 절: 히브리어는 오른쪽에서 왼쪽으로, ‘(히브리어 51:9)’ 같은 우리말 표시는 따로 줄에
+  // 원문 낱말 맞춰 보기: 악센트(히브리어 칸틸레이션, 헬라어 억양)를 빼고, 안 되면 히브리어는 자음만으로. 접두어가 붙은 꼴(וּבִינָה)도 찾는다
+  function normOrig(s, he, bare){
+    if (he){ s = s.replace(/[\u05BE/]/g, " ").replace(/[\u0591-\u05AF\u05BD\u05BF\u05C0\u05C3-\u05C6]/g, ""); if (bare) s = s.replace(/[\u05B0-\u05BC\u05C1\u05C2\u05C7]/g, ""); return s.replace(/[^\u05B0-\u05BC\u05C1\u05C2\u05C7\u05D0-\u05EA ]/g, "").trim(); }
+    return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/ς/g, "σ").replace(/[^\u03b1-\u03c9 ]/g, "").trim();
+  }
+  function hitTok(tok, w, he){
+    const a = normOrig(tok, he), b = normOrig(w, he);
+    if (b.length >= (he ? 2 : 3) && a.includes(b)) return true;
+    if (!he) return false;
+    const a2 = normOrig(tok, he, true), b2 = normOrig(w, he, true);
+    return b2.length >= 2 && a2.includes(b2);
+  }
+  const markRow = (t, he, ws) => ws && ws.length ? t.split(/(\s+)/).map(k => !k.trim() ? k : ws.some(w => hitTok(k, w, he)) ? `<mark>${esc(k)}</mark>` : esc(k)).join("") : esc(t);
+  function glossFor(x, words){  // 검토가 낸 원어 낱말 풀이 가운데, 그 절 원문에 실제로 있는 낱말만 보여 준다(지어낸 풀이가 나오지 않게)
+    const out = [];
+    for (const w of words || []){
+      if (!w || typeof w.word !== "string" || typeof w.mean !== "string") continue;
+      const k = parseCite(String(w.cite || "")); if (!k || k.kind !== "orig" || `${k.b.name} ${segLabel(k)}` !== x.ref) continue;
+      const word = w.word.trim().slice(0, 40), sound = String(w.sound || "").trim().slice(0, 24), mean = w.mean.trim().slice(0, 90);
+      if (!word || !mean || !x.rows.some(r => r.split(/\s+/).some(tok => hitTok(tok, word, x.he)))) continue;
+      if (!out.some(o => o.word === word)) out.push({ word, sound, mean });
+    }
+    return out.slice(0, 3);
+  }
+  function origRow(r, he, ws){  // 원문 한 절: 히브리어는 오른쪽에서 왼쪽으로, ‘(히브리어 51:9)’ 같은 우리말 표시는 따로 줄에. 풀이한 낱말은 칠해 둔다
     let t = r, pre = "", title = "", note = "";
     const m1 = /^\[표제, ([^\]]+)\]\s*(.*?)\s*‖\s*/.exec(t); if (m1){ pre = `표제(${m1[1]})`; title = m1[2]; t = t.slice(m1[0].length); }
     const m2 = /\s*\(((?:히브리어|앞 절과)[^)]*)\)\s*$/.exec(t); if (m2){ note = m2[1]; t = t.slice(0, m2.index); }
     const at = he ? ' dir="rtl" lang="he"' : ' lang="grc"';
-    return (pre ? `<span class="on">${esc(pre)}</span><span class="ol"${at}>${esc(title)}</span>` : "") + (t ? `<span class="ol"${at}>${esc(t)}</span>` : "") + (note ? `<span class="on">${esc(note)}</span>` : "");
+    return (pre ? `<span class="on">${esc(pre)}</span><span class="ol"${at}>${markRow(title, he, ws)}</span>` : "") + (t ? `<span class="ol"${at}>${markRow(t, he, ws)}</span>` : "") + (note ? `<span class="on">${esc(note)}</span>` : "");
   }
   const SRC = new WeakMap();  // 답 칸 → 그 답의 출처 목록
-  const srcBody = x => (x.rows ? x.rows.map(r => origRow(r, x.he)).join("") : esc(x.text).replace(/\n/g, "<br>"));
+  function srcBody(x){  // 원문은 우리말 풀이와 함께(사용자 요청 11/27): 답이 다룬 낱말의 소리·뜻 → 원문(그 낱말 칠함) → 그 절의 개역한글
+    if (!x.rows) return esc(x.text).replace(/\n/g, "<br>");
+    const ws = x.words || [], la = x.he ? ' dir="rtl" lang="he"' : ' lang="grc"';
+    const gl = ws.map(w => `<span class="gl">${w.sound ? `<b>${esc(w.sound)}</b> ` : ""}<span class="gw"${la}>${esc(w.word)}</span> — ${esc(w.mean)}</span>`).join("");
+    const kr = x.han && x.han.length ? `<span class="kr"><span class="kl">이 절의 우리말 · 개역한글판</span>${esc(x.han.join(" "))}</span>` : "";
+    return gl + x.rows.map(r => origRow(r, x.he, ws.map(w => w.word))).join("") + kr;
+  }
   const srcLink = x => (x.url ? `<a class="sl" href="${x.url}" target="_blank" rel="noopener">대한성서공회 개역개정으로 보기 ↗</a>` : "");
-  async function renderAnswer(el, text){
+  async function renderAnswer(el, text, words){
     const { num, list } = await resolveAll(text);
+    for (const x of list) if (x.rows) x.words = glossFor(x, words);
     const srcs = list.map((x, i) => `<details class="src" data-n="${i + 1}"><summary><span class="sn">${i + 1}</span>${esc(x.label)}</summary>`
       + `<div class="sx"${x.lang ? ` lang="${x.lang}"` : ""}>${srcBody(x)}</div>${srcLink(x)}</details>`).join("");
     el.innerHTML = md(text, l => citeInline(l, num)) + (srcs ? `<div class="srcs"><p class="sh">출처</p>${srcs}</div>` : "");
@@ -1148,7 +1208,7 @@ if (!route()) {
     const rs = info.range.getClientRects(), first = rs[0] || info.range.getBoundingClientRect(), last = rs[rs.length - 1] || first;
     el.hidden = false;
     const w = el.offsetWidth, h = el.offsetHeight;
-    let x = coarse() ? last.left : first.left, y = coarse() ? last.bottom + 14 : first.top - h - 10;  // 휴대폰은 위에 기본 메뉴가 떠서 아래에
+    let x = coarse() ? last.left : first.left, y = coarse() ? last.bottom + (pg ? 34 : 14) : first.top - h - 10;  // 휴대폰은 위에 기본 메뉴가 떠서 아래에(손잡이가 있으면 그 아래)
     if (!coarse() && y < 8) y = last.bottom + 10;
     x = Math.max(12, Math.min(x, innerWidth - w - 12));
     el.style.left = (x + scrollX) + "px"; el.style.top = (y + scrollY) + "px";
@@ -1344,13 +1404,14 @@ if (!route()) {
 
   function threadCard(t){  // 앞서 물은 본문의 카드(작게): 고른 글 두 줄과 그 자리
     const f = document.createElement("div"); f.className = "ask-th";
-    if (t.c.selected){ const q = document.createElement("p"); q.className = "th-q"; q.textContent = t.c.selected; f.append(q); }
+    if (t.c.img){ const im = document.createElement("img"); im.className = "th-img"; im.src = t.c.img; im.alt = ""; f.append(im); }
+    if (t.c.selected || t.c.cap){ const q = document.createElement("p"); q.className = "th-q"; q.textContent = t.c.selected || t.c.cap; f.append(q); }
     const r = document.createElement("p"); r.className = "th-r"; r.textContent = t.c.where + (t.c.title ? ` · ${t.c.title}` : ""); f.append(r);
     return f;
   }
   function openAsk(info){
     const c = context(info), changed = !th || th.c.key !== c.key;
-    clearSel();
+    clearSel(); clearImg(); pgClear();
     if (changed){
       if (th && th.asked){  // 앞 본문의 대화는 창에 그대로 두고 카드만 작게 줄인다. 새 본문 카드는 맨 아래에(앞의 답은 멈추지 않고 계속 쓴다)
         const old = threadCard(th); selBox.before(old); th.card = old; log.append(selBox);
@@ -1359,12 +1420,13 @@ if (!route()) {
       if (th && !th.asked) th.c = c;  // 아직 묻지 않은 카드는 새 본문으로 바꾸기만
       else { th = { c, turns: [], asked: 0, tail: Promise.resolve(), prior: "", card: selBox }; threads.push(th); }
     }
-    fillQuote(c.selected);
+    fillQuote(c.selected || c.cap || "");  // 그림이면 그림 설명(낱말을 눌러 붙여 넣을 수 있게)
+    const pic = $("ask-pic"); pic.hidden = !c.img; if (c.img){ pic.src = c.img; pic.alt = c.cap || "고른 그림"; }
     refEl.textContent = c.where + (c.title ? ` · ${c.title}` : "");
     const s0 = c.focus || c.segs[0] || { c1: 1, v1: 1 }, kbs = document.createElement("span"), link = (t, u) => { const a = document.createElement("a"); a.href = u; a.target = "_blank"; a.rel = "noopener"; a.textContent = t; return a; };
     kbs.className = "ask-kbs"; kbs.append(" · 대한성서공회 ", link("개역개정", kbsUrl("GAE", s0.c1, s0.v1)), " · ", link("새번역", kbsUrl("SAENEW", s0.c1, s0.v1)));
     refEl.append(kbs);  // 답을 읽다 의심이 들면 공식 번역과 바로 대조하게(사용자 요청)
-    selBox.hidden = false; quote.hidden = !c.selected;
+    selBox.hidden = false; quote.hidden = !(c.selected || c.cap);
     fab.hidden = true; menu.hidden = true; expand(changed ? selBox : null);
     try { getSelection().removeAllRanges(); } catch (_) {}
     if (!coarse()) input.focus({ preventScroll: true });
@@ -1428,12 +1490,13 @@ if (!route()) {
   // 11/27 오후: 검토는 근거 표시가 가리키는 출처 글(이 페이지 자료)을 함께 받아 도구 없이 확인한다. 기다리는 시간을 줄이려고 검토만 노력 ‘중간’
   // (답 자체는 그대로 Opus 5.5 노력 높음)
   const REVIEW_EFFORT = EFFORT;  // 11/27 3:34 사용자 요청(“시간이 많이 걸려도 좋으니 쉽게 이해하게”)으로 다시 ‘높음’
-  async function review(t, draft, signal){
+  async function review(t, draft, signal, imgs){  // → { answer, words: 원문 낱말 풀이 }
     try {
       const { pairs } = await resolveAll(draft);
-      const v = await askJSON(reviewInput(t, pairs), { model: MODEL, modelTier: "complex", effort: REVIEW_EFFORT, cache: false, signal });
-      return v?.verdict === "fixed" && typeof v.answer === "string" && v.answer.trim() ? v.answer.trim() : draft;
-    } catch (_) { return draft; }  // 멈추기를 눌렀거나 검토가 실패해도 지금까지의 답을 보여 준다
+      const v = await askJSON(reviewInput(t, pairs), { model: MODEL, modelTier: "complex", effort: REVIEW_EFFORT, cache: false, signal, ...(imgs && imgs.length ? { images: imgs } : {}) });
+      const answer = v?.verdict === "fixed" && typeof v.answer === "string" && v.answer.trim() ? v.answer.trim() : draft;
+      return { answer, words: Array.isArray(v?.words) ? v.words : [] };
+    } catch (_) { return { answer: draft, words: [] }; }  // 멈추기를 눌렀거나 검토가 실패해도 지금까지의 답을 보여 준다
   }
   async function simplify(t, draft, signal){  // 실패하거나 멈추면 초안을 그대로
     try {
@@ -1477,18 +1540,31 @@ if (!route()) {
       if (first && t.c.material == null) t.c.material = await material(t.c);
       if (signal.aborted) throw { code: "cancelled" };
       if (first) t.prior = priorTalk(t);
+      let imgs = t.c.img && canImg ? [await imgBlob(t.c)].filter(Boolean) : [];  // 꾹 눌러 고른 그림(묻는 때마다 함께 보낸다: 앞 차례의 그림은 다시 보내지지 않으므로)
+      if (first && t.c.img) t.c.blobOk = imgs.length > 0;
+      if (t.c.img && !imgs.length) job.noImg = true;  // 이 화면에서 그림을 보낼 수 없으면 답 아래에 알린다
+      if (signal.aborted) throw { code: "cancelled" };
       turns.push({ role: "user", content: first ? head(t.c, canTools, true) + priorBlock(t.prior) + Q + q : q }); pushed = true;
-      const run = tools => sample(turns, { model: MODEL, modelTier: "complex", effort: EFFORT, cache: false, signal, ...(tools ? { tools: [findTool(() => {})] } : {}) });  // 답은 다 확인한 뒤에 한 번에 보여 준다
+      const run = tools => sample(turns, { model: MODEL, modelTier: "complex", effort: EFFORT, cache: false, signal, ...(tools ? { tools: [findTool(() => {})] } : {}), ...(imgs.length ? { images: imgs } : {}) });  // 답은 다 확인한 뒤에 한 번에 보여 준다
       let res;
-      try { res = await run(canTools); }
-      catch (e) { if (e && e.code === "tools_unavailable"){ canTools = false; res = await run(false); } else throw e; }  // 도구를 못 쓰는 화면이면 도구 없이 한 번만 다시
+      for (let k = 0; ; k++){
+        try { res = await run(canTools); break; }
+        catch (e) {
+          const c = e && e.code;
+          if (k < 2 && c === "tools_unavailable" && canTools){ canTools = false; continue; }  // 도구를 못 쓰는 화면이면 도구 없이 한 번만 다시
+          if (k < 2 && (c === "images_unavailable" || c === "image_rejected") && imgs.length){ if (c === "images_unavailable") canImg = false; imgs = []; job.noImg = true; continue; }  // 그림을 못 보내면 그림 설명만으로
+          throw e;
+        }
+      }
       turns.push({ role: "assistant", content: res.text });
       const easy = signal.aborted ? res.text : await simplify(t, res.text, signal);  // 질문 의도에 맞게 쉽게 다시 쓰기
       turns[turns.length - 1].content = easy;
-      const answer = signal.aborted ? easy : await review(t, easy, signal);  // 쉽게 쓴 답이 자료·원칙에 맞는지 마지막으로 확인
+      const rv = signal.aborted ? { answer: easy, words: [] } : await review(t, easy, signal, imgs);  // 쉽게 쓴 답이 자료·원칙에 맞는지 마지막으로 확인
+      const answer = rv.answer;
       turns[turns.length - 1].content = answer;  // 이어 묻는 질문도 확인한 답을 바탕으로
-      await renderAnswer(out, answer); out.className = "ask-msg ai"; wrapWords(out, ".srcs, .cite");
+      await renderAnswer(out, answer, rv.words); out.className = "ask-msg ai"; wrapWords(out, ".srcs, .cite");
       if (res.truncated && answer === res.text) after(job, "note", "답이 길어 중간에 끊겼어요. 조금 좁혀서 물어보세요.");
+      if (job.noImg) after(job, "note", "이 화면에서는 그림을 보내지 못해 그림 설명만 보고 답했어요.");
       const who = res.modelApplied === MODEL ? "Claude Opus 5.5 · 노력 높음(가장 높은 단계)" : TIER[res.modelTierApplied];
       if (who) after(job, "model", `답한 모델: ${who}`);
       finish(job, null);
@@ -1510,6 +1586,19 @@ if (!route()) {
     if (code === "cancelled"){ if (job.out.classList.contains("wait")){ job.out.remove(); job.last = job.me; } after(job, "note", "멈췄어요."); }
     else { const el = code ? job.last : job.out; if (!inView(el)) news.push({ job, el, fail: !!code }); }  // 보이지 않는 곳에 온 답은 ‘새 답’으로 알린다
     renderDock(); updPill();
+  }
+  async function imgBlob(c){  // 고른 그림을 Claude에게 보낼 파일로(이 페이지의 그림이라 캔버스로 만든다). 안 되면 null(그림 설명만으로 묻는다)
+    if (c.blob !== undefined) return c.blob;
+    let b = null;
+    try {
+      const img = c.imgEl; if (!img.complete || !img.naturalWidth) await img.decode();
+      const k = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight)), cv = document.createElement("canvas");
+      cv.width = Math.max(1, Math.round(img.naturalWidth * k)); cv.height = Math.max(1, Math.round(img.naturalHeight * k));
+      cv.getContext("2d").drawImage(img, 0, 0, cv.width, cv.height);
+      b = await new Promise(res => cv.toBlob(res, "image/jpeg", 0.9));
+    } catch (_) { b = null; }
+    if (!b) try { b = await (await fetch(c.img)).blob(); } catch (_) { b = null; }
+    return (c.blob = b);
   }
   async function copyAsk(q, t){
     t.asked++; say("me", q);
@@ -1557,9 +1646,10 @@ if (!route()) {
   document.addEventListener("selectionchange", () => {
     const sel = getSelection();
     if (ours && (!sel || sel.isCollapsed || sel.toString() !== ours.text)) ours = null;
+    if (pg && (!sel || sel.isCollapsed || sel.toString() !== pg.text)) pgClear();  // 한 번 눌러 고른 낱말이 풀리면 손잡이도
     clearTimeout(timer);
     timer = setTimeout(() => {
-      const info = readSel(); if (!info){ fab.hidden = true; return; }
+      const info = readSel(); if (!info){ if (!imgPick) fab.hidden = true; return; }  // 꾹 눌러 고른 그림의 단추는 그대로
       picked = info; const ref = refOf(info), x = span(info);
       fabRef.textContent = ref;  // ↗ 표시 없이(사용자 요청)
       fabRef.hidden = !ref; if (x) fabRef.href = gaeUrl(x.c1, x.v1); fabCopy.hidden = !(ref && coarse());  // 휴대폰에는 오른쪽 클릭이 없어 복사 단추를 함께
@@ -1602,6 +1692,108 @@ if (!route()) {
     else copySel(picked);
   });
   document.addEventListener("pointerdown", e => { if (!menu.hidden && !menu.contains(e.target)) menu.hidden = true; }, true);
+  // ── 보통 글씨도 한 번 누르면 낱말을 고른다(사용자 요청 11/27 저녁) ──
+  // “꾹 누를 필요 없이 한 번 누르면 AI에게 질문하기가 나오고 글 범위를 넓힐 수 있게. 글씨가 아닌 곳을 누르면 나오지 않게.”
+  // 성경 본문(누르면 그 절을 고름)과 묻는 창은 빼고, ★ 누르면 기능을 하는 글씨(‘나에게’ 같은 접기·펼치기, ‘본문 펼치기’, ↑절 칩, 단추, 링크,
+  // 책·장 고르기 등)는 골라지지 않고 원래 기능만 한다(사용자: “누른 사람은 그 낱말의 본연의 기능을 바랐던 것”). 고른 낱말은 휴대폰 기본 선택처럼
+  // 파랗게 칠하고, 양 끝의 파란 손잡이로 범위를 넓히거나 좁힌다. ‘AI 질문’ 단추는 고른 글 아래에 뜬다
+  const ACT = "a, button, summary, label, input, textarea, select, [role=button], [role=link], [role=tab], [tabindex], [contenteditable]";
+  const OFF = "#ask, #ask-fab, #ask-menu, #ask-dock, #toast, img, svg, .bt, .pg-h";
+  const plainAt = el => el instanceof Element && !!el.closest(".wrap") && !el.closest(ACT) && !el.closest(OFF);
+  let wasPg = null;
+  const pgS = document.createElement("span"), pgE = document.createElement("span");  // 시작·끝 손잡이
+  pgS.className = "q-h q-h-s pg-h"; pgE.className = "q-h q-h-e pg-h"; pgS.hidden = pgE.hidden = true;
+  pgS.setAttribute("aria-hidden", "true"); pgE.setAttribute("aria-hidden", "true");
+  document.body.append(pgS, pgE);
+  function wordRange(x, y, loose){  // 그 자리의 낱말(띄어 쓴 한 덩어리). loose가 아니면 손가락이 그 글자 위에 있을 때만
+    const c = caretAt({ clientX: x, clientY: y }); if (!c) return null;
+    const n = c.startContainer; if (n.nodeType !== 3 || !plainAt(n.parentElement)) return null;
+    const t = n.data; let a = Math.min(c.startOffset, t.length), b = a;
+    while (a > 0 && !/\s/.test(t[a - 1])) a--;
+    while (b < t.length && !/\s/.test(t[b])) b++;
+    if (a === b) return null;
+    const r = document.createRange(); r.setStart(n, a); r.setEnd(n, b);
+    if (!loose && ![...r.getClientRects()].some(q => x >= q.left - 2 && x <= q.right + 2 && y >= q.top - 2 && y <= q.bottom + 2)) return null;
+    return r;
+  }
+  const sameRange = (r1, r2) => !!r1 && !!r2 && r1.compareBoundaryPoints(Range.START_TO_START, r2) === 0 && r1.compareBoundaryPoints(Range.END_TO_END, r2) === 0;
+  function setSel(r){ const s = getSelection(); s.removeAllRanges(); s.addRange(r); if (pg) pg.text = s.toString(); drawPg(); }
+  function pgClear(){ pg = null; pgS.hidden = pgE.hidden = true; }
+  function drawPg(){
+    const s = getSelection();
+    if (!pg || !s || !s.rangeCount || s.isCollapsed){ pgS.hidden = pgE.hidden = true; return; }
+    const rs = [...s.getRangeAt(0).getClientRects()].filter(q => q.width || q.height);
+    if (!rs.length){ pgS.hidden = pgE.hidden = true; return; }
+    const f = rs[0], l = rs[rs.length - 1];
+    pgS.hidden = pgE.hidden = false;
+    pgS.style.left = (f.left + scrollX) + "px"; pgS.style.top = (f.bottom + scrollY) + "px";
+    pgE.style.left = (l.right + scrollX) + "px"; pgE.style.top = (l.bottom + scrollY) + "px";
+  }
+  document.addEventListener("pointerdown", () => {  // 누르기 전에 골라 둔 낱말(같은 낱말을 다시 누르면 푼다)
+    const s = getSelection(); wasPg = pg && s && s.rangeCount ? s.getRangeAt(0).cloneRange() : null;
+  }, true);
+  document.addEventListener("click", e => {
+    if (!isMrk() || e.button !== 0 || !plainAt(e.target)) return;  // 기능이 있는 글씨, 성경 본문, 그림, 묻는 창은 여기서 다루지 않는다
+    const s = getSelection();
+    if (s && !s.isCollapsed && !(pg && s.toString() === pg.text) && !(ours && s.toString() === ours.text)) return;  // 꾹 눌러(끌어) 고른 글은 그대로
+    const r = wordRange(e.clientX, e.clientY, false);
+    if (!r || sameRange(r, wasPg)){  // 글씨가 아닌 곳: 아무것도 띄우지 않고, 골라 둔 것은 푼다. 고른 낱말을 다시 눌러도 푼다
+      if (pg || ours){ s.removeAllRanges(); pgClear(); ours = null; }
+      fab.hidden = true; return;
+    }
+    ours = null; pg = { text: "", root: e.target.closest(".pt, section, header, footer, .reader-top") || document.querySelector(".wrap") };
+    setSel(r);
+  });
+  function pgDrag(h, isStart){  // 손잡이를 끌면 손가락 조금 위의 낱말까지. 화면 위아래 끝까지 끌면 페이지가 따라 움직인다
+    h.addEventListener("pointerdown", e => {
+      e.preventDefault(); e.stopPropagation();
+      try { h.setPointerCapture(e.pointerId); } catch (_) {}
+      const move = ev => {
+        const s = getSelection(); if (!pg || !s.rangeCount) return;
+        if (ev.clientY > innerHeight - 48) scrollBy(0, 14); else if (ev.clientY < 48) scrollBy(0, -14);
+        const w = wordRange(ev.clientX, ev.clientY - 18, true); if (!w || !pg.root.contains(w.startContainer)) return;
+        const cur = s.getRangeAt(0), r = document.createRange();
+        if (isStart){ r.setStart(w.startContainer, w.startOffset); r.setEnd(cur.endContainer, cur.endOffset); }
+        else { r.setStart(cur.startContainer, cur.startOffset); r.setEnd(w.endContainer, w.endOffset); }
+        if (!r.collapsed) setSel(r);
+      };
+      const up = () => { h.removeEventListener("pointermove", move); h.removeEventListener("pointerup", up); h.removeEventListener("pointercancel", up); };
+      h.addEventListener("pointermove", move); h.addEventListener("pointerup", up); h.addEventListener("pointercancel", up);
+    });
+  }
+  pgDrag(pgS, true); pgDrag(pgE, false);
+  addEventListener("resize", drawPg);
+
+  // ── 그림: 한 번 누르면 아무 일도 없고, 꾹 누르면 그 그림이 골라져 ‘AI 질문’이 뜬다(사용자 요청 11/27 저녁: “스크롤하다 한 번 눌렀다고
+  // AI에게 질문하기가 바로 나오면 불편할 것 같아서”). 묻는 창에 그 그림과 그림 설명이 들어가고, Claude에게 그림을 함께 보내 묻는다 ──
+  let lp = null;
+  const imgOk = img => !!img && isMrk() && mode !== "copy" && !!img.closest(".wrap") && img.complete && img.naturalWidth > 0;
+  function clearImg(){ if (imgPick){ imgPick.classList.remove("img-on"); if (picked && picked.img === imgPick) picked = null; imgPick = null; } }
+  function pickImage(img, x, y){
+    clearImg(); pgClear(); ours = null;
+    try { getSelection().removeAllRanges(); } catch (_) {}
+    imgPick = img; img.classList.add("img-on");
+    picked = { img, el: img, text: "", range: null };
+    fabRef.hidden = true; fabCopy.hidden = true; fab.hidden = false;
+    const w = fab.offsetWidth, h = fab.offsetHeight, r = img.getBoundingClientRect();
+    const top = Math.max(8, Math.min(y + 28, r.bottom - h - 8, innerHeight - h - 16));  // 누른 자리 조금 아래(그림 안)
+    fab.style.left = (Math.max(12, Math.min(x - w / 2, innerWidth - w - 12)) + scrollX) + "px"; fab.style.top = (top + scrollY) + "px";
+  }
+  const lpStop = () => { if (lp){ clearTimeout(lp.t); lp = null; } };
+  document.addEventListener("contextmenu", e => {  // 안드로이드는 꾹 누르면 contextmenu가 온다: 휴대폰 기본 그림 메뉴 대신 그림 고르기
+    const img = e.target instanceof Element && e.target.closest("img");
+    if (!imgOk(img) || !coarse()) return;
+    e.preventDefault(); e.stopPropagation(); lpStop(); pickImage(img, e.clientX, e.clientY);
+  }, true);
+  document.addEventListener("pointerdown", e => {
+    if (imgPick && !(e.target instanceof Element && e.target.closest("#ask-fab"))){ clearImg(); fab.hidden = true; }  // 다른 곳을 누르면 그림 고르기를 푼다
+    const img = e.target instanceof Element && e.target.closest("img");
+    if (!imgOk(img) || e.button > 0) return;
+    lpStop(); const x = e.clientX, y = e.clientY;
+    lp = { x, y, t: setTimeout(() => { lp = null; pickImage(img, x, y); }, 600) };  // contextmenu가 없는 화면(아이폰, 마우스로 꾹)
+  }, true);
+  document.addEventListener("pointermove", e => { if (lp && Math.hypot(e.clientX - lp.x, e.clientY - lp.y) > 10) lpStop(); }, true);  // 스크롤하면 그만
+  document.addEventListener("pointerup", lpStop, true); document.addEventListener("pointercancel", lpStop, true);
   document.addEventListener("keydown", e => { if (e.key !== "Escape") return; if (!menu.hidden) menu.hidden = true; else if (!sheet.hidden) collapse(); });
 })();
 </script>
