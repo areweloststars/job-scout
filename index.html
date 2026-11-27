@@ -231,7 +231,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .ask-msg.ai p,.ask-msg.ai ul,.ask-msg.ai ol{margin:0 0 .6em}.ask-msg.ai>:last-child{margin-bottom:0}.ask-msg.ai ul,.ask-msg.ai ol{padding-left:1.3em}.ask-msg.ai .h{font-weight:600}
 .ask-msg.ai code{font-size:.9em;padding:0 .25em;border-radius:4px;background:var(--gold-t)}
 .ask-msg.ai p{margin:0 0 .85em}  /* 문단 사이를 띄워 읽기 편하게(사용자 요청 11/27 오후) */
-.ask-msg.ai .cs{cursor:pointer;text-decoration:underline dotted;text-decoration-color:color-mix(in srgb,var(--gold) 60%,transparent);text-decoration-thickness:1px;text-underline-offset:4px}  /* 근거가 있는 문장: 누르면 맨 아래 그 출처로 */
+.ask-msg.ai .cs{cursor:pointer;border-radius:4px}  /* 근거가 있는 문장: 밑줄 없이(읽을 때 눈에 걸리지 않게), 누르면 맨 아래 그 출처로 */
 .ask-msg.ai .cs:hover{background:var(--gold-t)}
 .ask-msg.ai .cite{all:unset;display:inline-block;min-width:1.2em;margin:0 1px 0 3px;padding:0 4px;border-radius:6px;font-size:.6875rem;line-height:1.45;text-align:center;vertical-align:.35em;color:var(--gold);background:var(--gold-t);cursor:pointer;font-variant-numeric:tabular-nums}
 .ask-msg.ai .cite:focus-visible,.ask-msg.ai .cs:focus-visible{outline:2px solid var(--gold);outline-offset:1px;border-radius:4px}
@@ -276,9 +276,9 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .dk-x{all:unset;width:34px;height:34px;margin-right:4px;display:grid;place-items:center;border-radius:999px;color:var(--ink-2);font-size:1.125rem;line-height:1;cursor:pointer}
 .dk-open:focus-visible,.dk-x:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:999px}
 .dk-i{flex:none;width:11px;height:11px;border-radius:50%;box-sizing:border-box}
-.ask-dock[data-state="busy"] .dk-i{border:2px solid var(--gold-t);border-top-color:var(--gold);animation:dk-spin .9s linear infinite}
+.ask-dock[data-state="busy"] .dk-i{border:2px solid color-mix(in srgb,var(--gold) 55%,transparent)}  /* 답변 준비 중: 움직이지 않는 고리(사용자 요청 11/27 3:34) */
 .ask-dock[data-state="new"]{border-color:var(--gold);animation:dk-blink 1.1s ease-in-out infinite}  /* 답이 오면 눌러 볼 때까지 깜박깜박(사용자 요청 11/27 오후) */
-.ask-dock[data-state="new"] .dk-i{background:var(--gold)}
+.ask-dock[data-state="new"] .dk-i{border:2px solid var(--gold-t);border-top-color:var(--gold);animation:dk-spin .9s linear infinite}  /* 답이 오면 그제서야 굴러가는 고리 */
 .ask-dock[data-state="new"] .dk-t{color:var(--gold);font-weight:600}
 .ask-dock[data-state="seen"] .dk-i{border:2px solid var(--ink-2);opacity:.55}
 .ask-dock[data-state="error"] .dk-i{background:var(--ink-2)}
@@ -915,14 +915,21 @@ if (!route()) {
     "  [[원문 시편 51:7]] — 그 구절의 원문(히브리어·헬라어). 원어 낱말을 설명할 때",
     "  [[노트 시편 51:7]] — [자료]의 연구 노트 가운데 그 절을 다룬 노트",
     "- 책 이름은 개역한글판 이름, 장:절은 숫자로 씁니다. [자료]나 도구 결과에 실제로 있는 것만 표시합니다(없는 노트·원문을 표시하지 않기).",
-    "- 표시는 한 문장에 하나, 많아도 두 개. 근거가 [자료]에 없는 설명(일반적인 배경, 학계의 주류 견해 등)에는 표시를 붙이지 않습니다."] : []),
+    "- 근거 표시는 답 전체에서 두세 개, 핵심이 되는 문장에만 붙입니다(한 문장에 하나). 근거가 [자료]에 없는 설명(일반적인 배경, 학계의 주류 견해 등)에는 붙이지 않습니다."] : []),
     "",
-    `${cites ? 5 : 4}. 답의 모양과 말투(읽는 사람의 요청)`,
-    "- 중학생도 머리에 쏙 들어오게, ChatGPT나 Gemini처럼 부드럽고 친근한 해요체로 씁니다(‘~예요’, ‘~해요’, ‘~거예요’). 딱딱한 글말(‘~이다’, ‘~하는 바’, ‘~함’)과 어려운 한자어를 피하고, 문장은 짧고 쉽게 씁니다.",
-    "- 쉽게 바꾸는 것은 말투뿐입니다. 뜻, 사실, 성경 낱말(예: 우슬초, 번제, 속죄)과 원어의 뜻은 정확하게 그대로 두고, 낯선 낱말은 쉬운 말로 풀어 줍니다. 쉽게 하려고 내용을 바꾸거나 지어내지 않습니다.",
-    "- 먼저 질문에 대한 답을 한두 문장으로 바로 말하고, 그다음 문단 두세 개로 차근차근 풀어 줍니다. 문단은 두세 문장씩 쓰고 문단 사이는 빈 줄로 띄웁니다. 핵심 말은 **굵게** 한두 군데. 제목(#)은 쓰지 않습니다. 목록은 꼭 필요할 때만 짧게.",
-    "- 길이는 보통 600–1,000자, 길어도 1,300자를 넘지 않습니다.",
-    "- 쓰지 않는 것: 확신 정도, 더 확인하려면, 출처 설명이나 출처 목록, ‘이 페이지의 번역이 원문과 맞습니다’ 같은 평가, ‘…로 알고 답하겠습니다’ 같은 머리말.",
+    `${cites ? 5 : 4}. 답의 모양과 말투(읽는 사람의 요청: 질문 의도에 맞게, 한 번 읽고 이해되게)`,
+    "- 쓰기 전에 머릿속으로 먼저 정리합니다(답에는 쓰지 않음): 읽는 사람이 정말 궁금한 것이 무엇인지, 어디에서 막혔는지, 질문에 부분이 여럿인지. 그 궁금증에 바로 답하는 데 필요한 것만 씁니다.",
+    "- 첫 문장에서 질문에 바로 답합니다. 읽는 사람이 쓴 말을 그대로 받아서 답하고, 이 첫 문장은 **굵게** 씁니다. 질문에 부분이 여럿이면 하나씩 차례로 답합니다.",
+    "- 중학생도 한 번 읽고 이해하게, 다정한 선생님처럼 부드러운 해요체로 씁니다(‘~예요’, ‘~해요’). 한 문장에는 한 가지 생각만, 문장은 짧게. 딱딱한 글말(‘~이다’, ‘~하는 바’), 어려운 한자어, 학술 용어(‘주류 견해’, ‘문맥상 추론’, ‘동사형’)는 쓰지 않습니다.",
+    "- 낯선 낱말(성경 낱말·옛 물건·예식)은 처음 나올 때 바로 쉬운 말로 풀어 줍니다. 예: 번제(짐승을 통째로 태워 드리는 제사).",
+    "- ‘왜 그런지’를 차근차근 잇습니다(‘왜냐하면’, ‘그러니까’, ‘예를 들어’). 이해를 돕는 일상의 비교를 하나 써도 좋지만, 비교는 설명일 뿐 새 사실을 만들지 않습니다.",
+    "- 질문과 상관없는 곁가지(원어 문법, 해석의 세부 논쟁, 참고 구절 나열)는 빼거나 한 줄로 줄입니다. 원어 낱말은 질문에 꼭 필요할 때만 하나 씁니다.",
+    "- 마지막은 ‘한마디로 ~예요.’ 같은 한 문장 정리로 끝냅니다.",
+    "- 쉽게 바꾸는 것은 말투와 설명하는 방식뿐입니다. 뜻, 사실, 성경 낱말과 원어의 뜻은 정확하게 그대로 두고, 쉽게 하려고 내용을 바꾸거나 지어내지 않습니다.",
+    "- 문단은 두세 문장씩, 문단 사이는 빈 줄. 제목(#)은 쓰지 않고, 목록은 꼭 필요할 때만 세 줄 이내.",
+    "- 길이는 보통 500–900자, 길어도 1,200자를 넘지 않습니다.",
+    "- 쓰지 않는 것: 확신 정도, 더 확인하려면, 출처 설명이나 출처 목록, ‘이 페이지의 번역이 원문과 맞습니다’ 같은 평가, ‘좋은 질문이에요’나 ‘…로 알고 답하겠습니다’ 같은 머리말.",
+    "- 읽는 사람이 ‘이해가 안 된다’, ‘어렵다’고 하면 같은 말을 되풀이하지 말고 더 쉬운 말과 다른 예로 다시 설명합니다.",
     "- 질문이 짧거나 모호하면 [읽고 있는 곳]과 앞의 대화로 뜻을 잡아 바로 답합니다.",
     "- 성경 본문과 상관없는 질문이면 형식에 매이지 말고 친절하게 짧게 답합니다.",
     ...(tools ? ["- find_verses 도구는 꼭 필요할 때만(많아야 두세 번) 쓰고, 찾을 구절을 다 찾은 뒤에 답을 쓰기 시작합니다."] : []),
@@ -936,15 +943,50 @@ if (!route()) {
     "2. 사실 — 따옴표로 인용한 성경 구절이 개역한글판과 글자 그대로 맞는가? 장:절이 맞는가? 원어 설명이 원문에 맞는가?",
     "3. 정통성 — 역사적 정통 기독교 신앙에서 벗어나거나, 이단의 비유 풀이·짝 풀이처럼 문맥 근거 없는 상징 해석이 섞이지 않았는가?",
     "4. 학술적 정확성 — 주류 견해를 바르게 전했는가? 소수 견해를 정설처럼 말하지 않았는가? 역사·문화 설명이 사실인가? 학자·책·인용을 지어내지 않았는가?",
-    "5. 말투와 모양 — 중학생도 쉽게 읽을 부드러운 해요체인가? 딱딱하면 말투만 쉽게 고칩니다(뜻과 낱말은 그대로). 문단을 나누었는가? 길이(보통 600–1,000자, 많아야 1,300자)를 지켰는가? 답 안에 출처를 말하는 문장, 출처 목록, 확신 정도, 더 확인하려면, 번역 평가, 머리말이 없는가?",
+    "5. 질문 의도 — 첫 문장이 [질문]에 바로 답하는가? 질문에 부분이 여럿이면 모두 답했는가? 질문과 상관없는 곁가지로 흐르지 않았는가?",
+    "6. 이해하기 쉬움 — 중학생이 한 번 읽고 이해할 수 있는가? 풀이 없는 어려운 낱말·학술 용어가 남아 있지 않은가? 부드러운 해요체인가? 문단을 나누었는가? 길이(보통 500–900자, 많아야 1,200자)를 지켰는가? 답 안에 출처를 말하는 문장, 출처 목록, 확신 정도, 더 확인하려면, 번역 평가, 머리말, ‘질문 의도:’ 같은 작성 메모가 없는가?",
     "",
     "JSON 값 하나로만 답하세요.",
     "- 고칠 것이 없으면: {\"verdict\":\"ok\",\"answer\":\"\"}",
     "- 고칠 것이 있으면: {\"verdict\":\"fixed\",\"answer\":\"고친 답변 전체(마크다운, 근거 표시 [[…]]는 맞는 것만 그대로 두기)\"}",
     "지킬 것:",
-    "- 사실·근거·인용·교리·말투·모양에 문제가 하나라도 있으면 \"fixed\"입니다. 필요한 곳만 고치고 새 추측을 보태지 않습니다. 너무 길면 핵심만 남겨 줄입니다.",
+    "- 사실·근거·인용·교리·질문 의도·쉬움에 문제가 하나라도 있으면 \"fixed\"입니다. 필요한 곳만 고치고 새 추측을 보태지 않습니다. 고칠 때도 쉬운 말투를 지키고 어려운 말을 보태지 않습니다. 너무 길면 핵심만 남겨 줄입니다.",
     "- 맞춤법 같은 아주 사소한 것뿐이면 \"ok\"입니다."
   ].join("\n");
+  const EASY = () => [
+    "당신은 어려운 내용을 중학생에게도 쉽게 풀어 주는 일을 아주 잘하는 다정한 선생님입니다. 아래 [초안]은 [질문]에 대한 정확한 답이지만, 읽는 사람은 그동안 AI의 답을 읽으며 ‘질문한 뜻에 딱 맞게 쉽게 설명해 주지 않아서 이해하기 어렵다’고 했습니다. 내용은 그대로 두고, 읽는 사람이 한 번 읽고 바로 이해하도록 다시 써 주세요. 시간이 걸려도 괜찮으니 깊이 생각하세요.",
+    "",
+    "먼저 머릿속으로(답에는 쓰지 않음):",
+    "1. [질문]을 읽는 사람의 입장에서 다시 읽고, 이 사람이 정말 궁금한 것이 무엇인지, 어디서 막혔는지 한 줄로 정리합니다. 질문에 부분이 여럿이면 모두 찾습니다. [고른 부분]과 [앞의 대화]도 함께 봅니다.",
+    "2. [초안]에서 그 궁금증에 꼭 필요한 내용만 고릅니다. 상관없는 곁가지(원어 문법, 해석의 세부, 참고 구절 나열)는 빼거나 한 줄로 줄입니다.",
+    "",
+    "그다음 이렇게 씁니다:",
+    "- 첫 문장에서 질문에 바로 답합니다. 읽는 사람이 쓴 말을 그대로 받아서 답하고, 첫 문장은 **굵게** 씁니다. 질문에 부분이 여럿이면 하나씩 차례로 답합니다.",
+    "- 한 문장에는 한 가지 생각만. 문장은 짧게(되도록 40자 안팎).",
+    "- 낯선 낱말(성경 낱말·옛 물건·예식)은 처음 나올 때 바로 쉬운 말로 풀어 줍니다. 예: 번제(짐승을 통째로 태워 드리는 제사).",
+    "- ‘왜 그런지’를 차근차근 잇습니다(‘왜냐하면’, ‘그러니까’, ‘예를 들어’). 이해를 돕는 일상의 비교를 하나 써도 좋습니다(‘~와 비슷해요’). 단, 비교는 설명일 뿐 새 사실을 만들지 않습니다.",
+    "- 마지막에 ‘한마디로 ~예요.’ 같은 한 문장 정리.",
+    "- 다정한 선생님처럼 부드러운 해요체. 문단은 두세 문장씩, 문단 사이는 빈 줄. 제목(#)은 쓰지 않고, 목록은 꼭 필요할 때만 세 줄 이내. 길이는 보통 500–900자, 길어도 1,200자.",
+    "",
+    "말투 예시(내용은 따라 하지 말고 말투만 참고):",
+    "- 딱딱함: ‘의식 자체보다 하나님이 하시는 속 깊은 씻음을 구한다는 점이 핵심입니다.’ → 쉬움: ‘다윗은 “예식만으로는 안 돼요. 하나님이 직접 제 마음을 씻어 주세요” 하고 부탁한 거예요.’",
+    "- 딱딱함: ‘이 동사는 강조형으로 죄를 제거하다를 뜻합니다.’ → 쉬움: ‘“정결케 하소서”는 원래 “제 죄를 없애 주세요”라는 뜻이에요.’",
+    "",
+    "꼭 지킬 것(정확성):",
+    "- [초안]에 없는 사실·해석·인용을 새로 넣지 않습니다. 쉽게 바꾸면서 뜻이 달라지지 않게 합니다. 확실하지 않다고 한 것은 그대로 ‘확실하지 않아요’라고 둡니다.",
+    "- 따옴표로 인용한 성경 구절은 글자 그대로 둡니다. 원어 낱말은 질문에 꼭 필요할 때만 하나, 문법 용어 없이.",
+    "- 근거 표시 [[…]]는 그 근거가 뒷받침하는 문장 끝에 그대로 둡니다. 문장을 합치거나 나누면 표시도 맞는 문장으로 옮깁니다. 새로 만들지는 않고, 두세 개만 남기고 덜 중요한 것은 지워도 됩니다.",
+    "- 정통 기독교 신앙의 테두리를 그대로 지킵니다(이단식 상징 풀이 금지).",
+    "- 출처를 말하는 문장(‘○○ 노트에 따르면’ 등), 출처 목록, 확신 정도, 더 확인하려면, ‘좋은 질문이에요’ 같은 머리말은 쓰지 않습니다.",
+    "",
+    "다시 쓴 답만 출력하세요. 설명이나 머리말은 붙이지 않습니다."
+  ].join("\n");
+  function easyInput(c, draft){  // 쉽게 다시 쓰기: 자료 없이 질문·문맥·초안만(빠르게, 새 사실을 보태지 않게)
+    const n = turns.length, prev = [];
+    for (let i = Math.max(0, n - 6); i < n - 2; i++) prev.push(`${turns[i].role === "user" ? "질문" : "답"}: ${cut(qOf(turns[i]), 800)}`);
+    return [EASY(), "", `[읽고 있는 곳] ${c.where}${c.title ? " · " + c.title : ""}`, ...(c.selected ? ["", "[고른 부분]", c.selected] : []),
+      ...(prev.length ? ["", "[앞의 대화]", ...prev] : []), "", "[질문]", qOf(turns[n - 2]), "", "[초안]", draft].join("\n");
+  }
   const Q = "\n\n[질문]\n";
   const HINT = / ⟨근거 표시: [^⟩]*⟩/g;  // [자료] 제목의 근거 표시 안내(근거 표시를 쓰지 않는 복사해서 묻기에서는 지운다)
   const head = (c, tools, cites) => [RULES(tools, cites), "", `[읽고 있는 곳] ${c.where}${c.title ? " · " + c.title : ""}`, "", "[자료]", cites ? c.material : c.material.replace(HINT, ""),
@@ -1191,13 +1233,20 @@ if (!route()) {
   // 11/27 사용자 요청으로 검토 결과 줄(고친 곳, ‘고칠 곳 없음’)은 보이지 않고, 다 확인한 답만 보여 준다. 검토를 못 하면 처음 답을 그대로
   // 11/27 오후: 검토는 근거 표시가 가리키는 출처 글(이 페이지 자료)을 함께 받아 도구 없이 확인한다. 기다리는 시간을 줄이려고 검토만 노력 ‘중간’
   // (답 자체는 그대로 Opus 5.5 노력 높음)
-  const REVIEW_EFFORT = "medium";
+  const REVIEW_EFFORT = EFFORT;  // 11/27 3:34 사용자 요청(“시간이 많이 걸려도 좋으니 쉽게 이해하게”)으로 다시 ‘높음’
   async function review(draft, signal){
     try {
       const { pairs } = await resolveAll(draft);
       const v = await askJSON(reviewInput(ctx, pairs), { model: MODEL, modelTier: "complex", effort: REVIEW_EFFORT, cache: false, signal });
       return v?.verdict === "fixed" && typeof v.answer === "string" && v.answer.trim() ? v.answer.trim() : draft;
     } catch (_) { return draft; }  // 멈추기를 눌렀거나 검토가 실패해도 지금까지의 답을 보여 준다
+  }
+  async function simplify(draft, signal){  // 실패하거나 멈추면 초안을 그대로
+    try {
+      const r = await sample(easyInput(ctx, draft), { model: MODEL, modelTier: "complex", effort: EFFORT, cache: false, signal });
+      const t = (r.text || "").trim();
+      return t.length >= 80 && !r.truncated ? t : draft;
+    } catch (_) { return draft; }
   }
   async function askClaude(q){
     const first = !turns.length;
@@ -1215,7 +1264,9 @@ if (!route()) {
       try { res = await run(canTools); }
       catch (e) { if (e && e.code === "tools_unavailable"){ canTools = false; res = await run(false); } else throw e; }  // 도구를 못 쓰는 화면이면 도구 없이 한 번만 다시
       turns.push({ role: "assistant", content: res.text });
-      const answer = await review(res.text, signal);
+      const easy = signal.aborted ? res.text : await simplify(res.text, signal);  // 질문 의도에 맞게 쉽게 다시 쓰기
+      turns[turns.length - 1].content = easy;
+      const answer = signal.aborted ? easy : await review(easy, signal);  // 쉽게 쓴 답이 자료·원칙에 맞는지 마지막으로 확인
       turns[turns.length - 1].content = answer;  // 이어 묻는 질문도 확인한 답을 바탕으로
       await renderAnswer(out, answer); out.className = "ask-msg ai"; waitEl = null;
       if (res.truncated && answer === res.text) say("note", "답이 길어 중간에 끊겼어요. 조금 좁혀서 물어보세요.");
