@@ -297,9 +297,13 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .ask-dock[data-state="new"] .dk-t{color:var(--gold);font-weight:600}
 .ask-dock[data-state="seen"] .dk-i{border:2px solid var(--ink-2);opacity:.55}
 .ask-dock[data-state="error"] .dk-i{background:var(--ink-2)}
+.dots i{font-style:normal;animation:dot-wave 1.4s ease-in-out infinite both}  /* ‘답변 준비 중…’의 점 셋이 차례로 깜박인다(사용자 요청 11/27 4:04) */
+.dots i:nth-child(2){animation-delay:.2s}
+.dots i:nth-child(3){animation-delay:.4s}
+@keyframes dot-wave{0%,80%,100%{opacity:.15}40%{opacity:1}}
 @keyframes dk-spin{to{transform:rotate(360deg)}}
 @keyframes dk-blink{0%,100%{background:var(--paper)}50%{background:color-mix(in srgb,var(--gold) 34%,var(--paper))}}
-@media (prefers-reduced-motion: reduce){.ask-dock,.ask-dock .dk-i{animation:none!important}.ask-dock[data-state="new"]{background:color-mix(in srgb,var(--gold) 22%,var(--paper))}}
+@media (prefers-reduced-motion: reduce){.dots i{animation:none!important;opacity:1}.ask-dock,.ask-dock .dk-i{animation:none!important}.ask-dock[data-state="new"]{background:color-mix(in srgb,var(--gold) 22%,var(--paper))}}
 html.ask-docked body{padding-bottom:76px}  /* 접힌 단추가 맨 아래 글을 가리지 않게 */
 .ask-new:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
@@ -1252,6 +1256,7 @@ if (!route()) {
   const dockEl = $("ask-dock"), dockT = $("ask-dock-t"), dockX = $("ask-dock-x");
   const wide = () => matchMedia("(min-width: 900px)").matches;  // 컴퓨터: 창이 오른쪽 옆 칸이라 본문을 가리지 않는다
   let unseen = false, failed = false, docked = false, waitEl = null;
+  const WAIT_HTML = `답변 준비 중<span class="dots" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span>`;  // 점 셋은 움직인다
   function renderDock(){
     const show = sheet.hidden && docked;
     dockEl.hidden = !show; document.documentElement.classList.toggle("ask-docked", show);
@@ -1259,7 +1264,7 @@ if (!route()) {
     if (!show) return;
     const st = busy ? "busy" : unseen ? (failed ? "error" : "new") : "seen";
     if (dockEl.dataset.state !== st) dockEl.dataset.state = st;  // 바뀔 때만
-    dockT.textContent = busy ? "답변 준비 중…" : st === "error" ? "답을 받지 못했어요 · 보기" : st === "new" ? "답이 왔어요 · 눌러서 보기" : "AI 대화 다시 보기";
+    if (busy) dockT.innerHTML = WAIT_HTML; else dockT.textContent = st === "error" ? "답을 받지 못했어요 · 보기" : st === "new" ? "답이 왔어요 · 눌러서 보기" : "AI 대화 다시 보기";
     dockX.hidden = busy || unseen;  // 쓰는 중이거나 아직 안 본 답이 있으면 닫기 단추를 숨긴다
   }
   function collapse(){ if (sheet.hidden) return; sheet.hidden = true; docked = true; try { input.blur(); } catch (_) {} renderDock(); }
@@ -1311,7 +1316,7 @@ if (!route()) {
   async function askClaude(q){
     const first = !turns.length;
     fresh = say("me", q);
-    const out = document.createElement("div"); out.className = "ask-msg ai wait"; out.textContent = "답변 준비 중…"; log.append(out); waitEl = out;
+    const out = document.createElement("div"); out.className = "ask-msg ai wait"; out.innerHTML = WAIT_HTML; log.append(out); waitEl = out;
     ctl = new AbortController(); busy = true; label(); pillLabel(); renderDock(); toEnd();
     const onFind = () => {};
     const signal = ctl.signal; let pushed = false;
