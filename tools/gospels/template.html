@@ -223,6 +223,9 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .ask-sel .q-s.on{background:color-mix(in srgb,var(--gold) 26%,transparent)}
 .q-paste{all:unset;display:inline-block;margin:0 .3em;padding:1px 10px;border-radius:999px;font-family:var(--ui);font-size:.75rem;line-height:1.6;color:var(--paper);background:var(--gold);cursor:pointer;vertical-align:.08em}
 .q-paste:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.ask-sel{position:relative}
+.q-paste.q-float{position:absolute;z-index:3;margin:0;box-shadow:0 6px 16px -8px var(--shadow)}  /* 꾹 눌러 고른 만큼(파란 칠) 바로 아래에 뜨는 ‘붙여넣기’(사용자 요청 11/27 4:01) */
+.q-paste.q-float[hidden]{display:none}
 .ask-sel figcaption{margin-top:6px;font-size:.8125rem;color:var(--ink-2)}
 .ask-log{display:grid;gap:10px}
 .ask-msg{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.75;font-size:.96875rem}
@@ -1184,15 +1187,42 @@ if (!route()) {
     if (was) return;  // 다시 누르면 푼다
     sp.classList.add("on");
     const b = document.createElement("button"); b.type = "button"; b.className = "q-paste"; b.textContent = "붙여넣기";
-    b.addEventListener("click", ev => {
-      ev.stopPropagation();
-      const t = `“${sp.textContent.trim()}” `, a = input.selectionStart ?? input.value.length, z = input.selectionEnd ?? a;
-      input.value = input.value.slice(0, a) + t + input.value.slice(z);
-      const at = a + t.length; b.remove(); sp.classList.remove("on");
-      input.focus({ preventScroll: true }); try { input.setSelectionRange(at, at); } catch (_) {}
-    });
+    b.addEventListener("click", ev => { ev.stopPropagation(); pasteText(sp.textContent.trim()); b.remove(); sp.classList.remove("on"); });
     sp.after(b);
   }
+  function pasteText(t){  // 질문 칸의 커서 자리에 “고른 글”을 넣는다
+    const ins = `“${t}” `, a = input.selectionStart ?? input.value.length, z = input.selectionEnd ?? a;
+    input.value = input.value.slice(0, a) + ins + input.value.slice(z);
+    const at = a + ins.length; input.focus({ preventScroll: true }); try { input.setSelectionRange(at, at); } catch (_) {}
+  }
+  // 인용 상자를 꾹 눌러 원하는 만큼 고르면(파란 칠), 고른 곳 바로 아래에 작은 ‘붙여넣기’가 뜬다(사용자 요청 11/27 4:01).
+  // 휴대폰의 기본 메뉴(복사·공유 등)는 고른 곳 위에 뜨므로 이 단추는 아래에 둔다
+  const qp = document.createElement("button"); qp.type = "button"; qp.className = "q-paste q-float"; qp.textContent = "붙여넣기"; qp.hidden = true;
+  selBox.append(qp);
+  let qpText = "", qpT = 0;
+  document.addEventListener("selectionchange", () => {
+    clearTimeout(qpT);
+    qpT = setTimeout(() => {
+      const s = getSelection();
+      if (!s || s.isCollapsed || !s.rangeCount || sheet.hidden){ qp.hidden = true; return; }
+      const r = s.getRangeAt(0); if (!quote.contains(r.commonAncestorContainer)){ qp.hidden = true; return; }
+      const t = s.toString().replace(/\s+/g, " ").trim(); if (!t){ qp.hidden = true; return; }
+      qpText = t; quote.querySelectorAll(".q-paste").forEach(x => x.remove()); quote.querySelectorAll(".q-s.on").forEach(x => x.classList.remove("on"));
+      const rs = r.getClientRects(), last = rs[rs.length - 1] || r.getBoundingClientRect(), box = selBox.getBoundingClientRect();
+      qp.hidden = false;
+      const w = qp.offsetWidth;
+      qp.style.left = Math.max(6, Math.min(last.right - box.left - w / 2, box.width - w - 6)) + "px";
+      qp.style.top = (last.bottom - box.top + 8) + "px";
+    }, 160);
+  });
+  quote.addEventListener("scroll", () => { qp.hidden = true; }, { passive: true });
+  qp.addEventListener("pointerdown", e => e.preventDefault());  // 누르는 동안 고른 글이 풀리지 않게
+  qp.addEventListener("click", ev => {
+    ev.stopPropagation(); if (!qpText) return;
+    const t = qpText; qpText = ""; qp.hidden = true;
+    try { getSelection().removeAllRanges(); } catch (_) {}  // 고른 글을 먼저 푼 뒤에 넣어야 질문 칸의 커서 자리가 그대로 남는다
+    pasteText(t);
+  });
   quote.addEventListener("click", e => { const sp = e.target instanceof Element && e.target.closest(".q-s"); if (sp) pickSentence(sp); });
   quote.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target instanceof Element && e.target.matches(".q-s")){ e.preventDefault(); pickSentence(e.target); } });
   function openAsk(info){
@@ -1204,7 +1234,7 @@ if (!route()) {
       return;
     }
     if (!ctx || ctx.key !== c.key){ ctx = c; turns = []; log.textContent = ""; fresh = null; pill.hidden = true; unseen = false; failed = false; }
-    selBox.hidden = !c.selected; fillQuote(c.selected);
+    selBox.hidden = !c.selected; fillQuote(c.selected); qp.hidden = true;
     refEl.textContent = c.where + (c.title ? ` · ${c.title}` : "");
     const s0 = c.focus || c.segs[0] || { c1: 1, v1: 1 }, kbs = document.createElement("span"), link = (t, u) => { const a = document.createElement("a"); a.href = u; a.target = "_blank"; a.rel = "noopener"; a.textContent = t; return a; };
     kbs.className = "ask-kbs"; kbs.append(" · 대한성서공회 ", link("개역개정", kbsUrl("GAE", s0.c1, s0.v1)), " · ", link("새번역", kbsUrl("SAENEW", s0.c1, s0.v1)));
