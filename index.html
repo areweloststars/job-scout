@@ -219,7 +219,14 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .ask-body{flex:1;min-height:0;overflow:auto;padding:14px 16px;display:grid;gap:12px;align-content:start}
 .ask-sel{margin:0;padding:10px 12px;border-radius:12px;background:var(--gold-t)}
 .ask-sel blockquote{margin:0;font-family:var(--scripture);font-size:.9375rem;line-height:1.7;max-height:7em;overflow:auto}
-.ask-sel .q-s{cursor:pointer;-webkit-tap-highlight-color:transparent}  /* 문장을 한 번 누르면 그 문장이 골라지고 바로 아래에 ‘붙여넣기’(사용자 요청 11/27) */
+.ask-sel blockquote{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}  /* 휴대폰의 꾹 누르기 선택 대신 이 페이지의 낱말 고르기(사용자 요청 11/27) */
+.ask-sel .qw{cursor:pointer;-webkit-tap-highlight-color:transparent;border-radius:2px}
+.ask-sel .qw.sel{background:rgba(66,133,244,.32)}  /* 한 번 누르면 파랗게(휴대폰 기본 선택 색과 비슷하게) */
+.q-h{position:absolute;z-index:4;width:20px;height:20px;background:#3b78e7;touch-action:none;cursor:grab}  /* 범위를 넓히고 좁히는 파란 손잡이 */
+.q-h::before{content:"";position:absolute;inset:-14px}  /* 손가락으로 잡기 쉽게 */
+.q-h-s{margin-left:-20px;border-radius:50% 0 50% 50%}
+.q-h-e{border-radius:0 50% 50% 50%}
+.q-h[hidden]{display:none}
 .q-paste{all:unset;display:inline-block;margin:0 .3em;padding:1px 10px;border-radius:999px;font-family:var(--ui);font-size:.75rem;line-height:1.6;color:var(--paper);background:var(--gold);cursor:pointer;vertical-align:.08em}
 .q-paste:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .ask-sel{position:relative}
@@ -1180,55 +1187,72 @@ if (!route()) {
   body.addEventListener("scroll", () => { if (!pill.hidden && seen()) pill.hidden = true; }, { passive: true });
   pill.addEventListener("click", () => { if (fresh) body.scrollTop += fresh.getBoundingClientRect().top - body.getBoundingClientRect().top - 8; pill.hidden = true; });
   function say(kind, text){ const p = document.createElement(kind.startsWith("ai") ? "div" : "p"); p.className = "ask-msg " + kind; p.textContent = text; log.append(p); toEnd(); return p; }
+  // 인용 상자(사용자 요청 11/27: “꾹 누르지 않아도 그냥 누르면 이미지처럼 글자 범위가 선택되어 붙여넣기”).
+  // 그냥 한 번 누르면 그 낱말이 파랗게 골라지고, 양 끝의 파란 손잡이를 끌어 범위를 넓히거나 좁힌다. 고른 곳 바로 아래의 ‘붙여넣기’를
+  // 누르면 질문 칸에 넣는다. 휴대폰의 꾹 누르기 선택과 문장 통째 고르기는 쓰지 않는다(사용자 요청으로 지움)
+  let qa = -1, qb = -1;  // 고른 낱말 범위(처음, 끝)
+  const qWords = () => [...quote.querySelectorAll(".qw")];
   function fillQuote(t){
-    quote.textContent = "";
-    const parts = String(t || "").match(/[^.!?。]+(?:[.!?。]+["”’」)]*)?\s*/g) || [];
-    for (const x of parts){ if (!x.trim()) continue; const sp = document.createElement("span"); sp.className = "q-s"; sp.textContent = x; sp.tabIndex = 0; sp.setAttribute("role", "button"); quote.append(sp); }
-  }
-  let picked1 = null, wasPicked = null;  // 한 번 눌러 고른 문장, 누르기 직전에 골라져 있던 문장
-  function pickSentence(sp){
-    const s = getSelection(); if (!s) return;
-    if (sp === wasPicked){ s.removeAllRanges(); picked1 = null; return; }  // 같은 문장을 다시 누르면 푼다
-    const r = document.createRange(); r.selectNodeContents(sp);
-    s.removeAllRanges(); s.addRange(r); picked1 = sp;  // 고르면 아래 selectionchange가 ‘붙여넣기’를 띄운다
+    quote.textContent = ""; qa = qb = -1;
+    for (const m of String(t || "").matchAll(/\S+\s*/g)){ const w = document.createElement("span"); w.className = "qw"; w.textContent = m[0]; quote.append(w); }
+    drawSel();
   }
   function pasteText(t){  // 질문 칸의 커서 자리에 “고른 글”을 넣는다
     const ins = `“${t}” `, a = input.selectionStart ?? input.value.length, z = input.selectionEnd ?? a;
     input.value = input.value.slice(0, a) + ins + input.value.slice(z);
     const at = a + ins.length; input.focus({ preventScroll: true }); try { input.setSelectionRange(at, at); } catch (_) {}
   }
-  // 인용 상자를 꾹 눌러 원하는 만큼 고르면(파란 칠), 고른 곳 바로 아래에 작은 ‘붙여넣기’가 뜬다(사용자 요청 11/27 4:01).
-  // 휴대폰의 기본 메뉴(복사·공유 등)는 고른 곳 위에 뜨므로 이 단추는 아래에 둔다
   const qp = document.createElement("button"); qp.type = "button"; qp.className = "q-paste q-float"; qp.textContent = "붙여넣기"; qp.hidden = true;
-  selBox.append(qp);
-  let qpText = "", qpT = 0;
-  document.addEventListener("selectionchange", () => {
-    clearTimeout(qpT);
-    qpT = setTimeout(() => {
-      const s = getSelection();
-      if (!s || s.isCollapsed || !s.rangeCount || sheet.hidden){ qp.hidden = true; return; }
-      const r = s.getRangeAt(0); if (!quote.contains(r.commonAncestorContainer)){ qp.hidden = true; return; }
-      const t = s.toString().replace(/\s+/g, " ").trim(); if (!t){ qp.hidden = true; return; }
-      qpText = t;
-      if (picked1 && t !== picked1.textContent.replace(/\s+/g, " ").trim()) picked1 = null;  // 손잡이로 범위를 바꾸면 더는 ‘누른 문장’이 아니다
-      const rs = r.getClientRects(), last = rs[rs.length - 1] || r.getBoundingClientRect(), box = selBox.getBoundingClientRect();
-      qp.hidden = false;
-      const w = qp.offsetWidth;
-      qp.style.left = Math.max(6, Math.min(last.right - box.left - w / 2, box.width - w - 6)) + "px";
-      qp.style.top = (last.bottom - box.top + 8) + "px";
-    }, 160);
+  const hs = document.createElement("span"), he = document.createElement("span");  // 시작·끝 손잡이
+  hs.className = "q-h q-h-s"; he.className = "q-h q-h-e"; hs.hidden = he.hidden = true;
+  hs.setAttribute("aria-hidden", "true"); he.setAttribute("aria-hidden", "true");
+  selBox.append(qp, hs, he);
+  function drawSel(){
+    const ws = qWords(); ws.forEach((w, i) => w.classList.toggle("sel", qa >= 0 && i >= qa && i <= qb));
+    if (qa < 0 || !ws[qa] || !ws[qb] || sheet.hidden){ hs.hidden = he.hidden = qp.hidden = true; return; }
+    const box = selBox.getBoundingClientRect(), q = quote.getBoundingClientRect();
+    const first = ws[qa].getClientRects()[0], last = [...ws[qb].getClientRects()].pop();
+    const inView = r => r && r.bottom > q.top + 2 && r.top < q.bottom - 2;  // 인용 상자 안에서 스크롤로 가려진 끝은 손잡이를 감춘다
+    hs.hidden = !inView(first); he.hidden = !inView(last);
+    if (first){ hs.style.left = (first.left - box.left) + "px"; hs.style.top = (first.bottom - box.top) + "px"; }
+    if (last){ he.style.left = (last.right - box.left) + "px"; he.style.top = (last.bottom - box.top) + "px"; }
+    const end = last || first; qp.hidden = false;
+    const w = qp.offsetWidth;
+    qp.style.left = Math.max(6, Math.min(end.right - box.left - w / 2, box.width - w - 6)) + "px";
+    qp.style.top = (end.bottom - box.top + 26) + "px";  // 손잡이 아래
+  }
+  const selText = () => qWords().slice(qa, qb + 1).map(w => w.textContent).join("").replace(/\s+/g, " ").trim();
+  function wordAt(x, y){  // 손가락 자리에 가장 가까운 낱말
+    let best = -1, bs = Infinity;
+    qWords().forEach((w, i) => { for (const r of w.getClientRects()){
+      const dy = y < r.top ? r.top - y : y > r.bottom ? y - r.bottom : 0, dx = x < r.left ? r.left - x : x > r.right ? x - r.right : 0, sc = dy * 1000 + dx;
+      if (sc < bs){ bs = sc; best = i; } } });
+    return best;
+  }
+  quote.addEventListener("click", e => {
+    const w = e.target instanceof Element && e.target.closest(".qw"); if (!w) return;
+    const i = qWords().indexOf(w);
+    if (qa === i && qb === i) qa = qb = -1; else qa = qb = i;  // 골라 둔 낱말 하나를 다시 누르면 푼다
+    drawSel();
   });
-  quote.addEventListener("scroll", () => { qp.hidden = true; }, { passive: true });
-  qp.addEventListener("pointerdown", e => e.preventDefault());  // 누르는 동안 고른 글이 풀리지 않게
-  qp.addEventListener("click", ev => {
-    ev.stopPropagation(); if (!qpText) return;
-    const t = qpText; qpText = ""; qp.hidden = true;
-    try { getSelection().removeAllRanges(); } catch (_) {}  // 고른 글을 먼저 푼 뒤에 넣어야 질문 칸의 커서 자리가 그대로 남는다
-    pasteText(t);
-  });
-  quote.addEventListener("pointerdown", () => { wasPicked = !qp.hidden ? picked1 : null; });
-  quote.addEventListener("click", e => { const sp = e.target instanceof Element && e.target.closest(".q-s"); if (sp) pickSentence(sp); });
-  quote.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target instanceof Element && e.target.matches(".q-s")){ e.preventDefault(); pickSentence(e.target); } });
+  function dragHandle(h, isStart){  // 손잡이를 끌면 손가락 조금 위의 낱말까지 범위가 바뀐다
+    h.addEventListener("pointerdown", e => {
+      e.preventDefault(); e.stopPropagation();
+      try { h.setPointerCapture(e.pointerId); } catch (_) {}
+      const move = ev => {
+        const i = wordAt(ev.clientX, ev.clientY - 18); if (i < 0) return;
+        if (isStart) qa = Math.min(i, qb); else qb = Math.max(i, qa);
+        drawSel();
+      };
+      const up = () => { h.removeEventListener("pointermove", move); h.removeEventListener("pointerup", up); h.removeEventListener("pointercancel", up); };
+      h.addEventListener("pointermove", move); h.addEventListener("pointerup", up); h.addEventListener("pointercancel", up);
+    });
+  }
+  dragHandle(hs, true); dragHandle(he, false);
+  quote.addEventListener("scroll", () => { if (qa >= 0) drawSel(); }, { passive: true });
+  addEventListener("resize", () => { if (qa >= 0) drawSel(); });
+  qp.addEventListener("pointerdown", e => e.preventDefault());
+  qp.addEventListener("click", ev => { ev.stopPropagation(); if (qa < 0) return; const t = selText(); qa = qb = -1; drawSel(); if (t) pasteText(t); });
   function openAsk(info){
     const c = context(info);
     if (busy && ctx && ctx.key !== c.key){  // 답을 쓰는 중에 다른 곳을 물으면, 쓰던 답을 멈추지 않고 그 대화를 보여 준다
@@ -1269,6 +1293,7 @@ if (!route()) {
   function collapse(){ if (sheet.hidden) return; sheet.hidden = true; docked = true; try { input.blur(); } catch (_) {} renderDock(); }
   function expand(){
     const was = unseen; sheet.hidden = false; unseen = false; failed = false; renderDock();
+    if (qa >= 0) requestAnimationFrame(drawSel);  // 접혀 있던 동안 고른 낱말의 손잡이 자리를 다시
     if (was && fresh) requestAnimationFrame(() => { body.scrollTop += fresh.getBoundingClientRect().top - body.getBoundingClientRect().top - 8; toEnd(); });  // 새 답의 처음부터
   }
   $("ask-dock-open").addEventListener("click", expand);
