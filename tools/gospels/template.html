@@ -184,14 +184,14 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .credits summary{cursor:pointer}
 .credits ul{margin:6px 0 0;padding-left:18px}
 /* 본문을 골라 Claude에게 묻기(사용자 요청). 고르면 떠오르는 버튼, 컴퓨터의 오른쪽 클릭 메뉴, 묻고 답하는 창 */
-.ask-fab{position:absolute;z-index:40;display:inline-flex;align-items:center;gap:0;padding:2px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--gold);font-family:var(--ui);font-size:.8125rem;line-height:1.2;box-shadow:0 10px 24px -12px var(--shadow);cursor:default}
+.ask-fab{position:absolute;z-index:46;display:inline-flex;align-items:center;gap:0;padding:2px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--gold);font-family:var(--ui);font-size:.8125rem;line-height:1.2;box-shadow:0 10px 24px -12px var(--shadow);cursor:default}
 .fab-b{all:unset;cursor:pointer;color:var(--gold);font:inherit}
 .ask-fab > *{padding:3px 9px;white-space:nowrap}  /* 떠오르는 단추를 조금 더 작게(사용자 요청) */
 .ask-fab > * + *{border-left:1px solid var(--rule)}
 .fab-ref{font-size:.75rem;color:var(--gold);text-decoration:none;font-variant-numeric:tabular-nums}  /* 고른 절의 장·절: 누르면 개역개정의 그 절로(사용자 요청) */
 .fab-ref:hover{text-decoration:underline}
 .fab-b:focus-visible,.ask-menu button:focus-visible,.ask-x:focus-visible,.ask-send:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.ask-menu{position:absolute;z-index:41;min-width:180px;padding:6px;border-radius:12px;border:1px solid var(--rule);background:var(--paper);box-shadow:0 16px 32px -16px var(--shadow);display:grid}
+.ask-menu{position:absolute;z-index:47;min-width:180px;padding:6px;border-radius:12px;border:1px solid var(--rule);background:var(--paper);box-shadow:0 16px 32px -16px var(--shadow);display:grid}
 .ask-menu button{all:unset;padding:9px 12px;border-radius:8px;font-family:var(--ui);font-size:.9375rem;color:var(--ink);cursor:pointer}
 .ask-menu button:hover{background:var(--gold-t)}
 .ask{position:fixed;z-index:50;right:0;bottom:0;display:flex;flex-direction:column;background:var(--paper);color:var(--ink);box-shadow:0 -12px 40px -16px var(--shadow);font-family:var(--ui)}
@@ -201,7 +201,9 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .toast{position:fixed;z-index:60;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);max-width:calc(100vw - 32px);padding:9px 16px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--ink);font-family:var(--ui);font-size:.875rem;line-height:1.3;box-shadow:0 10px 24px -12px var(--shadow);pointer-events:none}  /* 복사했다는 알림 */
 .ask-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 12px 10px 16px;border-bottom:1px solid var(--rule)}
 .ask-head h2{margin:0;font-family:var(--ui);font-size:1rem;font-weight:400;color:var(--gold)}
-.ask-x{all:unset;width:36px;height:36px;display:grid;place-items:center;border-radius:999px;font-size:1.375rem;line-height:1;color:var(--ink-2);cursor:pointer}
+.ask-x{all:unset;display:inline-flex;align-items:center;gap:3px;padding:7px 8px 7px 12px;border-radius:999px;font-size:.875rem;line-height:1;color:var(--ink-2);cursor:pointer}  /* ‘접기’: 창을 닫지 않고 아래로 접는다(사용자 요청) */
+.ask-x svg{width:18px;height:18px}
+.ask-x:hover{background:var(--gold-t);color:var(--ink)}
 .ask-body{flex:1;min-height:0;overflow:auto;padding:14px 16px;display:grid;gap:12px;align-content:start}
 .ask-sel{margin:0;padding:10px 12px;border-radius:12px;background:var(--gold-t)}
 .ask-sel blockquote{margin:0;font-family:var(--scripture);font-size:.9375rem;line-height:1.7;max-height:7em;overflow:auto}
@@ -214,6 +216,8 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .ask-msg.ai code{font-size:.9em;padding:0 .25em;border-radius:4px;background:var(--gold-t)}
 .ask-msg.model{font-size:.75rem;color:var(--ink-2)}
 .ask-msg.wait{color:var(--ink-2)}
+.ask-msg.wait .st{margin:0}
+.ask-msg.wait .hint{margin:.45em 0 0;font-size:.8125rem;line-height:1.6}
 .ask-msg.note{font-size:.8125rem;line-height:1.6;color:var(--ink-2)}
 .ask-msg.note a{color:var(--lake)}
 .ask-msg.note ul{margin:.35em 0 0;padding-left:1.2em;white-space:normal}
@@ -232,6 +236,24 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .ask-note{margin:0;font-size:.75rem;line-height:1.5;color:var(--ink-2)}
 .ask-new{position:sticky;bottom:8px;justify-self:center;z-index:1;padding:7px 14px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--gold);font-family:var(--ui);font-size:.8125rem;line-height:1.2;box-shadow:0 8px 20px -10px var(--shadow);cursor:pointer}  /* 새 답이 아래에 쓰일 때 읽던 자리는 그대로 두고 이 단추만 띄운다(사용자 요청) */
 .ask-new[hidden]{display:none}
+/* 접힌 묻는 창: 화면 아래 작은 단추. 답을 쓰는 동안은 진행 상황, 답이 오면 ‘답이 왔어요’로 알린다(사용자 요청 11/27) */
+.ask-dock{position:fixed;z-index:45;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;align-items:center;max-width:calc(100vw - 32px);border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);box-shadow:0 10px 28px -12px var(--shadow);font-family:var(--ui)}
+.ask-dock[hidden],.ask-dock [hidden]{display:none}
+.dk-open{all:unset;display:flex;align-items:center;gap:9px;min-width:0;padding:11px 16px;font-size:.875rem;line-height:1.2;color:var(--ink);cursor:pointer}
+.dk-t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dk-x{all:unset;width:34px;height:34px;margin-right:4px;display:grid;place-items:center;border-radius:999px;color:var(--ink-2);font-size:1.125rem;line-height:1;cursor:pointer}
+.dk-open:focus-visible,.dk-x:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:999px}
+.dk-i{flex:none;width:11px;height:11px;border-radius:50%;box-sizing:border-box}
+.ask-dock[data-state="busy"] .dk-i{border:2px solid var(--gold-t);border-top-color:var(--gold);animation:dk-spin .9s linear infinite}
+.ask-dock[data-state="new"]{border-color:var(--gold);animation:dk-pop 1.8s ease-out 2}
+.ask-dock[data-state="new"] .dk-i{background:var(--gold)}
+.ask-dock[data-state="new"] .dk-t{color:var(--gold);font-weight:600}
+.ask-dock[data-state="seen"] .dk-i{border:2px solid var(--ink-2);opacity:.55}
+.ask-dock[data-state="error"] .dk-i{background:var(--ink-2)}
+@keyframes dk-spin{to{transform:rotate(360deg)}}
+@keyframes dk-pop{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--gold) 55%,transparent)}70%{box-shadow:0 0 0 14px transparent}100%{box-shadow:0 10px 28px -12px var(--shadow)}}
+@media (prefers-reduced-motion: reduce){.ask-dock,.ask-dock .dk-i{animation:none!important}}
+html.ask-docked body{padding-bottom:76px}  /* 접힌 단추가 맨 아래 글을 가리지 않게 */
 .ask-new:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
@@ -285,8 +307,9 @@ h1,h2,h3{margin:0;text-wrap:balance}
   <button type="button" role="menuitem" data-act="ask">AI 질문</button>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="ask-dock" id="ask-dock" hidden><button type="button" class="dk-open" id="ask-dock-open"><span class="dk-i" aria-hidden="true"></span><span class="dk-t" id="ask-dock-t" role="status" aria-live="polite"></span></button><button type="button" class="dk-x" id="ask-dock-x" aria-label="AI 대화 닫기" hidden>×</button></div>
 <aside class="ask" id="ask" role="dialog" aria-labelledby="ask-h" hidden>
-  <header class="ask-head"><h2 id="ask-h">AI Claude에게 묻기</h2><button type="button" class="ask-x" id="ask-x" aria-label="닫기">×</button></header>
+  <header class="ask-head"><h2 id="ask-h">AI Claude에게 묻기</h2><button type="button" class="ask-x" id="ask-x" aria-label="창을 아래로 접기">접기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></header>
   <div class="ask-body" id="ask-body">
     <figure class="ask-sel"><blockquote id="ask-quote"></blockquote><figcaption id="ask-ref"></figcaption></figure>
     <div class="ask-log" id="ask-log" aria-live="polite"></div>
@@ -294,7 +317,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
   </div>
   <form class="ask-form" id="ask-form">
     <div class="ask-row"><textarea id="ask-in" rows="2" placeholder="궁금한 것을 적어 보세요" aria-label="질문"></textarea><button type="submit" class="ask-send" id="ask-send">묻기</button></div>
-    <p class="ask-note">본문이 아닌 것도 물어볼 수 있어요. 답은 개역한글판·원문·Tyndale 연구 노트를 바탕으로 Claude가 쓰고 한 번 더 검토하지만, 틀릴 수 있어요. 물을 때마다(검토까지) 내 Claude 사용량이 쓰입니다.</p>
+    <p class="ask-note" id="ask-note">본문이나 ‘접기’를 누르면 이 창이 아래로 접혀요. 답은 개역한글판과 원문을 바탕으로 Claude가 쓰고 한 번 더 확인하지만 틀릴 수 있어요. 물을 때마다 내 Claude 사용량이 쓰입니다.</p>
   </form>
 </aside>
 
@@ -771,64 +794,54 @@ if (!route()) {
     };
   }
 
+  // 답의 원칙. 11/27 사용자 요청(“답변이 너무 길어… 확신 정도·더 확인하려면·출처가 어디인지에 대한 너무 구체적인 부분은 제외”)으로
+  // 짧은 두 칸(한마디로/풀이)으로 줄였다. 근거 자료(개역한글·원문·연구 노트)는 그대로 보고, 정통 신앙의 테두리와 정직함도 그대로 지킨다
   const RULES = tools => [
-    "당신은 성경을 읽는 사람을 돕는 신중한 성경 해설자입니다. 읽는 사람은 「사복음서와 잠언」 읽기 페이지에서 본문을 읽다가 묻습니다. 그동안 AI의 해석을 읽으며 ‘이게 맞는 해석일까?’ 하는 의심이 자주 들었다고 합니다. 그럴듯한 말보다, 정확하고 근거를 확인할 수 있는 답이 가장 중요합니다. 시간이 걸려도 괜찮으니 깊이 생각하고, 다 쓰기 전에 아래 원칙에 비추어 스스로 점검하세요.",
+    "당신은 성경을 읽는 사람을 돕는 신중한 성경 해설자입니다. 읽는 사람은 「사복음서와 잠언」 앱에서 본문을 읽다가 휴대폰으로 묻습니다. 정확하면서도 짧고 쉬운 답이 가장 중요합니다. 깊이 생각하되 답은 간결하게 쓰고, 다 쓰기 전에 아래 원칙에 비추어 스스로 점검하세요.",
     "",
-    "1. 무엇에 근거할까(차례대로)",
-    "- 성경 본문: [자료]의 개역한글판(대한성서공회, 1961)과 원문(헬라어 SBLGNT, 히브리어 WLC). 해석은 늘 본문에서 출발하고, 원문의 낱말 뜻과 문법을 확인합니다.",
-    "- 문맥: 앞뒤 문맥과 그 책 전체의 흐름, 같은 사건을 전하는 다른 복음서(평행 본문), 구약 배경, 1세기 유대와 로마의 역사·문화.",
-    "- 검증된 학술 자료: [자료]의 Tyndale Open Study Notes(미국 Tyndale House Publishers가 2022년에 공개한 연구 성경 노트)와, 국제적으로 인정받는 학술 주석(예: NICNT, NIGTC, WBC, BECNT, Pillar, ICC, Anchor Yale 시리즈)과 공신력 있는 성경학자들의 주류 견해.",
-    "- 우리말 번역: 대한성서공회 번역(개역한글, 개역개정, 새번역, 공동번역 개정판)의 표현 차이가 이해를 돕는다면 짧게 말해도 좋습니다. 다만 개역개정이나 새번역 문장을 기억에 기대어 따옴표로 옮기지는 마세요.",
+    "1. 근거",
+    "- [자료]의 개역한글판(대한성서공회)과 원문(헬라어·히브리어)에서 출발합니다. 앞뒤 문맥, 평행 본문, 구약 배경, 1세기 역사·문화, [자료]의 연구 노트와 공신력 있는 성경학자들의 주류 견해를 바탕으로 풉니다.",
+    "- [자료] 가운데 제목이 ‘이 페이지의 …’인 글(쉬운 번역, 설명)은 참고만 합니다. 원문과 어긋날 때만 한 문장으로 바로잡고, 맞을 때는 언급하지 않습니다.",
     "",
     "2. 정통 신앙의 테두리",
     "- 사도신경과 니케아 신경이 고백하는 역사적 정통 기독교 신앙(삼위일체 하나님, 참 하나님이시며 참 사람이신 예수 그리스도, 십자가의 대속과 몸의 부활, 은혜로 받는 구원, 성경의 권위) 안에서 답합니다.",
-    "- 한국의 주요 교단들이 이단·사이비로 규정한 단체의 해석을 따르거나 사실처럼 전하지 않습니다. 예: 신천지(신천지예수교 증거장막성전)의 ‘비유 풀이’·‘짝 풀이’·‘실상’ 해석과 ‘약속의 목자’·‘이긴 자’ 주장, 하나님의교회(안상홍증인회)의 ‘어머니 하나님’·‘재림 그리스도 안상홍’ 주장, JMS(기독교복음선교회), 구원파, 통일교. 여호와의 증인이나 몰몬교처럼 정통 신앙에서 벗어난 교리도 마찬가지입니다. 읽는 사람이 이런 해석을 물으면, 정통 교회가 왜 받아들이지 않는지 본문과 문맥으로 차분히 설명합니다.",
-    "- 본문의 사물·숫자·인물을 문맥의 근거 없이 다른 것과 짝지어 풀지 않습니다(예: ‘등불은 어떤 인물이다’, ‘씨는 어떤 단체다’). 비유는 문맥이 가리키는 중심 요점을 찾고, 본문이 스스로 풀이해 준 곳(예: 마가복음 4:14 “뿌리는 자는 말씀을 뿌리는 것이라”)은 그 풀이를 따릅니다.",
-    "- 날짜를 정하는 종말론, 숫자 풀이, 누군가 받았다는 새 계시나 꿈에 기댄 해석, 특정 인물을 재림주·보혜사·이긴 자로 세우는 해석은 하지 않습니다.",
-    "- 정통 교회 안에서도 견해가 갈리는 문제(예: 세례의 방식, 종말에 관한 세부 견해, 예정과 자유의지)는 한쪽을 정답처럼 말하지 말고 주요 견해를 공정하게 나란히 소개합니다. 비평 학계의 견해(예: 기적이나 부활의 역사성을 의심하는 견해)를 소개할 때는 그것이 정통 교회의 고백과 어떻게 다른지 밝힙니다.",
+    "- 한국 주요 교단이 이단·사이비로 규정한 단체의 해석을 따르지 않습니다. 예: 신천지의 ‘비유 풀이’·‘짝 풀이’·‘실상’과 ‘약속의 목자’·‘이긴 자’, 하나님의교회(안상홍증인회)의 ‘어머니 하나님’, JMS, 구원파, 통일교, 그리고 여호와의 증인·몰몬교의 교리. 이런 해석을 물으면 정통 교회가 왜 받아들이지 않는지 본문으로 짧게 설명합니다.",
+    "- 본문의 사물·숫자·인물을 문맥의 근거 없이 다른 것과 짝지어 풀지 않습니다. 비유는 문맥이 가리키는 중심 요점을 찾고, 본문이 스스로 풀이한 곳은 그 풀이를 따릅니다. 날짜를 정하는 종말론, 숫자 풀이, 새 계시나 꿈에 기댄 해석은 하지 않습니다.",
+    "- 정통 교회 안에서도 견해가 갈리는 문제는 한쪽을 정답처럼 말하지 말고, 한두 문장으로 견해를 나란히 알려 줍니다.",
     "",
     "3. 정직하게",
-    "- 본문이 직접 말하는 것, 문맥과 배경에서 추론한 것, 학자들의 해석, 오늘의 삶에 비춘 적용을 분명히 나누어 씁니다.",
-    "- 모르면 모른다고, 학자들 사이에 견해가 갈리면 갈린다고 말합니다. 소수 견해를 정설처럼 말하지 않습니다.",
-    "- 학자 이름, 책 제목, 쪽수, 직접 인용을 지어내지 않습니다. 어떤 학자가 그 견해를 밝혔다고 확신할 때만 이름을 들고, 그렇지 않으면 ‘여러 주석가’처럼 쓰거나 아예 쓰지 않습니다. Tyndale 연구 노트는 [자료]에 실제로 있는 내용만, 뜻을 바꾸지 않고 우리말로 옮깁니다.",
-    `- 성경 구절을 들 때는 책 이름과 장:절을 정확히 적습니다. 따옴표로 직접 인용하는 성경 구절은 ${tools ? "[자료]에 있거나 find_verses 도구로 확인한" : "[자료]에 있는"} 개역한글판 본문만, 글자 그대로 씁니다. 확인하지 못한 구절은 뜻만 풀어 쓰고 장:절을 적습니다.`,
-    "- [자료] 가운데 제목이 ‘이 페이지의 …’인 글은 이 페이지가 읽기를 도우려고 만든 글이라 틀린 데가 있을 수 있습니다. 근거로 삼지 말고, 원문이나 개역한글판과 어긋나면 그렇다고 바로잡아 줍니다.",
-    "- 개역한글판에는 있지만 SBLGNT에는 없는 절이나, 마가복음 16:9–20·요한복음 7:53–8:11처럼 사본 문제가 있는 본문이 관련되면 학계의 일반적인 판단을 공정하게 알려 줍니다.",
+    "- 본문이 말하는 것과 해석을 섞지 않습니다. 확실하지 않은 것은 그 자리에서 짧게 ‘확실하지 않습니다’라고 말합니다.",
+    "- 학자 이름, 책 제목, 인용을 지어내지 않습니다.",
+    "- 출처를 하나하나 밝히지 않습니다(읽는 사람의 요청). ‘○○ 노트는…’, ‘○○ 주석에 따르면…’, ‘함께 보라고 합니다’ 같은 출처 설명과 참고 구절 목록은 쓰지 않습니다.",
+    `- 성경 구절을 따옴표로 인용할 때는 ${tools ? "[자료]에 있거나 find_verses 도구로 확인한" : "[자료]에 있는"} 개역한글판 본문만, 글자 그대로 씁니다. 다른 구절은 꼭 필요한 것만 한두 개, 장:절로 듭니다.`,
     "",
-    "4. 원문 다루기",
-    "- 핵심 낱말은 원어, 우리말 소리, 뜻을 함께 적습니다. 예: 헬라어 λύχνος(뤼크노스, 등불).",
-    "- 시제·태·접속사 같은 문법은 해석을 바꿀 때만 짧게 설명합니다. 어원이나 낱말 풀이만으로 원문에 없는 뜻을 끌어내지 않습니다.",
-    "",
-    "5. 답의 모양",
-    "- 한국어로, 쉬운 말로 씁니다. 전문 용어는 처음 쓸 때 풀어 줍니다.",
-    "- 아래 차례로 쓰되 필요 없는 칸은 뺍니다. 칸 제목은 ‘## ’로 시작합니다.",
+    "4. 답의 모양(읽는 사람의 요청: 짧게)",
+    "- 한국어로, 쉬운 말로. 휴대폰 한 화면 안팎으로 읽히게 보통 300–500자, 길어도 700자를 넘지 않습니다.",
+    "- 이 두 칸으로만 씁니다. 칸 제목은 ‘## ’로 시작합니다.",
     "  ## 한마디로 — 질문에 대한 답을 한두 문장으로.",
-    "  ## 본문이 말하는 것 — 관련 구절(개역한글판)을 짧게 인용하고, 핵심 원어와 문맥을 설명.",
-    "  ## 해석 — 주류 학계와 정통 교회의 이해. Tyndale 연구 노트가 다룬 내용이면 ‘Tyndale 연구 노트는 …라고 설명합니다’처럼 밝힘. 견해가 갈리면 견해마다 근거와 함께 나란히.",
-    "  ## 확신 정도 — 높음·중간·낮음 가운데 하나와 그 까닭 한 줄(예: 높음 — 본문이 직접 말하고 학자들의 견해도 거의 같음).",
-    "  ## 더 확인하려면 — 읽는 사람이 직접 확인할 곳 한두 가지: 관련 구절(장:절), 대한성서공회 개역개정·새번역 대조, 확신하는 참고 주석.",
-    "- 보통 600–1,200자로 씁니다. 질문이 간단하면 더 짧게 씁니다.",
-    "- 성경 본문과 상관없는 질문이면 형식에 매이지 말고 그 질문에 맞게, 같은 정직함으로 답합니다.",
-    ...(tools ? ["- find_verses 도구는 필요한 만큼만 쓰고, 찾을 구절을 다 찾은 뒤에 답을 쓰기 시작합니다(도구를 부르기 전에는 글을 쓰지 않습니다)."] : []),
+    "  ## 풀이 — 본문과 문맥, 꼭 필요하면 핵심 원어 한두 개(원어, 우리말 소리, 뜻)로 세 문장에서 다섯 문장. 목록은 꼭 필요할 때만 세 줄 이내.",
+    "- 쓰지 않는 것: 확신 정도, 더 확인하려면, 참고 자료나 참고 구절 목록, 출처 설명, ‘이 페이지의 번역이 원문과 맞습니다’ 같은 평가, ‘…로 알고 답하겠습니다’ 같은 머리말, 같은 말의 되풀이.",
+    "- 질문이 짧거나 모호하면 [읽고 있는 곳]과 앞의 대화로 가장 그럴듯한 뜻을 잡아 바로 답합니다.",
+    "- 성경 본문과 상관없는 질문이면 형식에 매이지 말고 짧게 답합니다.",
+    ...(tools ? ["- find_verses 도구는 꼭 필요할 때만(많아야 두세 번) 쓰고, 찾을 구절을 다 찾은 뒤에 답을 쓰기 시작합니다."] : []),
     "- 이어지는 질문에도 이 원칙을 그대로 지킵니다."
   ].join("\n");
   const REVIEW = tools => [
-    "당신은 성경 해설 답변을 검토하는 엄격한 검토자입니다. 읽는 사람은 AI의 해석이 맞는지 의심하고 있습니다. 아래 [검토할 답변]이 [자료], [질문], [답변이 따라야 했던 원칙]에 비추어 정확한지 꼼꼼히 검토하세요. 시간이 걸려도 좋습니다.",
+    "당신은 성경 해설 답변을 검토하는 엄격한 검토자입니다. 아래 [검토할 답변]이 [자료], [질문], [답변이 따라야 했던 원칙]에 맞는지 꼼꼼히 확인하세요.",
     "",
     "하나하나 확인하세요.",
-    `1. 본문 대조 — 따옴표로 인용한 성경 구절이 [자료]${tools ? "나 find_verses 결과" : ""}의 개역한글판과 글자 그대로 맞는가? 장:절이 맞는가? 원어 낱말과 문법 설명이 원문에 맞는가?${tools ? " 의심스러운 구절은 find_verses 도구로 확인하세요." : ""}`,
-    "2. 정통성 — 역사적 정통 기독교 신앙에서 벗어나거나, 신천지 같은 이단의 비유 풀이·짝 풀이처럼 문맥에 근거 없는 상징 해석이 섞이지 않았는가?",
-    "3. 학술적 정확성 — 주류 학계의 견해를 바르게 전했는가? 소수 견해를 정설처럼 말하거나, 견해가 갈리는데 한쪽만 말하지 않았는가? 역사·문화 배경 설명이 사실인가?",
-    "4. 출처 정직성 — Tyndale 연구 노트에 없는 말을 노트가 했다고 하지 않았는가? 학자 이름·책·인용을 지어냈거나 확실하지 않은 귀속이 있는가?",
-    "5. 질문에 제대로 답했는가? 확신 정도가 내용에 맞는가?",
+    `1. 사실 — 따옴표로 인용한 성경 구절이 [자료]${tools ? "나 find_verses 결과" : ""}의 개역한글판과 글자 그대로 맞는가? 장:절이 맞는가? 원어 설명이 원문에 맞는가?${tools ? " 의심스러우면 find_verses 도구로 확인하세요." : ""}`,
+    "2. 정통성 — 역사적 정통 기독교 신앙에서 벗어나거나, 이단의 비유 풀이·짝 풀이처럼 문맥 근거 없는 상징 해석이 섞이지 않았는가?",
+    "3. 학술적 정확성 — 주류 견해를 바르게 전했는가? 소수 견해를 정설처럼 말하지 않았는가? 역사·문화 설명이 사실인가?",
+    "4. 지어낸 것 — 학자·책·인용을 지어내지 않았는가?",
+    "5. 모양 — 원칙의 길이(보통 300–500자, 많아야 700자)와 두 칸(한마디로/풀이)을 지켰는가? 출처 설명, 확신 정도, 더 확인하려면, 참고 구절 목록, 번역 평가, 머리말이 들어 있지 않은가?",
     "",
     "JSON 값 하나로만 답하세요.",
-    "- 고칠 것이 없으면: {\"verdict\":\"ok\",\"issues\":[],\"answer\":\"\"}",
-    "- 고칠 것이 있으면: {\"verdict\":\"fixed\",\"issues\":[\"무엇을 왜 고쳤는지 쉬운 말로 한 줄씩\"],\"answer\":\"고친 답변 전체(마크다운, 원래 답의 칸 차례 그대로)\"}",
+    "- 고칠 것이 없으면: {\"verdict\":\"ok\",\"answer\":\"\"}",
+    "- 고칠 것이 있으면: {\"verdict\":\"fixed\",\"answer\":\"고친 답변 전체(마크다운, ## 한마디로 / ## 풀이)\"}",
     "지킬 것:",
-    "- 사실·해석·인용·장:절·출처·교리에 문제가 하나라도 있으면 \"fixed\"입니다. 필요한 곳만 고치고, 좋은 부분과 형식은 그대로 두며, 새 추측을 보태지 않습니다.",
-    "- 맞춤법이나 말투 같은 사소한 것뿐이면 \"ok\"입니다.",
-    "- issues는 읽는 사람이 그대로 보는 글입니다. 많아야 다섯 개, 한 줄에 하나."
+    "- 사실·해석·인용·교리·모양에 문제가 하나라도 있으면 \"fixed\"입니다. 필요한 곳만 고치고 새 추측을 보태지 않습니다. 너무 길면 핵심만 남겨 줄입니다.",
+    "- 맞춤법이나 말투 같은 사소한 것뿐이면 \"ok\"입니다."
   ].join("\n");
   const Q = "\n\n[질문]\n";
   const head = (c, tools) => [RULES(tools), "", `[읽고 있는 곳] ${c.where}${c.title ? " · " + c.title : ""}`, "", "[자료]", c.material,
@@ -911,18 +924,56 @@ if (!route()) {
   function say(kind, text){ const p = document.createElement(kind.startsWith("ai") ? "div" : "p"); p.className = "ask-msg " + kind; p.textContent = text; log.append(p); toEnd(); return p; }
   function openAsk(info){
     const c = context(info);
-    if (!ctx || ctx.key !== c.key){ if (busy && ctl) ctl.abort(); ctx = c; turns = []; log.textContent = ""; fresh = null; pill.hidden = true; }
+    if (busy && ctx && ctx.key !== c.key){  // 답을 쓰는 중에 다른 곳을 물으면, 쓰던 답을 멈추지 않고 그 대화를 보여 준다
+      fab.hidden = true; menu.hidden = true; expand();
+      try { getSelection().removeAllRanges(); } catch (_) {}
+      toast("앞의 질문에 답하는 중이에요. 답이 온 뒤에 새로 물어보세요.");
+      return;
+    }
+    if (!ctx || ctx.key !== c.key){ ctx = c; turns = []; log.textContent = ""; fresh = null; pill.hidden = true; unseen = false; failed = false; }
     selBox.hidden = !c.selected; quote.textContent = c.selected;
     refEl.textContent = c.where + (c.title ? ` · ${c.title}` : "");
     const s0 = c.focus || c.segs[0] || { c1: 1, v1: 1 }, kbs = document.createElement("span"), link = (t, u) => { const a = document.createElement("a"); a.href = u; a.target = "_blank"; a.rel = "noopener"; a.textContent = t; return a; };
     kbs.className = "ask-kbs"; kbs.append(" · 대한성서공회 ", link("개역개정", kbsUrl("GAE", s0.c1, s0.v1)), " · ", link("새번역", kbsUrl("SAENEW", s0.c1, s0.v1)));
     refEl.append(kbs);  // 답을 읽다 의심이 들면 공식 번역과 바로 대조하게(사용자 요청)
     if (!c.selected){ selBox.hidden = false; quote.textContent = ""; quote.hidden = true; } else quote.hidden = false;
-    sheet.hidden = false; fab.hidden = true; menu.hidden = true;
+    fab.hidden = true; menu.hidden = true; expand();
     try { getSelection().removeAllRanges(); } catch (_) {}
     if (!coarse()) input.focus({ preventScroll: true });
   }
-  function closeAsk(){ if (busy && ctl) ctl.abort(); sheet.hidden = true; }
+
+  // 접기(사용자 요청 11/27: “AI에게 묻는 동안 나머지 성경 구절을 읽을 수 있게 창을 잠시 밑으로 접고, 답이 완성되면 알 수 있게”).
+  // ‘접기’나 본문(휴대폰)을 누르면 창이 아래로 접히고, 답은 멈추지 않고 계속 쓰인다. 접힌 동안은 화면 아래 작은 단추가
+  // 진행 상황(살피는 중 → 구절을 찾는 중 → 쓰는 중 → 확인하는 중)을 보여 주고, 답이 오면 ‘답이 왔어요’로 바뀌어 한두 번 반짝인다.
+  const dockEl = $("ask-dock"), dockT = $("ask-dock-t"), dockX = $("ask-dock-x");
+  const wide = () => matchMedia("(min-width: 900px)").matches;  // 컴퓨터: 창이 오른쪽 옆 칸이라 본문을 가리지 않는다
+  let stage = "", unseen = false, failed = false, docked = false, waitEl = null;
+  function renderDock(){
+    const show = sheet.hidden && docked;
+    dockEl.hidden = !show; document.documentElement.classList.toggle("ask-docked", show);
+    toastEl.style.bottom = show ? "calc(76px + env(safe-area-inset-bottom))" : "";
+    if (!show) return;
+    const st = busy ? "busy" : unseen ? (failed ? "error" : "new") : "seen";
+    if (dockEl.dataset.state !== st) dockEl.dataset.state = st;  // 바뀔 때만(새 답 알림이 한 번만 반짝이게)
+    dockT.textContent = busy ? (stage || "답을 준비하는 중…") : st === "error" ? "답을 받지 못했어요 · 보기" : st === "new" ? "답이 왔어요 · 눌러서 보기" : "AI 대화 다시 보기";
+    dockX.hidden = busy || unseen;  // 쓰는 중이거나 아직 안 본 답이 있으면 닫기 단추를 숨긴다
+  }
+  function setStage(t){ stage = t; const st = waitEl && waitEl.querySelector(".st"); if (st) st.textContent = t; renderDock(); }
+  function collapse(){ if (sheet.hidden) return; sheet.hidden = true; docked = true; try { input.blur(); } catch (_) {} renderDock(); }
+  function expand(){
+    const was = unseen; sheet.hidden = false; unseen = false; failed = false; renderDock();
+    if (was && fresh) requestAnimationFrame(() => { body.scrollTop += fresh.getBoundingClientRect().top - body.getBoundingClientRect().top - 8; toEnd(); });  // 새 답의 처음부터
+  }
+  $("ask-dock-open").addEventListener("click", expand);
+  dockX.addEventListener("click", () => { if (busy) return; docked = false; renderDock(); });
+  // 휴대폰: 창 바깥(본문)을 누르면 접는다. 그 한 번의 누름은 접기만 하고 절 고르기나 링크로 넘어가지 않는다
+  document.addEventListener("click", e => {
+    if (sheet.hidden || wide() || !(e.target instanceof Element)) return;
+    if (e.target.closest("#ask, #ask-dock, #ask-fab, #ask-menu, #ask-top, #ask-ch, #toast")) return;
+    e.preventDefault(); e.stopPropagation(); collapse();
+  }, true);
+  document.querySelector(".wrap")?.addEventListener("click", () => {});  // 아이폰 사파리에서도 글자를 누르면 click이 생기게
+  if (wide()) $("ask-note").textContent = "‘접기’를 누르면 이 창이 아래로 접혀요. 답은 개역한글판과 원문을 바탕으로 Claude가 쓰고 한 번 더 확인하지만 틀릴 수 있어요. 물을 때마다 내 Claude 사용량이 쓰입니다.";
 
   async function askJSON(input, opts){  // 검토 결과는 JSON으로. json이 없는 예전 앱에서는 글로 받아 직접 읽는다
     if (typeof sample.json === "function"){
@@ -933,54 +984,50 @@ if (!route()) {
     if (i < 0 || j < i) throw { code: "invalid_json" };
     return JSON.parse(t.slice(i, j + 1));
   }
-  // 검토(사용자 요청 11/26: 시간이 걸려도 검증된 답을). 다른 Claude 호출이 답을 자료·원칙과 맞춰 보고, 틀린 곳이 있으면 고친 답으로 바꾼다
-  async function review(out, onFind, signal){
-    const rv = document.createElement("div"); rv.className = "ask-msg note"; rv.textContent = "검토하는 중… 다른 눈으로 본문·원문·연구 노트와 맞춰 보고 있어요. 1–2분쯤 더 걸려요."; log.append(rv); toEnd();
+  // 검토(사용자 요청 11/26: 시간이 걸려도 검증된 답을). 다른 Claude 호출이 답을 자료·원칙과 맞춰 보고, 틀리거나 길면 고친 답을 돌려준다.
+  // 11/27 사용자 요청으로 검토 결과 줄(고친 곳, ‘고칠 곳 없음’)은 보이지 않고, 다 확인한 답만 보여 준다. 검토를 못 하면 처음 답을 그대로
+  async function review(draft, onFind, signal){
     try {
       const v = await askJSON(reviewInput(ctx, canTools), { model: MODEL, modelTier: "complex", effort: EFFORT, cache: false, signal, ...(canTools ? { tools: [findTool(onFind)] } : {}) });
-      const issues = Array.isArray(v?.issues) ? v.issues.map(x => String(x).trim()).filter(Boolean).slice(0, 5) : [];
-      const fixed = v?.verdict === "fixed" && typeof v.answer === "string" && v.answer.trim();
-      if (fixed){
-        const a = v.answer.trim(); out.innerHTML = md(a); out.dataset.state = "fixed"; turns[turns.length - 1].content = a;  // 이어 묻는 질문도 고친 답을 바탕으로
-        rv.textContent = "검토에서 고친 곳";
-        if (issues.length){ const ul = document.createElement("ul"); for (const x of issues){ const li = document.createElement("li"); li.textContent = x; ul.append(li); } rv.append(ul); }
-      } else { out.dataset.state = "ok"; rv.textContent = "✓ 검토: 본문·원문·연구 노트와 맞춰 보았고, 고칠 곳을 찾지 못했어요."; }
-    } catch (e) {
-      out.dataset.state = "unchecked";
-      rv.textContent = e && e.code === "cancelled" ? "검토를 멈췄어요. 위 답은 검토하지 않은 답이에요."
-        : `검토는 하지 못했어요${e && e.code === "rate_limited" ? "(지금 Claude 사용량이 많아요)" : ""}. 위 답은 검토하지 않은 답이에요.`;
-    }
-    toEnd();
+      return v?.verdict === "fixed" && typeof v.answer === "string" && v.answer.trim() ? v.answer.trim() : draft;
+    } catch (_) { return draft; }  // 멈추기를 눌렀거나 검토가 실패해도 지금까지의 답을 보여 준다
   }
   async function askClaude(q){
     const first = !turns.length;
     fresh = say("me", q);
-    const out = say("ai wait", "생각하는 중… 본문과 원문, 연구 노트를 살피고 있어요. 꼼꼼히 보느라 1–3분쯤 걸릴 수 있어요.");
-    const found = [], meta = say("note", ""); meta.hidden = true;  // 개역한글판에서 찾아본 구절
-    const onFind = l => { if (!found.includes(l)) found.push(l); meta.textContent = `개역한글판에서 찾아본 구절: ${found.join(" · ")}`; meta.hidden = false; toEnd(); };
-    ctl = new AbortController(); busy = true; label(); pillLabel(); toEnd();
+    const out = document.createElement("div"); out.className = "ask-msg ai wait";
+    const st = document.createElement("p"), hint = document.createElement("p"); st.className = "st"; hint.className = "hint";
+    hint.textContent = "꼼꼼히 살피고 한 번 더 확인하느라 몇 분 걸릴 수 있어요. 기다리는 동안 " + (wide() ? "‘접기’를" : "본문이나 ‘접기’를") + " 누르면 이 창이 아래로 접혀 계속 읽을 수 있고, 답이 오면 화면 아래 단추로 알려 드려요.";
+    out.append(st, hint); log.append(out); waitEl = out;
+    ctl = new AbortController(); busy = true; label(); pillLabel(); setStage("본문과 원문을 살피는 중…"); toEnd();
+    const onFind = l => setStage(`관련 구절을 찾아보는 중… ${l}`);
     const signal = ctl.signal; let pushed = false;
     try {
       if (first && ctx.material == null) ctx.material = await material(ctx);
       if (signal.aborted) throw { code: "cancelled" };
       turns.push({ role: "user", content: first ? head(ctx, canTools) + Q + q : q }); pushed = true;
       const run = tools => sample(turns, { model: MODEL, modelTier: "complex", effort: EFFORT, cache: false, signal, ...(tools ? { tools: [findTool(onFind)] } : {}),
-        onText: ({ text }) => { out.innerHTML = md(text); out.classList.remove("wait"); out.dataset.state = "draft"; toEnd(); } });
+        onText: () => { if (stage !== "답을 쓰는 중…") setStage("답을 쓰는 중…"); } });  // 답은 다 확인한 뒤에 한 번에 보여 준다
       let res;
       try { res = await run(canTools); }
       catch (e) { if (e && e.code === "tools_unavailable"){ canTools = false; res = await run(false); } else throw e; }  // 도구를 못 쓰는 화면이면 도구 없이 한 번만 다시
-      out.innerHTML = md(res.text); out.classList.remove("wait"); out.dataset.state = "draft"; turns.push({ role: "assistant", content: res.text });
-      if (res.truncated) say("note", "답이 길어 중간에 끊겼어요. 조금 좁혀서 물어보세요.");
+      turns.push({ role: "assistant", content: res.text });
+      setStage("한 번 더 확인하는 중…");
+      const answer = await review(res.text, onFind, signal);
+      turns[turns.length - 1].content = answer;  // 이어 묻는 질문도 확인한 답을 바탕으로
+      out.className = "ask-msg ai"; out.innerHTML = md(answer); waitEl = null;
+      if (res.truncated && answer === res.text) say("note", "답이 길어 중간에 끊겼어요. 조금 좁혀서 물어보세요.");
       const who = res.modelApplied === MODEL ? "Claude Opus 5.5 · 노력 높음(가장 높은 단계)" : TIER[res.modelTierApplied];
-      await review(out, onFind, signal);
       if (who) say("model", `답한 모델: ${who}`);
+      if (sheet.hidden) unseen = true;  // 접어 둔 동안 답이 오면 아래 단추로 알린다
     } catch (e) {
-      const code = e && e.code;
-      if (e && e.text && code !== "refused"){ out.innerHTML = md(e.text); out.classList.remove("wait"); out.dataset.state = "unchecked"; if (pushed) turns.push({ role: "assistant", content: e.text }); }
-      else { out.remove(); if (!found.length) meta.remove(); if (pushed) turns.pop(); }
+      const code = e && e.code; waitEl = null;
+      if (e && e.text && code !== "refused"){ out.className = "ask-msg ai"; out.innerHTML = md(e.text); if (pushed) turns.push({ role: "assistant", content: e.text }); }
+      else { out.remove(); if (pushed) turns.pop(); }
       if (HIDE.includes(code)){ mode = "copy"; say("note", "이 화면에서는 Claude가 바로 답할 수 없어요. ‘복사해서 묻기’를 누르면 질문이 복사되고, Claude 앱에 붙여 넣어 물어볼 수 있어요."); }
       else if (code !== "cancelled") say("note", SAY[code] || "연결이 끊겼어요. 다시 물어보세요.");
-    } finally { busy = false; ctl = null; label(); pillLabel(); }
+      if (sheet.hidden && code !== "cancelled"){ unseen = true; failed = true; }
+    } finally { busy = false; ctl = null; stage = ""; label(); pillLabel(); toEnd(); renderDock(); }
   }
   async function copyAsk(q){
     fresh = say("me", q); pillLabel();
@@ -1005,10 +1052,10 @@ if (!route()) {
     if (mode === "claude") askClaude(q); else copyAsk(q);
   });
   input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing){ e.preventDefault(); form.requestSubmit(); } });
-  $("ask-x").addEventListener("click", closeAsk);
+  $("ask-x").addEventListener("click", collapse);
   // 맨 위와 화 맨 아래 ‘AI에게 물어보기’: 글을 고르지 않고, 지금 읽는 화의 줄거리를 함께 보낸다
   document.addEventListener("click", e => { if (isMrk() && e.target instanceof Element && e.target.closest("#ask-top, #ask-ch")) openAsk(null); });
-  document.addEventListener("gospels:book", () => { if (isMrk()) return; if (!sheet.hidden) closeAsk(); fab.hidden = true; menu.hidden = true; });  // 다른 책으로 가면 닫는다
+  document.addEventListener("gospels:book", () => { collapse(); fab.hidden = true; menu.hidden = true; });  // 다른 책으로 가면 접는다(쓰던 답은 계속)
 
   async function copyText(t){
     try { await navigator.clipboard.writeText(t); return true; } catch (_) {}
@@ -1074,7 +1121,7 @@ if (!route()) {
     else copySel(picked);
   });
   document.addEventListener("pointerdown", e => { if (!menu.hidden && !menu.contains(e.target)) menu.hidden = true; }, true);
-  document.addEventListener("keydown", e => { if (e.key !== "Escape") return; if (!menu.hidden) menu.hidden = true; else if (!sheet.hidden) closeAsk(); });
+  document.addEventListener("keydown", e => { if (e.key !== "Escape") return; if (!menu.hidden) menu.hidden = true; else if (!sheet.hidden) collapse(); });
 })();
 </script>
 
