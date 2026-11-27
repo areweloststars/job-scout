@@ -18,6 +18,10 @@ ALL = {
 }
 BOOKS = {b: ALL[b] for b in FIVE}
 PAGE = {'lam': '예레미야애가', '1jn': '요한1서', '2jn': '요한2서', '3jn': '요한3서'}  # 위키문헌 쪽 이름이 책 이름과 다른 것
+# 위키문헌 본문이 대한성서공회 개역한글(bskorea.or.kr, version=HAN)과 다른 곳: 공회 본문으로 바로잡는다
+FIX = {
+    'psa': {('51', '14'): '하나님이여 나의 구원의 하나님이여 피 흘린 죄에서 나를 건지소서 내 혀가 주의 의를 높이 노래하리이다'},  # 위키문헌은 뒷부분이 빠짐
+}
 URL = 'https://ko.wikisource.org/w/index.php?title={}&action=raw'
 UA = 'bible-study-page/1.0 (personal Bible study; low-volume)'  # 누구의 프로젝트인지 드러내지 않는 이름
 
@@ -61,6 +65,7 @@ def main(folder, books):
             open(raw_path, 'w', encoding='utf-8').write(raw)
             time.sleep(3)  # 위키문헌에 부담이 없게 천천히
         data = parse(open(raw_path, encoding='utf-8').read())
+        for (c, v), t in FIX.get(b, {}).items(): data[c]['verses'][v] = t
         json.dump(data, open(f'{folder}/han-{b}.json', 'w', encoding='utf-8'), ensure_ascii=False)
         print(b, len(data), '장', sum(len(c['verses']) for c in data.values()), '절')
     if failed: raise SystemExit(f'받지 못한 책: {failed}')

@@ -1,5 +1,5 @@
 import json, re, urllib.request, urllib.parse, html
-UA = {'User-Agent': 'job-scout-bible-reader/1.0 (https://github.com/areweloststars/job-scout)'}
+UA = {'User-Agent': 'bible-study-page/1.0 (personal Bible study; low-volume)'}  # 누구의 프로젝트인지 드러내지 않는 이름
 API = 'https://commons.wikimedia.org/w/api.php'
 import time, urllib.error
 def fetch(url, tries=8):

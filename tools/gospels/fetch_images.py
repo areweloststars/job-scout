@@ -4,7 +4,7 @@ import glob, importlib.util, io, json, os, re, sys, time, urllib.request
 from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.dirname(os.path.dirname(HERE))
 CDN = 'https://d1lfxha3ugu3d4.cloudfront.net/images/opencollection/objects/size4/'
-UA = {'User-Agent': 'job-scout-bible-reader/1.0 (https://github.com/areweloststars/job-scout)'}
+UA = {'User-Agent': 'bible-study-page/1.0 (personal Bible study; low-volume)'}  # 누구의 프로젝트인지 드러내지 않는 이름
 bynum = {}
 for v in json.load(open(f'{HERE}/tissot.json', encoding='utf-8')).values():
     m = v['cdn'] and re.match(r'00\.159\.([0-9a-z.]+?)_', v['cdn'])

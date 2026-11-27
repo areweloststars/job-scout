@@ -1,7 +1,7 @@
 import sys, json, io, os, time, urllib.request, urllib.error; sys.path.insert(0, '.')
 from PIL import Image
 log = open('slow.log', 'a', buffering=1)
-UA = {'User-Agent': 'job-scout-bible-reader/1.0 (https://github.com/areweloststars/job-scout)'}
+UA = {'User-Agent': 'bible-study-page/1.0 (personal Bible study; low-volume)'}  # 누구의 프로젝트인지 드러내지 않는 이름
 def fetch(url): return urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=90).read()
 def save(k, b):
     im = Image.open(io.BytesIO(b)).convert('RGB'); im.thumbnail((800, 800), Image.LANCZOS)

@@ -6,8 +6,10 @@ MORPH = {'mat': '61-Mt', 'mrk': '62-Mk', 'luk': '63-Lk', 'jhn': '64-Jn'}
 book = sys.argv[1]
 # 인용 대조는 개역한글판(dl_han.py로 받음)
 G = json.load(open(f'{REF}/han-{book}.json', encoding='utf-8'))
-OT = {'pro': 'Prov'}  # 구약: 히브리어 WLC(dl_refs.py가 받는 {책}.xml)의 절 목록과 대조
-if book in OT:
+OT = {'pro': 'Prov', 'psa': 'Ps'}  # 구약: 히브리어 WLC(dl_refs.py가 받는 {책}.xml)의 절 목록과 대조
+if book == 'psa':  # 시편은 히브리어 성경이 표제를 1–2절로 세어 번호가 달라, 절 목록은 개역한글(=KJV 번호)을 따른다. 표제는 '편:0'
+    S = {c: list(G[c]['verses']) for c in G}
+elif book in OT:
     S = {}
     for m_ in re.finditer(rf'<verse osisID="{OT[book]}\.(\d+)\.(\d+)"', open(f'{REF}/{OT[book]}.xml', encoding='utf-8').read()): S.setdefault(m_[1], []).append(m_[2])
 else: S = json.load(open(f'{REF}/sbl-{book}.json', encoding='utf-8'))
@@ -42,7 +44,7 @@ errs, warns = [], []
 chs = [int(x) for x in sys.argv[2:]] or [int(re.search(r'ch(\d+)', f)[1]) for f in glob.glob(f'{REPO}/content/{book}/ch*.py')]
 for c in sorted(chs):
     m = load(f'{REPO}/content/{book}/ch{c:02d}.py'); tag = f'{book} {c}'
-    want = {f'{c}:{v}' for v in S[str(c)]}; have = set(m.TX)
+    want = {f'{c}:{v}' for v in S[str(c)]}; have = set(m.TX) - {f'{c}:0'}  # 시편 표제(편:0)는 따로
     if want - have: errs.append(f'{tag} 번역 빠짐 {sorted(want - have, key=lambda k: int(k.split(":")[1]))}')
     if have - want: errs.append(f'{tag} SBLGNT에 없는 절 {sorted(have - want)}')
     ok, src = gae_has(m.EP['verse'][1], m.EP['verse'][0])

@@ -16,11 +16,11 @@ def mark(s):  # ⟪헬라어⟫, ⟦히브리어|출처⟧ 표시를 글꼴 태�
     s = re.sub(r'⟪([^⟫]+)⟫', r'<span class="gk" lang="grc">\1</span>', s)
     return re.sub(r'⟦([^|⟧]+)\|[^⟧]+⟧', r'<span class="he" lang="he" dir="rtl">\1</span>', s)
 
-def ref_label(name, r):  # "6:1–6" → "마가복음 6장 1–6절"
+def ref_label(name, r, unit='장'):  # "6:1–6" → "마가복음 6장 1–6절", 시편은 "시편 51편 1–2절"
     m = re.match(r'^(\d+):(\d+)–(\d+):(\d+)$', r)
-    if m: return f'{name} {m[1]}장 {m[2]}절–{m[3]}장 {m[4]}절', int(m[1]), int(m[2])
+    if m: return f'{name} {m[1]}{unit} {m[2]}절–{m[3]}{unit} {m[4]}절', int(m[1]), int(m[2])
     c, rest = r.split(':', 1)
-    return f"{name} {c}장 {'절, '.join(x.strip() for x in rest.split(','))}절", int(c), int(re.match(r'\d+', rest)[0])
+    return f"{name} {c}{unit} {'절, '.join(x.strip() for x in rest.split(','))}절", int(c), int(re.match(r'\d+', rest)[0])
 
 def segs(r, lastv):  # 범위 → [(장, [절...])]
     m = re.match(r'^(\d+):(\d+)–(\d+):(\d+)$', r)
@@ -32,10 +32,12 @@ def segs(r, lastv):  # 범위 → [(장, [절...])]
         a, _, b = part.strip().partition('–'); out.append((int(c), list(range(int(a), int(b or a) + 1))))
     return out
 
-def passage(r, tx, lastv, per_verse=False):  # per_verse: 잠언은 절마다 새 줄에서 시작(사용자 요청)
+def passage(r, tx, lastv, per_verse=False):  # per_verse: 잠언·시편은 절마다 새 줄에서 시작(사용자 요청)
     parts, miss, S = [], [], segs(r, lastv)
     for i, (c, vs) in enumerate(S):
         chunk = []
+        if vs and vs[0] == 1 and f'{c}:0' in tx:  # 시편 표제: 1절 앞에 절 번호 없이
+            chunk.append(f'<span class="ps-t">{tx[f"{c}:0"]}</span>')
         for v in vs:
             t = tx.get(f'{c}:{v}')
             if t is None: miss.append(f'{c}:{v}'); continue
@@ -52,15 +54,16 @@ def build_book(b, warn):
     tx = {}; [tx.update(m.TX) for m in mods.values()]
     lastv = {}
     for k in tx: c, v = map(int, k.split(':')); lastv[c] = max(lastv.get(c, 0), v)
+    unit = b.get('unit', '장'); bundle = []
     os.makedirs(f'{REPO}/data/{b["id"]}', exist_ok=True); credits = []; titles = {}; covered = set()
     for n, m in sorted(mods.items()):
         e = m.EP; pts = []
         for p in m.PTS:
-            lab, c, v = ref_label(b['name'], p['r'])
+            lab, c, v = ref_label(b['name'], p['r'], unit)
             links = [{'t': lab, 'u': han_url(b['id'], c, v)}]
             if p.get('also'):
                 ob, oc, ov, ol = p['also']; links.append({'t': f'그림 속 장면: {NAMES[ob]} {ol}', 'u': han_url(ob, oc, ov)})
-            bt, miss = passage(p['r'], tx, lastv, b['id'] == 'pro')
+            bt, miss = passage(p['r'], tx, lastv, b.get('lines', False))
             for sc, vs in segs(p['r'], lastv): covered.update(f'{sc}:{x}' for x in vs)
             rec = {'r': p['r'], 't': p['t'], 'd': mark(p['d']), 'me': p['me']}
             if p.get('q'): rec['q'] = list(p['q'])
@@ -75,17 +78,22 @@ def build_book(b, warn):
         ep = {'n': n, 'v': lastv.get(n, 0), 'title': e['title'], 'verse': list(e['verse']), 'fun': mark(e['fun'])}
         ep['plot'] = mark(e['plot'])  # 줄거리: 10/28부터 모든 장이 예전 ‘저자의 의도’ 칸 대신 쓴다
         ep.update(m=e['m'], mission=mark(e['mission']), points=pts)
-        js = f'// {b["name"]} {n}장. tools/gospels/build.py가 content/{b["id"]}/ch{n:02d}.py에서 만듭니다.\ngospelChapter({json.dumps(b["id"])}, {n}, ' + json.dumps(ep, ensure_ascii=False, indent=0) + ');\n'
-        open(f'{REPO}/data/{b["id"]}/{n:02d}.js', 'w', encoding='utf-8').write(js); titles[n] = e['title']
-    gap = [k for k in tx if k not in covered]
+        call = f'gospelChapter({json.dumps(b["id"])}, {n}, ' + json.dumps(ep, ensure_ascii=False, indent=0) + ');\n'
+        if b.get('bundle'): bundle.append(call)
+        else: open(f'{REPO}/data/{b["id"]}/{n:02d}.js', 'w', encoding='utf-8').write(f'// {b["name"]} {n}{unit}. tools/gospels/build.py가 content/{b["id"]}/ch{n:02d}.py에서 만듭니다.\n' + call)
+        titles[n] = e['title']
+    if b.get('bundle'):  # 장이 많은 책은 한 파일에(아티팩트 파일 수 한도 511 때문). 예전 장 파일은 지운다
+        open(f'{REPO}/data/{b["id"]}/all.js', 'w', encoding='utf-8').write(f'// {b["name"]} 모든 {unit}. tools/gospels/build.py가 content/{b["id"]}/에서 만듭니다.\n' + ''.join(bundle))
+        for old in glob.glob(f'{REPO}/data/{b["id"]}/[0-9][0-9].js'): os.remove(old)
+    gap = [k for k in tx if k not in covered and not k.endswith(':0')]  # :0은 시편 표제
     if gap: warn.append(f'{b["id"]}: 요점이 덮지 않는 절 {gap}')
-    return titles, credits, len(tx)
+    return titles, credits, len([k for k in tx if not k.endswith(':0')])  # 시편 표제(:0)는 절로 세지 않는다
 
 warn, books, credits, total = [], [], [], {}
 for b in BOOKS:
     titles, cr, nv = build_book(b, warn); credits += cr; total[b['id']] = (len(titles), nv)
     meta = {k: b[k] for k in ('id', 'name', 'author', 'kicker', 'chapters', 'abbr')}
-    meta.update({k: b[k] for k in ('klang', 'src_lang', 'src_text', 'wide', 'lede') if k in b})  # 잠언: 히브리어 표제, WLC, 한 줄 단추
+    meta.update({k: b[k] for k in ('klang', 'src_lang', 'src_text', 'wide', 'half', 'lede', 'unit', 'lines', 'bundle', 'only_ready') if k in b})  # 잠언·시편: 히브리어 표제, WLC, 단추 모양, 편, 절마다 줄, 한 파일, 준비된 편만
     if b['plate']:
         w, h = Image.open(f'{REPO}/{b["plate"]["img"]}').size; meta['plate'] = {k: v for k, v in b['plate'].items() if k != 'credit'} | {'w': w, 'h': h}
         if b['plate'].get('credit'):  # 속표지 그림 출처(잠언 도레 판화처럼 위키미디어에서 가져온 것)

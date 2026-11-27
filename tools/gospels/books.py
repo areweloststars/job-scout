@@ -25,8 +25,20 @@ BOOKS = [
        why=[('첫 줄', '“태초에 말씀이 계시니라 이 말씀이 하나님과 함께 계셨으니 이 말씀은 곧 하나님이시니라”(1:1).'),
             ('목적', '본문이 직접 밝힌 목적입니다. “오직 이것을 기록함은 너희로 예수께서 하나님의 아들 그리스도이심을 믿게 하려 함이요 또 너희로 믿고 그 이름을 힘입어 생명을 얻게 하려 함이니라”(20:31).'),
             ('마지막', '“예수의 행하신 일이 이 외에도 많으니”(21:25)라는 말로 끝맺습니다.')]),
-  # 구약. 쉬운 번역은 히브리어 WLC에서 옮기고, 표제는 히브리어 책 이름(미슐레)
-  dict(id='pro', name='잠언', author='솔로몬', kicker='מִשְׁלֵי', klang='he', src_lang='히브리어', src_text='WLC', wide=True,
+  # 구약. 쉬운 번역은 히브리어 WLC에서 옮기고, 표제는 히브리어 책 이름(시편 테힐림, 잠언 미슐레).
+  # half: 복음서 넷 아래 한 줄에 둘이 나란히. lines: 쉬운 번역을 절마다 새 줄. bundle: 모든 장을 data/{책}/all.js 하나에(아티팩트 파일 수 한도)
+  # 시편: 장 대신 ‘편’(unit), 탭은 준비된 편만(only_ready). 51편부터(11/27 사용자 요청: “시편 51편도 이런식으로 제작해줘”)
+  dict(id='psa', name='시편', author='다윗 외', kicker='תְּהִלִּים', klang='he', src_lang='히브리어', src_text='WLC', wide=True, half=True,
+       unit='편', lines=True, bundle=True, only_ready=True,
+       lede='시편 150편 가운데 준비된 편을 골라 읽습니다. 편마다 본문의 요점을 따라가고, 본문을 펼쳐 직접 읽습니다. 진도는 이 기기에 저장됩니다.',
+       chapters=150, abbr='시',
+       plate=dict(img='images/psa/plate.jpg', alt='수금을 타며 하늘을 우러러보는 다윗 왕',
+                  cap='헤라르트 판 혼토르스트, 〈수금을 타는 다윗 왕〉(1622). 시편에는 ‘다윗의 시’라는 표제가 붙은 시가 많습니다.',
+                  credit=('https://commons.wikimedia.org/wiki/File:Gerard_van_Honthorst_-_King_David_Playing_the_Harp_-_Google_Art_Project.jpg', '퍼블릭 도메인')),
+       why=[('첫 줄', '“복 있는 사람은 악인의 꾀를 좇지 아니하며 죄인의 길에 서지 아니하며 오만한 자의 자리에 앉지 아니하고”(1:1).'),
+            ('마지막', '“호흡이 있는 자마다 여호와를 찬양할지어다 할렐루야”(150:6).')]),
+  dict(id='pro', name='잠언', author='솔로몬', kicker='מִשְׁלֵי', klang='he', src_lang='히브리어', src_text='WLC', wide=True, half=True,
+       lines=True, bundle=True,
        lede='하루 한 장, 한 달에 한 번. 장마다 본문의 요점을 따라가고, 본문을 펼쳐 직접 읽습니다. 진도는 이 기기에 저장됩니다.',
        chapters=31, abbr='잠',
        plate=dict(img='images/pro/plate.jpg', alt='돌의자에 앉아 두루마리를 든 늙은 솔로몬 왕',
