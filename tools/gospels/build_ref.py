@@ -1,7 +1,7 @@
 # AI 질문에 함께 보낼 참고 자료를 묶는다. 페이지는 AI에게 처음 물을 때만 불러온다(읽기 화면에는 쓰지 않는다).
-#   data/ref/{책}.js — 사복음서와 잠언, 시편, 책마다 하나
+#   data/ref/{책}.js — 사복음서와 잠언, 시편, 히브리서, 책마다 하나
 #     han  : 개역한글판(1961, 대한성서공회, 저작권 만료) — dl_han.py가 한국어 위키문헌에서 받은 han-{책}.json
-#     orig : 원문 — 복음서는 SBLGNT(sbl-{Matt,Mark,Luke,John}.txt), 잠언·시편은 WLC(Prov.xml, Ps.xml, Open Scriptures morphhb).
+#     orig : 원문 — 복음서·히브리서는 SBLGNT(sbl-{Matt,Mark,Luke,John,Heb}.txt), 잠언·시편은 WLC(Prov.xml, Ps.xml, Open Scriptures morphhb).
 #            시편은 morphhb의 KJV 대응 표시로 개역한글 절 번호에 맞춘다(표제는 첫 절 앞에, 번호가 다르면 히브리어 번호를 함께)
 #     notes: Tyndale Open Study Notes(tosn-StudyNotes.xml) — [첫 장, 첫 절, 끝 장, 끝 절, 범위 표시, 글]
 #     intro: 같은 자료의 책 요약(tosn-BookIntroSummaries.xml) — 목적, 저자, 시기, 배경
@@ -10,7 +10,7 @@
 import html, json, os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.dirname(os.path.dirname(HERE))
 REF = sys.argv[1] if len(sys.argv) > 1 else os.environ['GOSPEL_REF']
-SBL = {'mat': 'Matt', 'mrk': 'Mark', 'luk': 'Luke', 'jhn': 'John'}
+SBL = {'mat': 'Matt', 'mrk': 'Mark', 'luk': 'Luke', 'jhn': 'John', 'heb': 'Heb'}
 HEAD = {
     'grc': '원문: SBL Greek New Testament(SBLGNT). Copyright 2010 Society of Biblical Literature and Logos Bible Software. '
            'CC BY 4.0(https://creativecommons.org/licenses/by/4.0/). 사본 차이 표시(⸀⸂⸃ 등)는 지웠다.',
@@ -64,8 +64,8 @@ def han(b):
     d = json.load(open(f'{REF}/han-{b}.json', encoding='utf-8'))
     return {f'{c}:{v}': t for c in d for v, t in d[c]['verses'].items()}
 
-TOSN = {'mat': 'Matt', 'mrk': 'Mark', 'luk': 'Luke', 'jhn': 'John', 'pro': 'Pr', 'psa': 'Ps'}
-TOSN_INTRO = {'mat': 'Matthew', 'mrk': 'Mark', 'luk': 'Luke', 'jhn': 'John', 'pro': 'Proverbs', 'psa': 'Psalms'}
+TOSN = {'mat': 'Matt', 'mrk': 'Mark', 'luk': 'Luke', 'jhn': 'John', 'pro': 'Pr', 'psa': 'Ps', 'heb': 'Heb'}
+TOSN_INTRO = {'mat': 'Matthew', 'mrk': 'Mark', 'luk': 'Luke', 'jhn': 'John', 'pro': 'Proverbs', 'psa': 'Psalms', 'heb': 'Hebrews'}
 _sn = None
 
 def text_of(body):  # XML 표시만 걷어 낸다(글은 그대로)
@@ -106,7 +106,7 @@ NOTE_HEAD = ('// 연구 노트(notes, intro): Tyndale Open Study Notes. Copyrigh
 HAN_HEAD = '// 개역한글판(1961, 대한성서공회): 저작권 보호기간이 끝난 번역. 본문은 한국어 위키문헌.\n'
 
 os.makedirs(f'{REPO}/data/ref', exist_ok=True)
-for b in ('mat', 'mrk', 'luk', 'jhn', 'pro', 'psa'):
+for b in ('mat', 'mrk', 'luk', 'jhn', 'pro', 'psa', 'heb'):
     lang = 'hbo' if b in ('pro', 'psa') else 'grc'
     orig = wlc('Prov') if b == 'pro' else wlc('Ps', kjv=True) if b == 'psa' else sblgnt(SBL[b])
     h = han(b)
@@ -124,7 +124,7 @@ GROUPS = {
     'ot1': 'gen exo lev num deu',
     'ot2': 'jos jdg rut 1sa 2sa 1ki 2ki 1ch 2ch ezr neh est',
     'ot3': 'job ecc sng isa jer lam ezk dan hos jol amo oba jnh mic nam hab zep hag zec mal',  # 시편은 data/ref/psa.js
-    'nt': 'act rom 1co 2co gal eph php col 1th 2th 1ti 2ti tit phm heb jas 1pe 2pe 1jn 2jn 3jn jud rev',
+    'nt': 'act rom 1co 2co gal eph php col 1th 2th 1ti 2ti tit phm jas 1pe 2pe 1jn 2jn 3jn jud rev',  # 히브리서는 data/ref/heb.js
 }
 sys.path.insert(0, HERE)
 from dl_han import ALL

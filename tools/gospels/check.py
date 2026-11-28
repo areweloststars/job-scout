@@ -2,7 +2,7 @@
 import glob, importlib.util, json, os, re, sys, unicodedata
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.dirname(os.path.dirname(HERE))
 REF = os.environ.get('GOSPEL_REF', '/tmp/claude-0/-home-user-job-scout/994516b7-6db5-5528-99fd-98d7f06f74c4/scratchpad/ref/dl')
-MORPH = {'mat': '61-Mt', 'mrk': '62-Mk', 'luk': '63-Lk', 'jhn': '64-Jn'}
+MORPH = {'mat': '61-Mt', 'mrk': '62-Mk', 'luk': '63-Lk', 'jhn': '64-Jn', 'heb': '79-Heb'}
 book = sys.argv[1]
 # 인용 대조는 개역한글판(dl_han.py로 받음)
 G = json.load(open(f'{REF}/han-{book}.json', encoding='utf-8'))
@@ -15,7 +15,7 @@ elif book in OT:
 else: S = json.load(open(f'{REF}/sbl-{book}.json', encoding='utf-8'))
 norm = lambda s: re.sub(r'[\W_]', '', s)
 def gnorm(w):
-    w = unicodedata.normalize('NFD', w.lower()); w = ''.join(ch for ch in w if unicodedata.category(ch) != 'Mn')
+    w = unicodedata.normalize('NFD', w.lower().replace('\u02bc', '')); w = ''.join(ch for ch in w if unicodedata.category(ch) != 'Mn')  # SBLGNT의 생략 부호(ʼ)는 morphgnt의 ’처럼 뺀다
     return re.sub(r'[^\w]', '', w).replace('ς', 'σ')
 GK = {}
 for line in (open(f'{REF}/{MORPH[book]}-morphgnt.txt', encoding='utf-8') if book in MORPH else []):

@@ -423,7 +423,7 @@ if (store.get("gospels.done.mrk", null) == null && store.get("mark16.done", null
 const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const tabs = $("tabs"), panel = $("ep"), booksNav = $("books");
 let book = null, cur = 0, done = new Set();
-const FULL = new Set(["mat", "mrk", "luk", "jhn", "pro", "psa"]);  // 모든 책에서(사용자 요청: 사복음서와 잠언 모두 누가복음처럼, 시편도): AI에게 묻기, 구절 고르기, 나에게 접기, 장·절 제목
+const FULL = new Set(["mat", "mrk", "luk", "jhn", "pro", "psa", "heb"]);  // 모든 책에서(사용자 요청: 사복음서와 잠언 모두 누가복음처럼, 시편도): AI에게 묻기, 구절 고르기, 나에게 접기, 장·절 제목
 const U = b => (b && b.unit) || "장";                        // 장을 세는 말: 시편은 ‘편’
 const EPW = b => (b && b.unit === "편") ? "편" : "화";       // 한 회를 부르는 말: 복음서·잠언은 ‘화’, 시편은 ‘편’
 const isMrk = () => !!book && FULL.has(book.id);
@@ -689,7 +689,7 @@ async function select(n, scroll){
 
 // #mat5, #mrk6처럼 책과 장을 주소에 붙여 바로 열 수 있다. 예전 주소 #ep6은 마가복음 6장.
 function route(){
-  const hm = /^#(?:(mat|mrk|luk|jhn|psa|pro)(\d{1,3})?|ep(\d{1,2}))$/.exec(location.hash || "");
+  const hm = new RegExp(`^#(?:(${BOOKS.map(b => b.id).join("|")})(\\d{1,3})?|ep(\\d{1,2}))$`).exec(location.hash || "");  // 책이 늘어도(히브리서 등) 주소로 바로 열리게
   if (!hm) return false;
   const id = hm[1] || "mrk";
   if (!book || book.id !== id) setBook(id);
@@ -804,7 +804,7 @@ if (!route()) {
     + "sng:아가:ot3,isa:이사야:ot3,jer:예레미야:ot3,lam:예레미야 애가:ot3,ezk:에스겔:ot3,dan:다니엘:ot3,hos:호세아:ot3,jol:요엘:ot3,amo:아모스:ot3,oba:오바댜:ot3,jnh:요나:ot3,"
     + "mic:미가:ot3,nam:나훔:ot3,hab:하박국:ot3,zep:스바냐:ot3,hag:학개:ot3,zec:스가랴:ot3,mal:말라기:ot3,mat:마태복음:ref,mrk:마가복음:ref,luk:누가복음:ref,jhn:요한복음:ref,"
     + "act:사도행전:nt,rom:로마서:nt,1co:고린도전서:nt,2co:고린도후서:nt,gal:갈라디아서:nt,eph:에베소서:nt,php:빌립보서:nt,col:골로새서:nt,1th:데살로니가전서:nt,2th:데살로니가후서:nt,"
-    + "1ti:디모데전서:nt,2ti:디모데후서:nt,tit:디도서:nt,phm:빌레몬서:nt,heb:히브리서:nt,jas:야고보서:nt,1pe:베드로전서:nt,2pe:베드로후서:nt,1jn:요한일서:nt,2jn:요한이서:nt,"
+    + "1ti:디모데전서:nt,2ti:디모데후서:nt,tit:디도서:nt,phm:빌레몬서:nt,heb:히브리서:ref,jas:야고보서:nt,1pe:베드로전서:nt,2pe:베드로후서:nt,1jn:요한일서:nt,2jn:요한이서:nt,"
     + "3jn:요한삼서:nt,jud:유다서:nt,rev:요한계시록:nt").split(",").map(x => { const [id, name, file] = x.split(":"); return { id, name, file }; });
   const BOOK66 = Object.fromEntries(BOOKS66.map(b => [b.id, b]));
   const squash = s => String(s ?? "").replace(/\s+/g, "");
