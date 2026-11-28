@@ -199,10 +199,10 @@ h1,h2,h3{margin:0;text-wrap:balance}
 /* 본문을 골라 Claude에게 묻기(사용자 요청). 고르면 떠오르는 버튼, 컴퓨터의 오른쪽 클릭 메뉴, 묻고 답하는 창 */
 .ask-fab{position:absolute;z-index:46;display:inline-flex;align-items:center;gap:0;padding:2px;border-radius:999px;border:1px solid var(--rule);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--paper);color:var(--gold);font-family:var(--ui);font-size:.8125rem;line-height:1.2;box-shadow:0 10px 24px -12px var(--shadow);cursor:default}
 .fab-b{all:unset;cursor:pointer;color:var(--gold);font:inherit}
-.ask-fab > *{display:inline-flex;align-items:center;min-height:42px;padding:0 15px;white-space:nowrap}  /* 손가락으로 누르기 쉽게 크게(사용자 요청 11/27: “작아서 누르기 어려워”. 그 전 ‘조금 더 작게’를 바꿈) */
-.ask-fab{max-width:calc(100vw - 24px);font-size:.9375rem}
+.ask-fab > *{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;white-space:nowrap}  /* 누르기 쉬운 크기: 처음엔 작다(11/27 “작아서 누르기 어려워”) → 42px는 크다(11/28 “너무 커, 좀만 작게”) → 36px */
+.ask-fab{max-width:calc(100vw - 24px);font-size:.875rem}
 .ask-fab > * + *{border-left:1px solid var(--rule)}
-.fab-ref{min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:.875rem;color:var(--gold);text-decoration:none;font-variant-numeric:tabular-nums}  /* 고른 절의 장·절: 누르면 개역개정의 그 절로(사용자 요청) */
+.fab-ref{min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:.8125rem;color:var(--gold);text-decoration:none;font-variant-numeric:tabular-nums}  /* 고른 절의 장·절: 누르면 개역개정의 그 절로(사용자 요청) */
 .fab-ref:hover{text-decoration:underline}
 .fab-b:focus-visible,.ask-menu button:focus-visible,.ask-x:focus-visible,.ask-send:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .ask-menu{position:absolute;z-index:47;min-width:180px;padding:6px;border-radius:12px;border:1px solid var(--rule);background:var(--paper);box-shadow:0 16px 32px -16px var(--shadow);display:grid}
