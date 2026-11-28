@@ -201,7 +201,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .fab-b{all:unset;cursor:pointer;color:var(--gold);font:inherit}
 .ask-fab > *{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;white-space:nowrap}  /* 누르기 쉬운 크기: 처음엔 작다(11/27 “작아서 누르기 어려워”) → 42px는 크다(11/28 “너무 커, 좀만 작게”) → 36px */
 .ask-fab{max-width:calc(100vw - 24px);font-size:.875rem}
-.ask-fab > * + *{border-left:1px solid var(--rule)}
+.ask-fab > :not([hidden]) ~ :not([hidden]){border-left:1px solid var(--rule)}  /* 보이는 단추 사이에만 칸막이(‘AI 질문’만 뜰 때 왼쪽에 선이 남던 것, 11/28) */
 .fab-ref{min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:.8125rem;color:var(--gold);text-decoration:none;font-variant-numeric:tabular-nums}  /* 고른 절의 장·절: 누르면 개역개정의 그 절로(사용자 요청) */
 .fab-ref:hover{text-decoration:underline}
 .fab-b:focus-visible,.ask-menu button:focus-visible,.ask-x:focus-visible,.ask-send:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
