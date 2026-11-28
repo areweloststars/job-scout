@@ -47,9 +47,19 @@ BOOKS = [
        why=[('첫 줄', '“다윗의 아들 이스라엘 왕 솔로몬의 잠언이라”(1:1).'),
             ('목적', '본문이 직접 밝힌 목적입니다. “이는 지혜와 훈계를 알게 하며 명철의 말씀을 깨닫게 하며”(1:2).'),
             ('마지막', '“그 손의 열매가 그에게로 돌아갈 것이요 그 행한 일을 인하여 성문에서 칭찬을 받으리라”(31:31).')]),
+  # 구약 율법서. 쉬운 번역은 히브리어 WLC에서. 3장부터(11/28 사용자 요청: “출애굽기 3장도 작업해 줘”). 히브리서와 한 줄에 나란히(half)
+  dict(id='exo', name='출애굽기', author='모세', kicker='שְׁמוֹת', klang='he', src_lang='히브리어', src_text='WLC', wide=True, half=True,
+       lines=True, bundle=True, only_ready=True,
+       lede='출애굽기 40장 가운데 준비된 장을 골라 읽습니다. 장마다 본문의 요점을 따라가고, 본문을 펼쳐 직접 읽습니다. 진도는 이 기기에 저장됩니다.',
+       chapters=40, abbr='출',
+       plate=dict(img='images/exo/plate.jpg', alt='갈라진 바다 사이로 건너가는 이스라엘 백성과 뒤에서 일어나는 거센 물결',
+                  cap='이반 아이바좁스키, 〈홍해를 건너는 이스라엘 백성〉(1891). 갈라진 바닷길로 이스라엘 백성이 건너가고, 뒤에서는 거센 물결이 일어납니다(출애굽기 14장).',
+                  credit=('https://commons.wikimedia.org/wiki/File:Aivazovsky_Passage_of_the_Jews_through_the_Red_Sea.jpg', '퍼블릭 도메인')),
+       why=[('첫 줄', '“야곱과 함께 각기 권속을 데리고 애굽에 이른 이스라엘 아들들의 이름은 이러하니”(1:1).'),
+            ('마지막', '“낮에는 여호와의 구름이 성막 위에 있고 밤에는 불이 그 구름 가운데 있음을 이스라엘의 온 족속이 그 모든 행하는 길에서 친히 보았더라”(40:38).')]),
   # 신약 서신. 쉬운 번역은 헬라어 SBLGNT에서. 13장부터(11/28 사용자 요청: “히브리서 13장도 이렇게 만들어 줘”).
-  # wide: 시편·잠언 아래 한 줄을 다 쓴다. 탭은 준비된 장만(only_ready). 절마다 새 줄(lines). 장 파일은 한 묶음(bundle)
-  dict(id='heb', name='히브리서', author='저자 미상', kicker='ΠΡΟΣ ΕΒΡΑΙΟΥΣ', chapters=13, abbr='히', wide=True,
+  # wide+half: 출애굽기와 한 줄에 나란히. 탭은 준비된 장만(only_ready). 절마다 새 줄(lines). 장 파일은 한 묶음(bundle)
+  dict(id='heb', name='히브리서', author='저자 미상', kicker='ΠΡΟΣ ΕΒΡΑΙΟΥΣ', chapters=13, abbr='히', wide=True, half=True,
        lines=True, bundle=True, only_ready=True,
        lede='히브리서 13장 가운데 준비된 장을 골라 읽습니다. 장마다 본문의 요점을 따라가고, 본문을 펼쳐 직접 읽습니다. 진도는 이 기기에 저장됩니다.',
        plate=dict(img='images/heb/plate.jpg', alt='빵과 포도주를 들고 나온 멜기세덱이 무장한 아브라함을 맞이하는 장면',
@@ -61,4 +71,4 @@ BOOKS = [
 # 본문 링크와 인용 표기에 쓰는 책 이름 (대한성서공회 책 코드)
 NAMES = {'mat': '마태복음', 'mrk': '마가복음', 'luk': '누가복음', 'jhn': '요한복음', 'gen': '창세기', 'exo': '출애굽기',
          'lev': '레위기', 'deu': '신명기', 'psa': '시편', 'isa': '이사야', 'jer': '예레미야', 'dan': '다니엘', 'hos': '호세아',
-         'mic': '미가', 'zec': '스가랴', 'mal': '말라기', 'act': '사도행전', 'pro': '잠언', 'heb': '히브리서'}
+         'mic': '미가', 'zec': '스가랴', 'mal': '말라기', 'act': '사도행전', 'pro': '잠언', 'heb': '히브리서', 'num': '민수기'}

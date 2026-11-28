@@ -423,7 +423,7 @@ if (store.get("gospels.done.mrk", null) == null && store.get("mark16.done", null
 const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const tabs = $("tabs"), panel = $("ep"), booksNav = $("books");
 let book = null, cur = 0, done = new Set();
-const FULL = new Set(["mat", "mrk", "luk", "jhn", "pro", "psa", "heb"]);  // 모든 책에서(사용자 요청: 사복음서와 잠언 모두 누가복음처럼, 시편도): AI에게 묻기, 구절 고르기, 나에게 접기, 장·절 제목
+const FULL = new Set(["mat", "mrk", "luk", "jhn", "pro", "psa", "heb", "exo"]);  // 모든 책에서(사용자 요청: 사복음서와 잠언 모두 누가복음처럼, 시편도): AI에게 묻기, 구절 고르기, 나에게 접기, 장·절 제목
 const U = b => (b && b.unit) || "장";                        // 장을 세는 말: 시편은 ‘편’
 const EPW = b => (b && b.unit === "편") ? "편" : "화";       // 한 회를 부르는 말: 복음서·잠언은 ‘화’, 시편은 ‘편’
 const isMrk = () => !!book && FULL.has(book.id);
@@ -799,7 +799,7 @@ if (!route()) {
       document.head.appendChild(s);
     }));
   }
-  const BOOKS66 = ("gen:창세기:ot1,exo:출애굽기:ot1,lev:레위기:ot1,num:민수기:ot1,deu:신명기:ot1,jos:여호수아:ot2,jdg:사사기:ot2,rut:룻기:ot2,1sa:사무엘상:ot2,2sa:사무엘하:ot2,"
+  const BOOKS66 = ("gen:창세기:ot1,exo:출애굽기:ref,lev:레위기:ot1,num:민수기:ot1,deu:신명기:ot1,jos:여호수아:ot2,jdg:사사기:ot2,rut:룻기:ot2,1sa:사무엘상:ot2,2sa:사무엘하:ot2,"
     + "1ki:열왕기상:ot2,2ki:열왕기하:ot2,1ch:역대상:ot2,2ch:역대하:ot2,ezr:에스라:ot2,neh:느헤미야:ot2,est:에스더:ot2,job:욥기:ot3,psa:시편:ref,pro:잠언:ref,ecc:전도서:ot3,"
     + "sng:아가:ot3,isa:이사야:ot3,jer:예레미야:ot3,lam:예레미야 애가:ot3,ezk:에스겔:ot3,dan:다니엘:ot3,hos:호세아:ot3,jol:요엘:ot3,amo:아모스:ot3,oba:오바댜:ot3,jnh:요나:ot3,"
     + "mic:미가:ot3,nam:나훔:ot3,hab:하박국:ot3,zep:스바냐:ot3,hag:학개:ot3,zec:스가랴:ot3,mal:말라기:ot3,mat:마태복음:ref,mrk:마가복음:ref,luk:누가복음:ref,jhn:요한복음:ref,"

@@ -1,8 +1,8 @@
 # AI 질문에 함께 보낼 참고 자료를 묶는다. 페이지는 AI에게 처음 물을 때만 불러온다(읽기 화면에는 쓰지 않는다).
-#   data/ref/{책}.js — 사복음서와 잠언, 시편, 히브리서, 책마다 하나
+#   data/ref/{책}.js — 사복음서와 잠언, 시편, 히브리서, 출애굽기, 책마다 하나
 #     han  : 개역한글판(1961, 대한성서공회, 저작권 만료) — dl_han.py가 한국어 위키문헌에서 받은 han-{책}.json
-#     orig : 원문 — 복음서·히브리서는 SBLGNT(sbl-{Matt,Mark,Luke,John,Heb}.txt), 잠언·시편은 WLC(Prov.xml, Ps.xml, Open Scriptures morphhb).
-#            시편은 morphhb의 KJV 대응 표시로 개역한글 절 번호에 맞춘다(표제는 첫 절 앞에, 번호가 다르면 히브리어 번호를 함께)
+#     orig : 원문 — 복음서·히브리서는 SBLGNT(sbl-{Matt,Mark,Luke,John,Heb}.txt), 잠언·시편·출애굽기는 WLC(Prov.xml, Ps.xml, Exod.xml, Open Scriptures morphhb).
+#            시편·출애굽기는 morphhb의 KJV 대응 표시로 개역한글 절 번호에 맞춘다(표제는 첫 절 앞에, 번호가 다르면 히브리어 번호를 함께. 출애굽기는 7–8장, 21–22장)
 #     notes: Tyndale Open Study Notes(tosn-StudyNotes.xml) — [첫 장, 첫 절, 끝 장, 끝 절, 범위 표시, 글]
 #     intro: 같은 자료의 책 요약(tosn-BookIntroSummaries.xml) — 목적, 저자, 시기, 배경
 #   data/ref/bible-{ot1,ot2,ot3,nt}.js — 나머지 60권의 개역한글(AI가 다른 구절을 찾아볼 때만)
@@ -64,8 +64,8 @@ def han(b):
     d = json.load(open(f'{REF}/han-{b}.json', encoding='utf-8'))
     return {f'{c}:{v}': t for c in d for v, t in d[c]['verses'].items()}
 
-TOSN = {'mat': 'Matt', 'mrk': 'Mark', 'luk': 'Luke', 'jhn': 'John', 'pro': 'Pr', 'psa': 'Ps', 'heb': 'Heb'}
-TOSN_INTRO = {'mat': 'Matthew', 'mrk': 'Mark', 'luk': 'Luke', 'jhn': 'John', 'pro': 'Proverbs', 'psa': 'Psalms', 'heb': 'Hebrews'}
+TOSN = {'mat': 'Matt', 'mrk': 'Mark', 'luk': 'Luke', 'jhn': 'John', 'pro': 'Pr', 'psa': 'Ps', 'heb': 'Heb', 'exo': 'Exod'}
+TOSN_INTRO = {'mat': 'Matthew', 'mrk': 'Mark', 'luk': 'Luke', 'jhn': 'John', 'pro': 'Proverbs', 'psa': 'Psalms', 'heb': 'Hebrews', 'exo': 'Exodus'}
 _sn = None
 
 def text_of(body):  # XML 표시만 걷어 낸다(글은 그대로)
@@ -106,9 +106,9 @@ NOTE_HEAD = ('// 연구 노트(notes, intro): Tyndale Open Study Notes. Copyrigh
 HAN_HEAD = '// 개역한글판(1961, 대한성서공회): 저작권 보호기간이 끝난 번역. 본문은 한국어 위키문헌.\n'
 
 os.makedirs(f'{REPO}/data/ref', exist_ok=True)
-for b in ('mat', 'mrk', 'luk', 'jhn', 'pro', 'psa', 'heb'):
-    lang = 'hbo' if b in ('pro', 'psa') else 'grc'
-    orig = wlc('Prov') if b == 'pro' else wlc('Ps', kjv=True) if b == 'psa' else sblgnt(SBL[b])
+for b in ('mat', 'mrk', 'luk', 'jhn', 'pro', 'psa', 'heb', 'exo'):
+    lang = 'hbo' if b in ('pro', 'psa', 'exo') else 'grc'
+    orig = wlc('Prov') if b == 'pro' else wlc('Ps', kjv=True) if b == 'psa' else wlc('Exod', kjv=True) if b == 'exo' else sblgnt(SBL[b])
     h = han(b)
     data = {'lang': lang, 'han': h, 'orig': orig, 'notes': notes(b), 'intro': intro(b)}
     js = (f'// {b}: AI 질문에 함께 보내는 참고 자료. tools/gospels/build_ref.py가 만듭니다.\n'
@@ -121,7 +121,7 @@ for b in ('mat', 'mrk', 'luk', 'jhn', 'pro', 'psa', 'heb'):
 
 # 나머지 61권: 개역한글만, 네 묶음으로(아티팩트 파일 수 한도 때문에 책마다 따로 두지 않는다)
 GROUPS = {
-    'ot1': 'gen exo lev num deu',
+    'ot1': 'gen lev num deu',  # 출애굽기는 data/ref/exo.js
     'ot2': 'jos jdg rut 1sa 2sa 1ki 2ki 1ch 2ch ezr neh est',
     'ot3': 'job ecc sng isa jer lam ezk dan hos jol amo oba jnh mic nam hab zep hag zec mal',  # 시편은 data/ref/psa.js
     'nt': 'act rom 1co 2co gal eph php col 1th 2th 1ti 2ti tit phm jas 1pe 2pe 1jn 2jn 3jn jud rev',  # 히브리서는 data/ref/heb.js

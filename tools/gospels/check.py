@@ -6,8 +6,8 @@ MORPH = {'mat': '61-Mt', 'mrk': '62-Mk', 'luk': '63-Lk', 'jhn': '64-Jn', 'heb': 
 book = sys.argv[1]
 # 인용 대조는 개역한글판(dl_han.py로 받음)
 G = json.load(open(f'{REF}/han-{book}.json', encoding='utf-8'))
-OT = {'pro': 'Prov', 'psa': 'Ps'}  # 구약: 히브리어 WLC(dl_refs.py가 받는 {책}.xml)의 절 목록과 대조
-if book == 'psa':  # 시편은 히브리어 성경이 표제를 1–2절로 세어 번호가 달라, 절 목록은 개역한글(=KJV 번호)을 따른다. 표제는 '편:0'
+OT = {'pro': 'Prov', 'psa': 'Ps', 'exo': 'Exod'}  # 구약: 히브리어 WLC(dl_refs.py가 받는 {책}.xml)의 절 목록과 대조
+if book in ('psa', 'exo'):  # 시편은 히브리어 성경이 표제를 1–2절로 세어 번호가 달라, 절 목록은 개역한글(=KJV 번호)을 따른다. 표제는 '편:0'. 출애굽기도 7–8장, 21–22장 번호가 달라 개역한글을 따른다
     S = {c: list(G[c]['verses']) for c in G}
 elif book in OT:
     S = {}
