@@ -135,9 +135,10 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .bible[open] .bt-btn::after{transform:rotate(225deg) translateY(-1px)}
 .bible[open] .lb-o,.bible:not([open]) .lb-c{display:none}
 .bible[open] .bt-btn{background:transparent;border-color:color-mix(in srgb,var(--ink-2) 40%,transparent);color:var(--ink-2);padding:7px 14px;font-size:.9375rem}  /* 펼친 동안의 ‘본문 접기’는 색 없이(사용자 요청 11/27: 본문을 읽을 때 신경 쓰임). ‘본문 펼치기’는 그대로 */
-.bible[open] summary:hover .bt-btn{border-color:var(--ink-2);color:var(--ink)}  /* 11/28: ‘↑ 7절’과 ‘본문 접기’는 색 없이 테두리만(사용자 요청: 누르는 단추로 보이게) */
+.bible[open] summary:hover .bt-btn{border-color:var(--ink-2);color:var(--ink)}  /* 11/28: ‘본문 접기’는 색 없이 테두리만(사용자 요청: 누르는 단추로 보이게). ‘↑ 8절’의 테두리는 같은 날 다시 뺌 */
 .prev-v,.back-v{all:unset;box-sizing:border-box;font-family:var(--ui);color:var(--ink-2);cursor:pointer;font-variant-numeric:tabular-nums;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
-.prev-v{padding:7px 13px;border:1px solid color-mix(in srgb,var(--ink-2) 40%,transparent);border-radius:999px;font-size:.875rem;line-height:1.45}  /* ‘↑ 12절’: 바로 앞 절로 올라가기(사용자 요청 11/27). 펼쳤을 때만 */
+.prev-v{padding:6px 2px;font-size:.8125rem;font-weight:600;line-height:1.45}  /* ‘↑ 8절’: 테두리 없이, 아래 줄 ‘마가복음 1장 9–11절’ 바로 왼쪽에(사용자 요청 11/28). 굵게 해서 누르는 글씨로 보이게 */
+.sm-row{display:inline-flex;align-items:center;flex-wrap:wrap;gap:2px 10px}  /* ‘↑ 12절’(바로 앞 절로 올라가기, 사용자 요청 11/27, 펼쳤을 때만)과 ‘마가복음 1장 9–11절 · 쉬운 번역’을 한 줄에 */
 .bible:not([open]) .prev-v{display:none}
 .prev-v:hover,.back-v:hover{color:var(--ink);border-color:var(--ink-2)}
 .prev-v:focus-visible,.back-v:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
@@ -607,7 +608,7 @@ function pointHTML(n, p, i, prev){
     ${p.q ? `<blockquote class="vq"><p>“${p.q[1]}”</p><cite>${p.q[0]} · 개역한글</cite></blockquote>` : ""}
     <p class="d">${p.d}</p>
     ${isMrk() ? `<details class="me-fold"><summary>나에게</summary><div class="me"><p>${p.me}</p></div></details>` : `<div class="me"><p class="lab">나에게</p><p>${p.me}</p></div>`}
-    <details class="bible"><summary>${prev ? `<button type="button" class="prev-v" data-to="p${n}-${prev.j + 1}" data-c="${prev.c}" data-v="${prev.v}" data-from="p${n}-${i + 1}" data-fv="${prev.v + 1}" aria-label="바로 앞 ${prev.v}절로 올라가기">↑ ${prev.v}절</button>` : ""}<span class="bt-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5.5c3-1 6.5-1 10 1.5v13c-3.5-2.5-7-2.5-10-1.5z"/><path d="M22 5.5c-3-1-6.5-1-10 1.5v13c3.5-2.5 7-2.5 10-1.5z"/></svg><span class="lb-o">본문 펼치기</span><span class="lb-c">본문 접기</span></span><span class="sm">${p.links[0].t} · 쉬운 번역</span></summary>
+    <details class="bible"><summary><span class="bt-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5.5c3-1 6.5-1 10 1.5v13c-3.5-2.5-7-2.5-10-1.5z"/><path d="M22 5.5c-3-1-6.5-1-10 1.5v13c3.5-2.5 7-2.5 10-1.5z"/></svg><span class="lb-o">본문 펼치기</span><span class="lb-c">본문 접기</span></span><span class="sm-row">${prev ? `<button type="button" class="prev-v" data-to="p${n}-${prev.j + 1}" data-c="${prev.c}" data-v="${prev.v}" data-from="p${n}-${i + 1}" data-fv="${prev.v + 1}" aria-label="바로 앞 ${prev.v}절로 올라가기">↑ ${prev.v}절</button>` : ""}<span class="sm">${p.links[0].t} · 쉬운 번역</span></span></summary>
       <div class="bt${book.lines ? " vv" : ""}">${qm(p.bt)}
         <div class="bt-foot"><p>${src(book)}을 이 페이지에서 쉬운 우리말로 옮긴 번역입니다. 공식 번역이 아닙니다.</p><p class="bt-links">${links}</p></div>
       </div>
