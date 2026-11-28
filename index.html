@@ -101,7 +101,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .ep h2 .epn{color:var(--lake);margin-right:.28em}
 .toc{display:flex;flex-wrap:wrap;gap:6px;padding-top:4px}
 .toc a{font-family:var(--ui);font-size:.8125rem;line-height:1.45;padding:4px 11px;border-radius:999px;background:var(--lake-t);color:var(--lake);text-decoration:none}
-.toc a:hover{text-decoration:underline}
+@media (hover:hover){.toc a:hover{text-decoration:underline}}  /* 휴대폰에서는 누른 뒤 밑줄이 남지 않게 */
 .points{list-style:none;margin:0;padding:0;display:grid}
 .pt{position:relative;display:grid;gap:16px;padding-block:34px;scroll-margin-top:16px;min-width:0}
 .pt + .pt{border-top:1px solid var(--rule)}
@@ -520,7 +520,7 @@ panel.addEventListener("click", ev => {
   if (!a) return;
   ev.preventDefault();
   const t = document.getElementById(a.getAttribute("href").slice(1));
-  if (t) t.scrollIntoView({behavior: reduceMotion ? "auto" : "smooth", block: "start"});
+  if (t) t.scrollIntoView({behavior: "instant", block: "start"});  // 목차를 누르면 그 요점으로 바로(부드럽게 흘러가지 않고, 사용자 요청 11/28)
 });
 
 const qm = s => s.replace(/[“”‘’]/g, '<span class="qm">$&</span>');  // 따옴표를 작게 표시하려고 감싼다
